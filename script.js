@@ -50,37 +50,37 @@ if (carouselContainer) {
     startStackedCarousel();
 }
 
-// --- Mini 3D Stacked Carousel for "Trusted By" ---
-const miniCards = document.querySelectorAll('.mini-card');
-let miniClassArray = ['mini-front', 'mini-middle', 'mini-hidden']; //mini-back can be add
-let miniInterval;
+// --- Colorful Promo 3D Carousel Logic ---
+const promoCards = document.querySelectorAll('.promo-card');
+let promoClassArray = ['promo-front', 'promo-middle', 'promo-back'];
+let promoInterval;
 
-function rotateMiniCards() {
-    const last = miniClassArray.pop();
-    miniClassArray.unshift(last);
-    miniCards.forEach((card, index) => {
-        card.className = 'mini-card ' + miniClassArray[index];
+function rotatePromoCards() {
+    const last = promoClassArray.pop();
+    promoClassArray.unshift(last);
+    promoCards.forEach((card, index) => {
+        card.className = 'promo-card ' + promoClassArray[index];
     });
 }
 
-function startMiniCarousel() {
-    if (miniCards.length > 0) {
-        miniInterval = setInterval(rotateMiniCards, 3000); // Swipes every 3 seconds
+function startPromoCarousel() {
+    if (promoCards.length > 0) {
+        promoInterval = setInterval(rotatePromoCards, 3500); // Swipes every 3.5 seconds
     }
 }
 
-function stopMiniCarousel() { 
-    clearInterval(miniInterval); 
+function stopPromoCarousel() { 
+    clearInterval(promoInterval); 
 }
 
-const miniContainer = document.getElementById('trustedCarousel');
-if (miniContainer) {
-    // Pauses the swipe if they touch or hover over the badges
-    miniContainer.addEventListener('mouseenter', stopMiniCarousel);
-    miniContainer.addEventListener('mouseleave', startMiniCarousel);
-    miniContainer.addEventListener('touchstart', stopMiniCarousel);
-    miniContainer.addEventListener('touchend', startMiniCarousel);
-    startMiniCarousel();
+const promoCarouselContainer = document.getElementById('promoCarousel');
+if (promoCarouselContainer) {
+    // Pauses the swipe if they hover/touch to read the bullets
+    promoCarouselContainer.addEventListener('mouseenter', stopPromoCarousel);
+    promoCarouselContainer.addEventListener('mouseleave', startPromoCarousel);
+    promoCarouselContainer.addEventListener('touchstart', stopPromoCarousel);
+    promoCarouselContainer.addEventListener('touchend', startPromoCarousel);
+    startPromoCarousel();
 }
 
 // --- Hide Floating CTA when Form is Visible ---
