@@ -65,7 +65,7 @@ function rotatePromoCards() {
 
 function startPromoCarousel() {
     if (promoCards.length > 0) {
-        promoInterval = setInterval(rotatePromoCards, 3500); // Swipes every 3.5 seconds
+        promoInterval = setInterval(rotatePromoCards, 4500); // Increased to 4.5 seconds for tracker animation
     }
 }
 
