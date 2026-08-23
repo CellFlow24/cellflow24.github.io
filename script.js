@@ -285,6 +285,15 @@ fetch(WEB_APP_URL)
     .then(data => {
         availableProducts = data;
         isProductsLoading = false;
+        
+        // INSTANT UI UPGRADE: Inject live prices into the homepage buttons!
+        data.forEach(item => {
+            let badge = document.getElementById('badge-' + item.name);
+            if(badge) {
+                badge.textContent = '₹' + item.discountedPrice;
+            }
+        });
+
         // If the user already opened the product container, render it instantly
         if (productContainer.style.display === 'block') {
             renderProductCards();
@@ -421,3 +430,40 @@ window.requestCustomBuild = function(event) {
         document.querySelector('input[name="name"]').focus();
     }, 600);
 };
+
+// 6. Marketing Story Carousel Engine
+let currentStorySlide = 0;
+const storySlides = document.querySelectorAll('.story-slide');
+const storyIndicators = document.querySelectorAll('.indicator');
+let storyIntervalTimer;
+
+function showStorySlide(index) {
+    if(storySlides.length === 0) return;
+    storySlides.forEach(s => s.classList.remove('active'));
+    storyIndicators.forEach(i => i.classList.remove('active'));
+    
+    storySlides[index].classList.add('active');
+    storyIndicators[index].classList.add('active');
+    currentStorySlide = index;
+}
+
+function nextStorySlide() {
+    if(storySlides.length === 0) return;
+    let next = (currentStorySlide + 1) % storySlides.length;
+    showStorySlide(next);
+}
+
+function startStoryCarousel() {
+    storyIntervalTimer = setInterval(nextStorySlide, 4500); // Swipes every 4.5 seconds
+}
+
+// Allow users to click the dots manually
+window.goToSlide = function(index) {
+    clearInterval(storyIntervalTimer);
+    showStorySlide(index);
+    startStoryCarousel();
+};
+
+if (storySlides.length > 0) {
+    startStoryCarousel();
+}
