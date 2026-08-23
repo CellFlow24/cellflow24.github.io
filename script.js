@@ -431,22 +431,6 @@ window.requestCustomBuild = function(event) {
     }, 600);
 };
 
-// 6. Marketing Story Carousel Engine
-let currentStorySlide = 0;
-const storySlides = document.querySelectorAll('.story-slide');
-const storyIndicators = document.querySelectorAll('.indicator');
-let storyIntervalTimer;
-
-function showStorySlide(index) {
-    if(storySlides.length === 0) return;
-    storySlides.forEach(s => s.classList.remove('active'));
-    storyIndicators.forEach(i => i.classList.remove('active'));
-    
-    storySlides[index].classList.add('active');
-    storyIndicators[index].classList.add('active');
-    currentStorySlide = index;
-}
-
 function nextStorySlide() {
     if(storySlides.length === 0) return;
     let next = (currentStorySlide + 1) % storySlides.length;
