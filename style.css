@@ -253,3 +253,36 @@ footer { background: #1a202c; color: #a0aec0; padding: 60px 20px 20px; margin-to
     .custom-dev-text h2 { text-align: center; }
     .custom-dev-btn { width: 100%; justify-content: center; }
 }
+
+/* =========================================================
+   MARKETING STORY CAROUSEL & DYNAMIC PRICE BADGES
+========================================================= */
+/* Price Badges inside Purchase Buttons */
+.btn-purchase { flex-direction: column; gap: 4px; padding: 8px 5px; }
+.btn-price-tag { font-size: 0.85rem; background: rgba(0, 176, 80, 0.1); padding: 2px 10px; border-radius: 20px; color: #00b050; transition: all 0.3s ease; font-weight: 800; letter-spacing: 0.5px; }
+.project-card:hover .btn-price-tag { background: rgba(255,255,255,0.25); color: white; }
+
+/* Story Section Background & Layout */
+.story-section { max-width: 1050px; margin: 20px auto 60px auto; padding: 0 20px; }
+.story-container { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); border-radius: 24px; position: relative; height: 320px; display: flex; align-items: center; justify-content: center; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.15); overflow: hidden; border: 1px solid rgba(255,255,255,0.1); }
+.story-slide { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -40%); width: 85%; max-width: 700px; opacity: 0; visibility: hidden; transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1); }
+.story-slide.active { opacity: 1; visibility: visible; transform: translate(-50%, -50%); }
+
+/* Story Typography & Elements */
+.story-icon { font-size: 2.5rem; margin-bottom: 15px; animation: floatBreathe 4s infinite ease-in-out; }
+.story-slide h3 { font-size: 2.2rem; color: #38bdf8; margin-bottom: 15px; font-weight: 800; }
+.story-slide p { font-size: 1.15rem; color: #cbd5e0; line-height: 1.6; margin-bottom: 20px; }
+.story-slide strong { color: #10b981; font-size: 1.3rem; }
+.story-btn { background: #00b050; padding: 12px 28px; font-size: 1.05rem; margin-top: 10px; box-shadow: 0 8px 20px rgba(0,176,80,0.2); }
+.story-btn:hover { background: #008a3e; transform: translateY(-3px); }
+
+/* Indicators */
+.story-indicators { position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%); display: flex; gap: 12px; z-index: 10; }
+.indicator { width: 10px; height: 10px; border-radius: 50%; background: #475569; cursor: pointer; transition: all 0.3s ease; }
+.indicator.active { background: #38bdf8; transform: scale(1.4); box-shadow: 0 0 10px rgba(56, 189, 248, 0.5); }
+
+@media (max-width: 768px) {
+    .story-container { height: 380px; }
+    .story-slide h3 { font-size: 1.8rem; }
+    .story-slide p { font-size: 1rem; }
+}
