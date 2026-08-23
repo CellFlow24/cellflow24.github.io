@@ -62,6 +62,39 @@
         </div>
     </header>
 
+    <!-- TARGETED MARKETING STORY CAROUSEL -->
+    <section class="story-section reveal">
+        <div class="story-container">
+            <!-- Slide 1: Target FB/Insta Sellers -->
+            <div class="story-slide active" id="slide0">
+                <div class="story-icon">📱</div>
+                <h3>Selling on Facebook or Instagram?</h3>
+                <p>Stop losing orders in buried DMs. Get a professional, automated web presence that takes orders 24/7 and builds immediate customer trust.</p>
+            </div>
+            
+            <!-- Slide 2: Target B2B / Professionalism -->
+            <div class="story-slide" id="slide1">
+                <div class="story-icon">🏢</div>
+                <h3>Instant Brand Recognition</h3>
+                <p>We build fully responsive platforms tailored for your business. Includes custom domains, secure hosting, and zero-headache payment gateways.</p>
+            </div>
+            
+            <!-- Slide 3: Pricing & Features -->
+            <div class="story-slide" id="slide2">
+                <div class="story-icon">🚀</div>
+                <h3>Premium Features. Transparent Price.</h3>
+                <p>Complete Web Apps starting at just <strong>₹5,999</strong>.<br>Need a complex system? We offer <strong>Custom Quoting</strong> for special requirements.</p>
+                <button class="btn-primary story-btn" onclick="requestCustomBuild(event)">Get Your Business Online</button>
+            </div>
+            
+            <div class="story-indicators">
+                <span class="indicator active" onclick="goToSlide(0)"></span>
+                <span class="indicator" onclick="goToSlide(1)"></span>
+                <span class="indicator" onclick="goToSlide(2)"></span>
+            </div>
+        </div>
+    </section>
+    
     <!-- PREMIUM 3D STACKED BADGES (Trusted By) -->
     <section class="trusted-section reveal">
         <p class="trusted-title">TRUSTED BY FAST-GROWING BUSINESSES ACROSS KOLKATA</p>
@@ -108,7 +141,10 @@
                 <div class="card-buttons">
                     <button class="btn-secondary">Explore <span>&#8594;</span></button>
                     <!-- New Direct Purchase Button -->
-                    <button class="btn-purchase" onclick="directPurchase('Mess Khata', event)">Purchase <span>🛒</span></button>
+                    <button class="btn-purchase" onclick="directPurchase('Mess Khata', event)">
+                        <span>Purchase 🛒</span>
+                        <span class="btn-price-tag" id="badge-Mess Khata">₹--</span>
+                    </button>
                 </div>
             </div>
 
@@ -131,7 +167,10 @@
                 <div class="card-buttons">
                     <button class="btn-secondary">Explore <span>&#8594;</span></button>
                     <!-- New Direct Purchase Button -->
-                    <button class="btn-purchase" onclick="directPurchase('Bill Flow', event)">Purchase <span>🛒</span></button>
+                    <button class="btn-purchase" onclick="directPurchase('Bill Flow', event)">
+                        <span>Purchase 🛒</span>
+                        <span class="btn-price-tag" id="badge-Bill Flow">₹--</span>
+                    </button>
                 </div>
             </div>
 
@@ -154,7 +193,10 @@
                 <div class="card-buttons">
                     <button class="btn-secondary">Explore <span>&#8594;</span></button>
                     <!-- New Direct Purchase Button -->
-                    <button class="btn-purchase" onclick="directPurchase('Mok Test APK', event)">Purchase <span>🛒</span></button>
+                    <button class="btn-purchase" onclick="directPurchase('Mok Test APK', event)">
+                        <span>Purchase 🛒</span>
+                        <span class="btn-price-tag" id="badge-Mok Test APK">₹--</span>
+                    </button>
                 </div>
             </div>
 
