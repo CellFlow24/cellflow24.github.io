@@ -408,4 +408,26 @@ footer { background: #1a202c; color: #a0aec0; padding: 60px 20px 20px; margin-to
 
     /* 9. Floating CTA Fix */
     .floating-cta { bottom: 15px !important; right: 15px !important; padding: 12px 20px !important; font-size: 0.95rem !important; }
+
+   /* 10. Performance & GPU Acceleration (Fixes Mobile Scroll Lag) */
+    html, body { 
+        background-attachment: scroll !important; /* Fixed backgrounds destroy mobile framerates */
+    }
+    * {
+        -webkit-font-smoothing: antialiased; /* Smoother text rendering while scrolling */
+    }
+    /* Force elements to render on their own GPU layer */
+    .hero, .contact-section::before, .stacked-carousel, .promo-carousel, form, .project-card {
+        will-change: transform;
+        backface-visibility: hidden; 
+    }
+    /* Slightly reduce the heavy blur for smoother rendering on older phones */
+    form { 
+        backdrop-filter: blur(12px) !important; 
+        -webkit-backdrop-filter: blur(12px) !important; 
+    }
+    .promo-card { 
+        backdrop-filter: blur(8px) !important; 
+        -webkit-backdrop-filter: blur(8px) !important; 
+    }
 }
