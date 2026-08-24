@@ -223,6 +223,29 @@ textarea { resize: vertical; min-height: 140px; }
 .custom-option:hover { background: #f8fafc; color: #0056b3; padding-left: 22px; }
 
 /* =========================================================
+   DYNAMIC APP ORDER SELECTION & LOADER
+========================================================= */
+.select-prompt { font-weight: 700; color: #4a5568; margin-bottom: 12px; text-align: left; font-size: 0.95rem;}
+.product-grid { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+.checkout-item { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border: 2px solid #e2e8f0; border-radius: 12px; cursor: pointer; transition: all 0.3s ease; background: #ffffff; margin-bottom: 12px; }
+.checkout-item:hover { border-color: #cbd5e0; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+.checkout-item.selected { border-color: #00b050; background: rgba(0, 176, 80, 0.05); box-shadow: 0 4px 15px rgba(0,176,80,0.15); }
+.prod-name { font-weight: 800; color: #1a202c; font-size: 1.1rem; }
+.prod-pricing { display: flex; align-items: center; gap: 12px; }
+.price-strike { text-decoration: line-through; color: #a0aec0; font-size: 0.95rem; font-weight: 600; }
+.price-final { color: #00b050; font-size: 1.3rem; font-weight: 800; }
+
+/* --- Premium Jumping Dots Loader --- */
+.loader-container { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 25px 0; }
+.loader-text { font-weight: 700; color: #0056b3; font-size: 1.1rem; letter-spacing: 0.5px; }
+.jumping-dots { display: flex; gap: 6px; align-items: flex-end; height: 15px; }
+.jumping-dots .dot { width: 8px; height: 8px; background-color: #00b050; border-radius: 50%; animation: waveBounce 1.2s infinite ease-in-out both; }
+.jumping-dots .dot:nth-child(1) { animation-delay: -0.32s; }
+.jumping-dots .dot:nth-child(2) { animation-delay: -0.16s; }
+.jumping-dots .dot:nth-child(3) { animation-delay: 0s; }
+@keyframes waveBounce { 0%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-12px); } }
+
+/* =========================================================
    8. FOOTER, MODALS & RESPONSIVE DESIGN
 ========================================================= */
 footer { background: #1a202c; color: #a0aec0; padding: 60px 20px 20px; margin-top: 40px; }
