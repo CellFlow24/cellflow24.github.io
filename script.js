@@ -6,20 +6,18 @@ window.onload = function() {
     window.scrollTo(0, 0);
 };
 
-// Scroll Reveal Animations
-function revealElements() {
-    var reveals = document.querySelectorAll('.reveal');
-    for (var i = 0; i < reveals.length; i++) {
-        var windowHeight = window.innerHeight;
-        var elementTop = reveals[i].getBoundingClientRect().top;
-        var elementVisible = 100;
-        if (elementTop < windowHeight - elementVisible) {
-            reveals[i].classList.add('active');
+// Scroll Reveal Animations (Upgraded for Zero Lag on Mobile)
+const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('active');
         }
-    }
-}
-window.addEventListener('scroll', revealElements);
-revealElements();
+    });
+}, { threshold: 0.05, rootMargin: "0px 0px -50px 0px" });
+
+document.querySelectorAll('.reveal').forEach(el => {
+    revealObserver.observe(el);
+});
 
 // --- Toptal-Style Stacked Carousel Logic ---
 const cards = document.querySelectorAll('.stacked-card');
