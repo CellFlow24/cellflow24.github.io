@@ -311,3 +311,67 @@ footer { background: #1a202c; color: #a0aec0; padding: 60px 20px 20px; margin-to
     .promo-middle { transform: translateX(15px) translateY(15px) scale(0.92); }
     .promo-back { transform: translateX(30px) translateY(30px) scale(0.84); }
 }
+
+/* =========================================================
+   ULTIMATE MOBILE OPTIMIZATION (PHONES ONLY)
+========================================================= */
+@media (max-width: 768px) {
+    /* 1. Global Spacing & Typography */
+    section { padding: 50px 15px !important; }
+    h2 { font-size: 1.8rem !important; margin-bottom: 25px !important; }
+    p { font-size: 1rem !important; }
+
+    /* 2. Hero Section (Scale down the giant blob and text) */
+    .hero { padding-top: 30px !important; min-height: auto; }
+    .logo { width: 100px !important; height: 100px !important; padding: 8px !important; }
+    .cloud-blob { width: 160px !important; height: 160px !important; }
+    .hero h1 { font-size: 2.1rem !important; margin-bottom: 12px !important; }
+    
+    /* 3. Feedback Carousel (Shrink height so it doesn't take the whole screen) */
+    .stacked-carousel { height: 500px !important; max-width: 320px !important; margin: 30px auto 0 !important; }
+    .card-content-bottom { padding: 15px 20px !important; }
+    .card-content-bottom h4 { font-size: 1.2rem !important; }
+    .card-content-bottom p { font-size: 0.9rem !important; line-height: 1.4 !important; }
+
+    /* 4. Product Cards (Stack the buttons for easy thumb-tapping) */
+    .project-card { padding: 25px 20px !important; border-radius: 16px !important; }
+    .project-card h3 { font-size: 1.4rem !important; }
+    .image-wrapper { margin: 15px 0 !important; }
+    .glass-specs { padding: 15px !important; }
+    .glass-specs li { font-size: 0.85rem !important; margin-bottom: 8px !important; }
+    
+    /* This makes the Explore and Purchase buttons stack vertically on small phones */
+    .card-buttons { flex-direction: column !important; gap: 12px !important; } 
+    .project-card .btn-secondary, .btn-purchase { padding: 12px !important; width: 100% !important; }
+    .btn-purchase { flex-direction: row !important; justify-content: center !important; gap: 10px !important; }
+
+    /* 5. Promo/Tracker Cards (Tighten up the tracker so it fits) */
+    .promo-container { padding: 30px 20px !important; gap: 20px !important; }
+    .promo-text h2 { font-size: 1.7rem !important; line-height: 1.3 !important; }
+    .promo-carousel { height: 350px !important; max-width: 300px !important; margin: 10px auto 0 !important; }
+    .promo-card { padding: 20px 15px !important; }
+    .promo-card-header { margin-bottom: 10px !important; padding-bottom: 8px !important; }
+    .promo-card-header h3 { font-size: 1.15rem !important; }
+    .promo-card-header svg { width: 22px !important; height: 22px !important; }
+    .promo-tracker li { font-size: 0.85rem !important; margin-bottom: 10px !important; }
+    .promo-price { padding: 10px !important; font-size: 0.85rem !important; }
+    .promo-price strong { font-size: 1.2rem !important; }
+
+    /* 6. Form Section (Give inputs more room) */
+    form { padding: 25px 15px !important; border-radius: 16px !important; }
+    input, select, textarea, .custom-dropdown-selected { padding: 14px !important; font-size: 0.95rem !important; }
+    .checkout-item { padding: 12px 15px !important; flex-direction: column !important; align-items: flex-start !important; gap: 8px !important; }
+    .prod-pricing { width: 100% !important; justify-content: space-between !important; }
+    
+    /* 7. Stats Area */
+    .stats-container { gap: 15px !important; }
+    .premium-stat-card { padding: 25px 15px !important; min-width: 100% !important; margin-bottom: 0 !important; }
+    .stat-icon { font-size: 2rem !important; margin-bottom: 10px !important; }
+    .premium-stat-card h3 { font-size: 2.2rem !important; }
+
+    /* 8. Footer (Center everything cleanly) */
+    .footer-content { gap: 25px !important; text-align: center; flex-direction: column; }
+    .footer-left, .footer-right { width: 100%; align-items: center; }
+    .footer-right { display: flex; flex-direction: column; gap: 12px; }
+}
+
