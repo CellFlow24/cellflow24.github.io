@@ -323,11 +323,14 @@ footer { background: #1a202c; color: #a0aec0; padding: 60px 20px 20px; margin-to
     h2 { font-size: 1.8rem !important; margin-bottom: 25px !important; }
     p { font-size: 1rem !important; }
 
-    /* 2. Hero Section (Scale down the giant blob and text) */
-    .hero { padding-top: 30px !important; min-height: auto; }
-    .logo { width: 100px !important; height: 100px !important; padding: 8px !important; }
-    .cloud-blob { width: 160px !important; height: 160px !important; }
-    .hero h1 { font-size: 2.1rem !important; margin-bottom: 12px !important; }
+    /* 2. Hero Section (Left-Aligned App Style) */
+    .hero { padding-top: 30px !important; min-height: auto; text-align: left !important; }
+    .hero-left { display: flex !important; flex-direction: column !important; align-items: flex-start !important; }
+    .logo-wrapper { margin: 0 0 20px 0 !important; }
+    .logo { width: 90px !important; height: 90px !important; padding: 8px !important; }
+    .cloud-blob { width: 140px !important; height: 140px !important; }
+    .hero h1 { font-size: 2.1rem !important; margin-bottom: 12px !important; text-align: left !important; }
+    .hero p { text-align: left !important; }
     
     /* 3. Feedback Carousel (Shrink height so it doesn't take the whole screen) */
     .stacked-carousel { height: 500px !important; max-width: 320px !important; margin: 30px auto 0 !important; }
