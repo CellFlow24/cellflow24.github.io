@@ -145,8 +145,9 @@ document.getElementById('leadForm').addEventListener('submit', function(e) {
         submitBtn.innerHTML = "Opening Secure Checkout...";
         submitBtn.style.opacity = "0.7";
 
-        // Fire-and-forget: Log order immediately without waiting for Apps Script
-        fetch(webAppUrl, { method: 'POST', body: formData }).catch(e => console.log(e));
+        // --- THE TEMPORARY TOKEN ---
+        // Drop a token in the phone's short-term memory before leaving for UPI
+        sessionStorage.setItem("cellflowPaymentSuccess", "true");
 
         var options = {
             "key": "rzp_live_TSvZvBK9HMg5eU",
@@ -157,15 +158,17 @@ document.getElementById('leadForm').addEventListener('submit', function(e) {
             "image": "https://cellflow24.github.io/logo.png",
             "notes": { "ticketId": ticketId }, 
             
-            // 1. FORCES A CLEAN REDIRECT INSTEAD OF JAVASCRIPT HANDLER
-            "callback_url": "https://cellflow24.github.io/?razorpay_payment_id=success",
-            // 2. CRITICAL FOR GITHUB PAGES (Prevents 405 Error)
+            // Clean redirect url
+            "callback_url": "https://cellflow24.github.io/?payment=done",
             "callback_method": "get",
             
             "prefill": { "name": name, "email": email },
             "theme": { "color": "#0056b3" },
             "modal": {
                 "ondismiss": function() {
+                    // IF THEY CANCEL: Delete the token so it doesn't falsely trigger later
+                    sessionStorage.removeItem("cellflowPaymentSuccess");
+                    
                     var btn = document.getElementById('submitBtn');
                     if (btn) {
                         btn.innerHTML = "Place an Order";
@@ -174,7 +177,7 @@ document.getElementById('leadForm').addEventListener('submit', function(e) {
                 }
             }
         };
-        
+
         var rzp1 = new Razorpay(options);
         rzp1.open();
 
@@ -433,20 +436,21 @@ if (storySlides.length > 0) {
     startStoryCarousel();
 }
 
-// --- CATCH MOBILE UPI REDIRECTS FOR SUCCESS ANIMATION ---
+// --- TEMPORARY TOKEN CHECKER (Instant Success Animation) ---
 window.addEventListener('DOMContentLoaded', (event) => {
     const urlParams = new URLSearchParams(window.location.search);
     
-    // Check if Razorpay sent the user back with a payment ID in the link
-    if (urlParams.has('razorpay_payment_id')) {
+    // Check if the temporary token exists OR if the clean URL tag is there
+    if (sessionStorage.getItem("cellflowPaymentSuccess") === "true" || urlParams.has('payment') || urlParams.has('razorpay_payment_id')) {
         
-        // 1. Scroll down to the contact section instantly so they see it
-        const contactSection = document.getElementById('contact');
-        if(contactSection) {
-            contactSection.scrollIntoView({ behavior: 'smooth' });
-        }
+        // 1. Destroy the token immediately so it doesn't replay on normal refreshes
+        sessionStorage.removeItem("cellflowPaymentSuccess");
 
-        // 2. Hide the form and show the success block
+        // 2. Scroll straight to the contact section
+        const contactSection = document.getElementById('contact');
+        if(contactSection) contactSection.scrollIntoView({ behavior: 'smooth' });
+
+        // 3. Hide the form and show the success animation instantly
         const formContainer = document.getElementById('formContainer');
         const successState = document.getElementById('successState');
         
@@ -454,14 +458,13 @@ window.addEventListener('DOMContentLoaded', (event) => {
             formContainer.style.display = 'none';
             successState.style.display = 'block';
             
-            // 3. Trigger the smooth blob animation
             setTimeout(() => {
                 document.getElementById('successBlob').classList.add('active');
                 document.getElementById('successContent').classList.add('active');
             }, 50);
         }
 
-        // 4. Clean up the URL! (Removes the tracking code so if they refresh, the form comes back normally)
+        // 4. Wipe the URL clean of any tracking tags
         window.history.replaceState({}, document.title, window.location.pathname);
     }
 });
