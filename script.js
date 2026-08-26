@@ -157,29 +157,41 @@ document.getElementById('leadForm').addEventListener('submit', function(e) {
             "image": "https://cellflow24.github.io/logo.png",
             "notes": { "ticketId": ticketId }, 
             "handler": function (response) {
+                // 1. Hide the form and show the success state immediately
                 document.getElementById('formContainer').style.display = 'none';
                 document.getElementById('successState').style.display = 'block';
+                
+                // 2. Trigger the animations
                 setTimeout(() => {
                     document.getElementById('successBlob').classList.add('active');
                     document.getElementById('successContent').classList.add('active');
                 }, 50);
+                
+                // 3. Reset everything
                 document.getElementById('leadForm').reset();
                 document.getElementById('customDropdownSelected').textContent = "How can we help you?";
                 document.getElementById('customDropdownSelected').classList.remove('has-value');
 
-                submitBtn.innerHTML = "Place an Order";
-                submitBtn.style.opacity = "1";
+                // 4. Safely grab the button directly to prevent crashes
+                var btn = document.getElementById('submitBtn');
+                if (btn) {
+                    btn.innerHTML = "Place an Order";
+                    btn.style.opacity = "1";
+                }
             },
             "prefill": { "name": name, "email": email },
             "theme": { "color": "#0056b3" },
             "modal": {
                 "ondismiss": function() {
-                    submitBtn.innerHTML = "Place an Order";
-                    submitBtn.style.opacity = "1";
+                    var btn = document.getElementById('submitBtn');
+                    if (btn) {
+                        btn.innerHTML = "Place an Order";
+                        btn.style.opacity = "1";
+                    }
                 }
             }
         };
-
+        
         var rzp1 = new Razorpay(options);
         rzp1.open();
 
