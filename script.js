@@ -161,13 +161,40 @@ document.getElementById('leadForm').addEventListener('submit', function(e) {
                 "image": "https://cellflow24.github.io/logo.png",
                 "notes": { "ticketId": ticketId }, 
                 
-                "callback_url": "https://cellflow24.github.io/?payment=done",
-                "callback_method": "get",
+                // 1. FIX FOR "AUTHORIZED" PAYMENTS: Force Auto-Capture!
+                "payment_capture": 1,
+                
+                // 2. FIX FOR 405 ERROR: Use the handler instead of callback_url
+                "handler": function (response) {
+                    // Destroy token so it doesn't replay later
+                    sessionStorage.removeItem("cellflowPaymentSuccess");
+                    
+                    // Instantly show the success animation
+                    document.getElementById('formContainer').style.display = 'none';
+                    document.getElementById('successState').style.display = 'block';
+                    
+                    setTimeout(() => {
+                        document.getElementById('successBlob').classList.add('active');
+                        document.getElementById('successContent').classList.add('active');
+                    }, 50);
+                    
+                    // Reset the form
+                    document.getElementById('leadForm').reset();
+                    document.getElementById('customDropdownSelected').textContent = "How can we help you?";
+                    document.getElementById('customDropdownSelected').classList.remove('has-value');
+
+                    var btn = document.getElementById('submitBtn');
+                    if (btn) {
+                        btn.innerHTML = "Place an Order";
+                        btn.style.opacity = "1";
+                    }
+                },
                 
                 "prefill": { "name": name, "email": email },
                 "theme": { "color": "#0056b3" },
                 "modal": {
                     "ondismiss": function() {
+                        // IF THEY CANCEL: Delete the token
                         sessionStorage.removeItem("cellflowPaymentSuccess");
                         var btn = document.getElementById('submitBtn');
                         if (btn) {
@@ -177,7 +204,7 @@ document.getElementById('leadForm').addEventListener('submit', function(e) {
                     }
                 }
             };
-
+            
             var rzp1 = new Razorpay(options);
             rzp1.open();
         })
