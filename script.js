@@ -193,6 +193,44 @@ document.getElementById('leadForm').addEventListener('submit', function(e) {
             submitBtn.style.opacity = "1";
             sessionStorage.removeItem("cellflowPaymentSuccess");
         });
+
+    } else {
+        // 2. Normal Support / Complaints / Custom Dev
+        submitBtn.innerHTML = "Sending...";
+        submitBtn.style.opacity = "0.7";
+        
+        var originalMessage = formData.get('message');
+        formData.set('inquiryType', inquiryType);
+        formData.set('message', originalMessage);
+        formData.set('paymentStatus', 'Pending');
+        formData.set('paymentAmount', '0');
+
+        // OPTIMISTIC UI: Handle Apps Script lag on mobile
+        let isSuccessTriggered = false;
+        
+        function triggerSuccess() {
+            if (isSuccessTriggered) return;
+            isSuccessTriggered = true;
+            document.getElementById('formContainer').style.display = 'none';
+            document.getElementById('successState').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('successBlob').classList.add('active');
+                document.getElementById('successContent').classList.add('active');
+            }, 50);
+            document.getElementById('leadForm').reset();
+            document.getElementById('customDropdownSelected').textContent = "How can we help you?";
+            document.getElementById('customDropdownSelected').classList.remove('has-value');
+            submitBtn.innerHTML = "Send Request";
+            submitBtn.style.opacity = "1";
+        }
+
+        fetch(webAppUrl, { method: 'POST', body: formData })
+        .then(() => triggerSuccess())
+        .catch(() => triggerSuccess()); 
+
+        setTimeout(triggerSuccess, 2000);
+    }
+});
         
 function sendToGoogleSheets(formData, submitBtn, webAppUrl) {
     fetch(webAppUrl, {
