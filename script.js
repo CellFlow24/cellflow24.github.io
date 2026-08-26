@@ -285,9 +285,13 @@ const productList = document.getElementById('productList');
 const selectedProductInput = document.getElementById('selectedProduct');
 
 // 1. HARDCODED PRODUCT CATALOG (Zero Lag, Instant Load)
-// ⚠️ Change Payment
+
+// Add this line to destroy the old memory from our first attempt!
+localStorage.removeItem('cellflowProducts'); 
+
+// ⚠️ Change prize here
 const availableProducts = [
-    { name: "Mess Khata", originalPrice: 199, discountedPrice: 1 },
+    { name: "Mess Khata", originalPrice: 199, discountedPrice: 1 }, 
     { name: "Bill Flow", originalPrice: 8999, discountedPrice: 5999 },
     { name: "Mok Test APK", originalPrice: 2999, discountedPrice: 1499 }
 ];
@@ -301,7 +305,7 @@ function updateProductUI() {
         }
     });
 }
-updateProductUI(); // Run immediately so mobile never sees ₹--
+updateProductUI();
 
 // 2. Render Products Logic (Instant render, no loading dots needed)
 function renderProductCards(autoSelectName = null) {
