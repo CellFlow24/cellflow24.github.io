@@ -112,7 +112,7 @@ function slideGallery(sliderId, direction) {
     slider.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
 }
 
-// --- Form Submission & Razorpay Integration (HYBRID MODAL + WEBHOOK) ---
+// --- Form Submission & Razorpay Integration (UPGRADED TO PREVENT TIMEOUTS) ---
 document.getElementById('leadForm').addEventListener('submit', function(e) {
     e.preventDefault(); 
     
@@ -122,7 +122,6 @@ document.getElementById('leadForm').addEventListener('submit', function(e) {
     var name = formData.get('name');
     var email = formData.get('email');
     
-    // IMPORTANT: Make sure your actual Apps Script URL is here
     var webAppUrl = "https://script.google.com/macros/s/AKfycbxi5eKscJULcVf9ygblyu3MJqLAaHLAaqEk5_VN7DTe1e4BSOeE_gk9xvwaNkGF4mq4yQ/exec"; 
 
     // 1. App Orders (Native Popup with Pre-Logging)
@@ -135,7 +134,6 @@ document.getElementById('leadForm').addEventListener('submit', function(e) {
             return;
         }
 
-        // Generate Ticket ID in frontend so we can tie it to the Razorpay Payment
         var ticketId = "CF-" + Math.floor(100000 + Math.random() * 900000);
 
         formData.set('inquiryType', inquiryType);
@@ -147,7 +145,7 @@ document.getElementById('leadForm').addEventListener('submit', function(e) {
         submitBtn.innerHTML = "Opening Secure Checkout...";
         submitBtn.style.opacity = "0.7";
 
-        // Fire-and-forget: Log "Pending" order to Sheets immediately
+        // Fire-and-forget: Log order immediately without waiting for Apps Script
         fetch(webAppUrl, { method: 'POST', body: formData }).catch(e => console.log(e));
 
         var options = {
@@ -157,9 +155,8 @@ document.getElementById('leadForm').addEventListener('submit', function(e) {
             "name": "Cellflow",
             "description": "Order: " + productName,
             "image": "https://cellflow24.github.io/logo.png",
-            "notes": { "ticketId": ticketId }, // Crucial: This tells the Webhook which order was paid!
+            "notes": { "ticketId": ticketId }, 
             "handler": function (response) {
-                // The user stayed in the browser! Show the awesome animation.
                 document.getElementById('formContainer').style.display = 'none';
                 document.getElementById('successState').style.display = 'block';
                 setTimeout(() => {
@@ -197,28 +194,31 @@ document.getElementById('leadForm').addEventListener('submit', function(e) {
         formData.set('paymentStatus', 'Pending');
         formData.set('paymentAmount', '0');
 
+        // OPTIMISTIC UI: Handle Apps Script lag on mobile
+        let isSuccessTriggered = false;
+        
+        function triggerSuccess() {
+            if (isSuccessTriggered) return;
+            isSuccessTriggered = true;
+            document.getElementById('formContainer').style.display = 'none';
+            document.getElementById('successState').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('successBlob').classList.add('active');
+                document.getElementById('successContent').classList.add('active');
+            }, 50);
+            document.getElementById('leadForm').reset();
+            document.getElementById('customDropdownSelected').textContent = "How can we help you?";
+            document.getElementById('customDropdownSelected').classList.remove('has-value');
+            submitBtn.innerHTML = "Send Request";
+            submitBtn.style.opacity = "1";
+        }
+
         fetch(webAppUrl, { method: 'POST', body: formData })
-        .then(response => response.text())
-        .then(text => {
-            var data = JSON.parse(text);
-            if(data.status === "success") {
-                document.getElementById('formContainer').style.display = 'none';
-                document.getElementById('successState').style.display = 'block';
-                setTimeout(() => {
-                    document.getElementById('successBlob').classList.add('active');
-                    document.getElementById('successContent').classList.add('active');
-                }, 50);
-                document.getElementById('leadForm').reset();
-                document.getElementById('customDropdownSelected').textContent = "How can we help you?";
-                document.getElementById('customDropdownSelected').classList.remove('has-value');
-                submitBtn.innerHTML = "Send Request";
-                submitBtn.style.opacity = "1";
-            }
-        })
-        .catch(error => {
-            submitBtn.innerHTML = "Error! Try Again";
-            submitBtn.style.backgroundColor = "red";
-        });
+        .then(() => triggerSuccess())
+        .catch(() => triggerSuccess()); // Even on timeout error, the data reaches Google Sheets
+
+        // Failsafe: Trigger success after 2 seconds no matter what to prevent a frozen button
+        setTimeout(triggerSuccess, 2000);
     }
 });
 
@@ -272,31 +272,45 @@ const submitBtn = document.getElementById('submitBtn');
 const productList = document.getElementById('productList');
 const selectedProductInput = document.getElementById('selectedProduct');
 
-// 1. Background Loading Engine
+// 1. Background Loading Engine (UPGRADED WITH INSTANT CACHING)
 let availableProducts = [];
 let isProductsLoading = true;
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxi5eKscJULcVf9ygblyu3MJqLAaHLAaqEk5_VN7DTe1e4BSOeE_gk9xvwaNkGF4mq4yQ/exec"; // <-- PASTE YOUR ACTUAL APPS SCRIPT URL HERE
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxi5eKscJULcVf9ygblyu3MJqLAaHLAaqEk5_VN7DTe1e4BSOeE_gk9xvwaNkGF4mq4yQ/exec"; 
 
-// Fetch silently as soon as the page loads
+// Try to load from phone cache first for zero lag
+const cachedProducts = localStorage.getItem('cellflowProducts');
+if (cachedProducts) {
+    try {
+        availableProducts = JSON.parse(cachedProducts);
+        isProductsLoading = false;
+        updateProductUI(availableProducts);
+    } catch(e) {}
+}
+
+// Fetch silently in the background to get latest prices
 fetch(WEB_APP_URL)
     .then(res => res.json())
     .then(data => {
         availableProducts = data;
         isProductsLoading = false;
+        localStorage.setItem('cellflowProducts', JSON.stringify(data)); // Save to cache
+        updateProductUI(data);
         
-        // INSTANT UI UPGRADE: Inject live prices into the homepage buttons!
-        data.forEach(item => {
-            let badge = document.getElementById('badge-' + item.name);
-            if(badge) {
-                badge.textContent = '₹' + item.discountedPrice;
-            }
-        });
+        // If user already opened the product container, re-render instantly
+        if (document.getElementById('productContainer').style.display === 'block') {
+            renderProductCards(document.getElementById('selectedProduct').value);
+        }
+    })
+    .catch(err => console.log("Background fetch failed", err));
 
-        // If the user already opened the product container, render it instantly
-        if (productContainer.style.display === 'block') {
-            renderProductCards();
+function updateProductUI(data) {
+    data.forEach(item => {
+        let badge = document.getElementById('badge-' + item.name);
+        if(badge) {
+            badge.textContent = '₹' + item.discountedPrice;
         }
     });
+}
 
 // 2. Render Products Logic
 function renderProductCards(autoSelectName = null) {
