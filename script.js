@@ -285,9 +285,9 @@ const productList = document.getElementById('productList');
 const selectedProductInput = document.getElementById('selectedProduct');
 
 // 1. HARDCODED PRODUCT CATALOG (Zero Lag, Instant Load)
-// ⚠️ EDIT YOUR PRICES HERE WHENEVER YOU WANT!
+// ⚠️ Change Payment
 const availableProducts = [
-    { name: "Mess Khata", originalPrice: 199, discountedPrice: 99 },
+    { name: "Mess Khata", originalPrice: 199, discountedPrice: 1 },
     { name: "Bill Flow", originalPrice: 8999, discountedPrice: 5999 },
     { name: "Mok Test APK", originalPrice: 2999, discountedPrice: 1499 }
 ];
