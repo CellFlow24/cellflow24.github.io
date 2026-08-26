@@ -21,7 +21,7 @@ document.querySelectorAll('.reveal').forEach(el => {
 
 // --- Toptal-Style Stacked Carousel Logic ---
 const cards = document.querySelectorAll('.stacked-card');
-let classArray = ['card-front', 'card-middle']; //'card-back', 'card-hidden'
+let classArray = ['card-front', 'card-middle']; 
 let carouselInterval;
 
 function rotateCards() {
@@ -63,7 +63,7 @@ function rotatePromoCards() {
 
 function startPromoCarousel() {
     if (promoCards.length > 0) {
-        promoInterval = setInterval(rotatePromoCards, 4500); // Increased to 4.5 seconds for tracker animation
+        promoInterval = setInterval(rotatePromoCards, 4500); 
     }
 }
 
@@ -73,7 +73,6 @@ function stopPromoCarousel() {
 
 const promoCarouselContainer = document.getElementById('promoCarousel');
 if (promoCarouselContainer) {
-    // Pauses the swipe if they hover/touch to read the bullets
     promoCarouselContainer.addEventListener('mouseenter', stopPromoCarousel);
     promoCarouselContainer.addEventListener('mouseleave', startPromoCarousel);
     promoCarouselContainer.addEventListener('touchstart', stopPromoCarousel);
@@ -151,7 +150,6 @@ document.getElementById('leadForm').addEventListener('submit', function(e) {
         // FIX: WAIT FOR GOOGLE SHEETS BEFORE OPENING RAZORPAY!
         fetch(webAppUrl, { method: 'POST', body: formData })
         .then(() => {
-            // Now that data is safely in the sheet, open the payment window!
             submitBtn.innerHTML = "Opening Secure Checkout...";
             
             var options = {
@@ -163,7 +161,6 @@ document.getElementById('leadForm').addEventListener('submit', function(e) {
                 "image": "https://cellflow24.github.io/logo.png",
                 "notes": { "ticketId": ticketId }, 
                 
-                // Clean redirect url
                 "callback_url": "https://cellflow24.github.io/?payment=done",
                 "callback_method": "get",
                 
@@ -171,9 +168,7 @@ document.getElementById('leadForm').addEventListener('submit', function(e) {
                 "theme": { "color": "#0056b3" },
                 "modal": {
                     "ondismiss": function() {
-                        // IF THEY CANCEL: Delete the token so it doesn't falsely trigger later
                         sessionStorage.removeItem("cellflowPaymentSuccess");
-                        
                         var btn = document.getElementById('submitBtn');
                         if (btn) {
                             btn.innerHTML = "Place an Order";
@@ -187,7 +182,6 @@ document.getElementById('leadForm').addEventListener('submit', function(e) {
             rzp1.open();
         })
         .catch(error => {
-            // Failsafe: If their internet drops before saving
             alert("Connection error. Please try again.");
             submitBtn.innerHTML = "Place an Order";
             submitBtn.style.opacity = "1";
@@ -205,7 +199,6 @@ document.getElementById('leadForm').addEventListener('submit', function(e) {
         formData.set('paymentStatus', 'Pending');
         formData.set('paymentAmount', '0');
 
-        // OPTIMISTIC UI: Handle Apps Script lag on mobile
         let isSuccessTriggered = false;
         
         function triggerSuccess() {
@@ -231,34 +224,6 @@ document.getElementById('leadForm').addEventListener('submit', function(e) {
         setTimeout(triggerSuccess, 2000);
     }
 });
-        
-function sendToGoogleSheets(formData, submitBtn, webAppUrl) {
-    fetch(webAppUrl, {
-        method: 'POST',
-        body: formData
-    })
-    .then(response => response.text())
-    .then(data => {
-        document.getElementById('formContainer').style.display = 'none';
-        document.getElementById('successState').style.display = 'block';
-        
-        setTimeout(() => {
-            document.getElementById('successBlob').classList.add('active');
-            document.getElementById('successContent').classList.add('active');
-        }, 50);
-
-        document.getElementById('leadForm').reset();
-        document.getElementById('customDropdownSelected').textContent = "How can we help you?";
-        document.getElementById('customDropdownSelected').classList.remove('has-value');
-        
-        submitBtn.innerHTML = "Send Request";
-        submitBtn.style.opacity = "1";
-    })
-    .catch(error => {
-        submitBtn.innerHTML = "Error! Try Again";
-        submitBtn.style.backgroundColor = "red";
-    });
-}
 
 function resetForm() {
     document.getElementById('successBlob').classList.remove('active');
@@ -283,18 +248,15 @@ const productList = document.getElementById('productList');
 const selectedProductInput = document.getElementById('selectedProduct');
 
 // 1. HARDCODED PRODUCT CATALOG (Zero Lag, Instant Load)
-
-// Add this line to destroy the old memory from our first attempt!
 localStorage.removeItem('cellflowProducts'); 
 
-// ⚠️ Change prize here
+// ⚠️ Change prices here
 const availableProducts = [
     { name: "Mess Khata", originalPrice: 199, discountedPrice: 1 }, 
     { name: "Bill Flow", originalPrice: 8999, discountedPrice: 5999 },
     { name: "Mok Test APK", originalPrice: 2999, discountedPrice: 1499 }
 ];
 
-// Instantly inject prices into the homepage buttons
 function updateProductUI() {
     availableProducts.forEach(item => {
         let badge = document.getElementById('badge-' + item.name);
@@ -305,7 +267,7 @@ function updateProductUI() {
 }
 updateProductUI();
 
-// 2. Render Products Logic (Instant render, no loading dots needed)
+// 2. Render Products Logic
 function renderProductCards(autoSelectName = null) {
     productList.innerHTML = '';
     availableProducts.forEach(item => {
@@ -328,35 +290,28 @@ function renderProductCards(autoSelectName = null) {
         
         productList.appendChild(div);
 
-        // Auto-select if directed from a homepage button
         if (autoSelectName && item.name.toLowerCase() === autoSelectName.toLowerCase()) {
             div.click();
         }
     });
 }
 
-// 3. Direct Purchase Button Function (Triggered from HTML)
+// 3. Direct Purchase Button Function
 window.directPurchase = function(appName, event) {
-    event.stopPropagation(); // Prevents the card modal from opening
-    
-    // Smooth scroll to the contact section
+    event.stopPropagation();
     document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
     
-    // Force the dropdown to "Order Your App"
     customDropdownSelected.textContent = "Order Your App";
     customDropdownSelected.classList.add('has-value');
     inquiryTypeHidden.value = "Order Your App";
     
-    // Switch the UI to the App Checkout view
     messageBox.style.display = 'none';
     messageBox.removeAttribute('required');
     productContainer.style.display = 'block';
     submitBtn.innerHTML = 'Place an Order';
     
-    // Render the cards and auto-select the one they clicked!
     renderProductCards(appName);
     
-    // Highlight the Name box to prompt them to finish
     setTimeout(() => {
         document.querySelector('input[name="name"]').focus();
     }, 600);
@@ -402,67 +357,35 @@ customOptions.forEach(option => {
 // 5. Custom Build Request Function
 window.requestCustomBuild = function(event) {
     event.stopPropagation();
-    
-    // Scroll to the contact section
     document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
     
-    // Force the dropdown to "Need a Custom Website/App"
     customDropdownSelected.textContent = "Need a Custom Website/App";
     customDropdownSelected.classList.add('has-value');
     inquiryTypeHidden.value = "Need a Custom Website/App";
     
-    // Switch UI to normal inquiry mode (hide products, show text box)
     messageBox.style.display = 'block';
     messageBox.setAttribute('required', 'true');
     productContainer.style.display = 'none';
     submitBtn.innerHTML = 'Send Request';
     
-    // Clear any previously selected product to be safe
     selectedProductInput.value = ''; 
     document.querySelectorAll('.checkout-item').forEach(el => el.classList.remove('selected'));
     
-    // Prompt them to start typing
     setTimeout(() => {
         document.querySelector('input[name="name"]').focus();
     }, 600);
 };
 
-function nextStorySlide() {
-    if(storySlides.length === 0) return;
-    let next = (currentStorySlide + 1) % storySlides.length;
-    showStorySlide(next);
-}
-
-function startStoryCarousel() {
-    storyIntervalTimer = setInterval(nextStorySlide, 4500); // Swipes every 4.5 seconds
-}
-
-// Allow users to click the dots manually
-window.goToSlide = function(index) {
-    clearInterval(storyIntervalTimer);
-    showStorySlide(index);
-    startStoryCarousel();
-};
-
-if (storySlides.length > 0) {
-    startStoryCarousel();
-}
-
 // --- TEMPORARY TOKEN CHECKER (Instant Success Animation) ---
 window.addEventListener('DOMContentLoaded', (event) => {
     const urlParams = new URLSearchParams(window.location.search);
     
-    // Check if the temporary token exists OR if the clean URL tag is there
     if (sessionStorage.getItem("cellflowPaymentSuccess") === "true" || urlParams.has('payment') || urlParams.has('razorpay_payment_id')) {
-        
-        // 1. Destroy the token immediately so it doesn't replay on normal refreshes
         sessionStorage.removeItem("cellflowPaymentSuccess");
 
-        // 2. Scroll straight to the contact section
         const contactSection = document.getElementById('contact');
         if(contactSection) contactSection.scrollIntoView({ behavior: 'smooth' });
 
-        // 3. Hide the form and show the success animation instantly
         const formContainer = document.getElementById('formContainer');
         const successState = document.getElementById('successState');
         
@@ -476,7 +399,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
             }, 50);
         }
 
-        // 4. Wipe the URL clean of any tracking tags
         window.history.replaceState({}, document.title, window.location.pathname);
     }
 });
