@@ -449,3 +449,36 @@ window.goToSlide = function(index) {
 if (storySlides.length > 0) {
     startStoryCarousel();
 }
+
+// --- CATCH MOBILE UPI REDIRECTS FOR SUCCESS ANIMATION ---
+window.addEventListener('DOMContentLoaded', (event) => {
+    const urlParams = new URLSearchParams(window.location.search);
+    
+    // Check if Razorpay sent the user back with a payment ID in the link
+    if (urlParams.has('razorpay_payment_id')) {
+        
+        // 1. Scroll down to the contact section instantly so they see it
+        const contactSection = document.getElementById('contact');
+        if(contactSection) {
+            contactSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // 2. Hide the form and show the success block
+        const formContainer = document.getElementById('formContainer');
+        const successState = document.getElementById('successState');
+        
+        if(formContainer && successState) {
+            formContainer.style.display = 'none';
+            successState.style.display = 'block';
+            
+            // 3. Trigger the smooth blob animation
+            setTimeout(() => {
+                document.getElementById('successBlob').classList.add('active');
+                document.getElementById('successContent').classList.add('active');
+            }, 50);
+        }
+
+        // 4. Clean up the URL! (Removes the tracking code so if they refresh, the form comes back normally)
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }
+});
