@@ -142,84 +142,58 @@ document.getElementById('leadForm').addEventListener('submit', function(e) {
         formData.set('paymentAmount', productPrice);
         formData.set('ticketId', ticketId);
 
-        submitBtn.innerHTML = "Opening Secure Checkout...";
+        submitBtn.innerHTML = "Securely Logging Order...";
         submitBtn.style.opacity = "0.7";
 
         // --- THE TEMPORARY TOKEN ---
-        // Drop a token in the phone's short-term memory before leaving for UPI
         sessionStorage.setItem("cellflowPaymentSuccess", "true");
 
-        var options = {
-            "key": "rzp_live_TSvZvBK9HMg5eU",
-            "amount": parseFloat(productPrice) * 100,
-            "currency": "INR",
-            "name": "Cellflow",
-            "description": "Order: " + productName,
-            "image": "https://cellflow24.github.io/logo.png",
-            "notes": { "ticketId": ticketId }, 
+        // FIX: WAIT FOR GOOGLE SHEETS BEFORE OPENING RAZORPAY!
+        fetch(webAppUrl, { method: 'POST', body: formData })
+        .then(() => {
+            // Now that data is safely in the sheet, open the payment window!
+            submitBtn.innerHTML = "Opening Secure Checkout...";
             
-            // Clean redirect url
-            "callback_url": "https://cellflow24.github.io/?payment=done",
-            "callback_method": "get",
-            
-            "prefill": { "name": name, "email": email },
-            "theme": { "color": "#0056b3" },
-            "modal": {
-                "ondismiss": function() {
-                    // IF THEY CANCEL: Delete the token so it doesn't falsely trigger later
-                    sessionStorage.removeItem("cellflowPaymentSuccess");
-                    
-                    var btn = document.getElementById('submitBtn');
-                    if (btn) {
-                        btn.innerHTML = "Place an Order";
-                        btn.style.opacity = "1";
+            var options = {
+                "key": "rzp_live_TSvZvBK9HMg5eU",
+                "amount": parseFloat(productPrice) * 100,
+                "currency": "INR",
+                "name": "Cellflow",
+                "description": "Order: " + productName,
+                "image": "https://cellflow24.github.io/logo.png",
+                "notes": { "ticketId": ticketId }, 
+                
+                // Clean redirect url
+                "callback_url": "https://cellflow24.github.io/?payment=done",
+                "callback_method": "get",
+                
+                "prefill": { "name": name, "email": email },
+                "theme": { "color": "#0056b3" },
+                "modal": {
+                    "ondismiss": function() {
+                        // IF THEY CANCEL: Delete the token so it doesn't falsely trigger later
+                        sessionStorage.removeItem("cellflowPaymentSuccess");
+                        
+                        var btn = document.getElementById('submitBtn');
+                        if (btn) {
+                            btn.innerHTML = "Place an Order";
+                            btn.style.opacity = "1";
+                        }
                     }
                 }
-            }
-        };
+            };
 
-        var rzp1 = new Razorpay(options);
-        rzp1.open();
-
-    } else {
-        // 2. Normal Support / Complaints / Custom Dev
-        submitBtn.innerHTML = "Sending...";
-        submitBtn.style.opacity = "0.7";
-        
-        var originalMessage = formData.get('message');
-        formData.set('inquiryType', inquiryType);
-        formData.set('message', originalMessage);
-        formData.set('paymentStatus', 'Pending');
-        formData.set('paymentAmount', '0');
-
-        // OPTIMISTIC UI: Handle Apps Script lag on mobile
-        let isSuccessTriggered = false;
-        
-        function triggerSuccess() {
-            if (isSuccessTriggered) return;
-            isSuccessTriggered = true;
-            document.getElementById('formContainer').style.display = 'none';
-            document.getElementById('successState').style.display = 'block';
-            setTimeout(() => {
-                document.getElementById('successBlob').classList.add('active');
-                document.getElementById('successContent').classList.add('active');
-            }, 50);
-            document.getElementById('leadForm').reset();
-            document.getElementById('customDropdownSelected').textContent = "How can we help you?";
-            document.getElementById('customDropdownSelected').classList.remove('has-value');
-            submitBtn.innerHTML = "Send Request";
+            var rzp1 = new Razorpay(options);
+            rzp1.open();
+        })
+        .catch(error => {
+            // Failsafe: If their internet drops before saving
+            alert("Connection error. Please try again.");
+            submitBtn.innerHTML = "Place an Order";
             submitBtn.style.opacity = "1";
-        }
-
-        fetch(webAppUrl, { method: 'POST', body: formData })
-        .then(() => triggerSuccess())
-        .catch(() => triggerSuccess()); // Even on timeout error, the data reaches Google Sheets
-
-        // Failsafe: Trigger success after 2 seconds no matter what to prevent a frozen button
-        setTimeout(triggerSuccess, 2000);
-    }
-});
-
+            sessionStorage.removeItem("cellflowPaymentSuccess");
+        });
+        
 function sendToGoogleSheets(formData, submitBtn, webAppUrl) {
     fetch(webAppUrl, {
         method: 'POST',
