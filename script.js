@@ -167,12 +167,12 @@ document.getElementById('leadForm').addEventListener('submit', function(e) {
                     document.getElementById('successContent').classList.add('active');
                 }, 50);
                 
-                // 3. Reset everything
+                // 3. Reset the form
                 document.getElementById('leadForm').reset();
                 document.getElementById('customDropdownSelected').textContent = "How can we help you?";
                 document.getElementById('customDropdownSelected').classList.remove('has-value');
 
-                // 4. Safely grab the button directly to prevent crashes
+                // 4. Safely grab the button to prevent code breaks
                 var btn = document.getElementById('submitBtn');
                 if (btn) {
                     btn.innerHTML = "Place an Order";
@@ -284,61 +284,31 @@ const submitBtn = document.getElementById('submitBtn');
 const productList = document.getElementById('productList');
 const selectedProductInput = document.getElementById('selectedProduct');
 
-// 1. Background Loading Engine (UPGRADED WITH INSTANT CACHING)
-let availableProducts = [];
-let isProductsLoading = true;
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxi5eKscJULcVf9ygblyu3MJqLAaHLAaqEk5_VN7DTe1e4BSOeE_gk9xvwaNkGF4mq4yQ/exec"; 
+// 1. HARDCODED PRODUCT CATALOG (Zero Lag, Instant Load)
+// ⚠️ EDIT YOUR PRICES HERE WHENEVER YOU WANT!
+const availableProducts = [
+    { name: "Mess Khata", originalPrice: 199, discountedPrice: 99 },
+    { name: "Bill Flow", originalPrice: 8999, discountedPrice: 5999 },
+    { name: "Mok Test APK", originalPrice: 2999, discountedPrice: 1499 }
+];
 
-// Try to load from phone cache first for zero lag
-const cachedProducts = localStorage.getItem('cellflowProducts');
-if (cachedProducts) {
-    try {
-        availableProducts = JSON.parse(cachedProducts);
-        isProductsLoading = false;
-        updateProductUI(availableProducts);
-    } catch(e) {}
-}
-
-// Fetch silently in the background to get latest prices
-fetch(WEB_APP_URL)
-    .then(res => res.json())
-    .then(data => {
-        availableProducts = data;
-        isProductsLoading = false;
-        localStorage.setItem('cellflowProducts', JSON.stringify(data)); // Save to cache
-        updateProductUI(data);
-        
-        // If user already opened the product container, re-render instantly
-        if (document.getElementById('productContainer').style.display === 'block') {
-            renderProductCards(document.getElementById('selectedProduct').value);
-        }
-    })
-    .catch(err => console.log("Background fetch failed", err));
-
-function updateProductUI(data) {
-    data.forEach(item => {
+// Instantly inject prices into the homepage buttons
+function updateProductUI() {
+    availableProducts.forEach(item => {
         let badge = document.getElementById('badge-' + item.name);
         if(badge) {
             badge.textContent = '₹' + item.discountedPrice;
         }
     });
 }
+updateProductUI(); // Run immediately so mobile never sees ₹--
 
-// 2. Render Products Logic
+// 2. Render Products Logic (Instant render, no loading dots needed)
 function renderProductCards(autoSelectName = null) {
-    if (isProductsLoading) {
-        productList.innerHTML = `
-            <div class="loader-container">
-                <span class="loader-text">Loading Details</span>
-                <div class="jumping-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-            </div>`;
-        return;
-    }
-    
     productList.innerHTML = '';
     availableProducts.forEach(item => {
         let div = document.createElement('div');
-        div.className = 'checkout-item'; // Updated class name to prevent conflicts
+        div.className = 'checkout-item'; 
         div.innerHTML = `
             <span class="prod-name">${item.name}</span>
             <div class="prod-pricing">
@@ -356,7 +326,7 @@ function renderProductCards(autoSelectName = null) {
         
         productList.appendChild(div);
 
-        // Instantly trigger a click on this item if directed from the purchase button
+        // Auto-select if directed from a homepage button
         if (autoSelectName && item.name.toLowerCase() === autoSelectName.toLowerCase()) {
             div.click();
         }
