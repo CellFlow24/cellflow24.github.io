@@ -279,7 +279,7 @@ localStorage.removeItem('cellflowProducts');
 
 // ⚠️ Change prices here
 const availableProducts = [
-    { name: "Mess Khata", originalPrice: 199, discountedPrice: 1 }, 
+    { name: "Mess Khata", originalPrice: 199, discountedPrice: 99 }, 
     { name: "Bill Flow", originalPrice: 8999, discountedPrice: 5999 },
     { name: "Mok Test APK", originalPrice: 2999, discountedPrice: 1499 }
 ];
