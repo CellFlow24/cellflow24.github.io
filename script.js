@@ -121,7 +121,7 @@ document.getElementById('leadForm').addEventListener('submit', function(e) {
     var name = formData.get('name');
     var email = formData.get('email');
     
-    var webAppUrl = "https://script.google.com/macros/s/AKfycbxi5eKscJULcVf9ygblyu3MJqLAaHLAaqEk5_VN7DTe1e4BSOeE_gk9xvwaNkGF4mq4yQ/exec"; 
+    var webAppUrl = "https://script.google.com/macros/s/AKfycbzWinkvpaQNr25tKjePWeubGhEAV-ApWWJ_ELZcv7UJRr9xSxB4DRDehRnv6S4PZMIXKg/exec"; 
 
     // 1. App Orders (Native Popup with Pre-Logging)
     if (inquiryType === 'Order Your App') {
