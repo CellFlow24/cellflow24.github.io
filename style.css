@@ -699,3 +699,101 @@ footer { background: #1a202c; color: #a0aec0; padding: 60px 20px 20px; margin-to
 
     .feature-text-block h2 { font-size: 2rem; }
 }
+
+/* =========================================================
+   PRO SHOWCASE (ZAPPY STYLE + PURE CSS SCREENS)
+========================================================= */
+.pro-showcase-section { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+.pro-showcase-container { display: flex; align-items: flex-start; position: relative; }
+
+/* Sticky Left Column */
+.pro-sticky-col {
+    position: sticky; top: 12vh; width: 50%; height: 85vh;
+    display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10;
+}
+
+/* 3D Phone Hardware */
+.pro-phone-frame {
+    width: 250px; height: 520px; background: #000000; border-radius: 40px; padding: 10px; box-sizing: border-box;
+    position: relative; box-shadow: -20px 20px 40px rgba(0,0,0,0.15), inset 0 0 0 2px #333333;
+    transform: perspective(1000px) rotateY(-8deg) rotateX(2deg) scale(1.02);
+    transition: transform 0.1s linear; transform-origin: center center;
+}
+.pro-notch { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); width: 70px; height: 18px; background: #000000; border-radius: 12px; z-index: 20; }
+.pro-screen-container { width: 100%; height: 100%; border-radius: 32px; overflow: hidden; position: relative; background: #e2e8f0; }
+
+/* Actions (Buttons) */
+.pro-actions { display: flex; gap: 15px; margin-top: 30px; width: 100%; max-width: 350px; justify-content: center; flex-wrap: wrap; }
+.pro-actions button { flex: 1; min-width: 140px; }
+
+/* Right Column (Scroll Cards) */
+.pro-scroll-col { width: 50%; padding-bottom: 20vh; }
+.pro-feature-card {
+    min-height: 40vh; display: flex; flex-direction: column; justify-content: center;
+    padding: 0 40px; margin-bottom: 60vh; /* Massive gap for desktop scrolling */
+    opacity: 0.3; transform: translateY(20px); transition: all 0.6s ease;
+}
+.pro-feature-card.active-text { opacity: 1; transform: translateY(0); }
+.pro-feature-card:last-child { margin-bottom: 10vh; }
+.pro-feature-card h2 { font-size: 2.6rem; line-height: 1.1; margin-bottom: 20px; text-align: left; }
+.pro-feature-card p { font-size: 1.1rem; line-height: 1.6; color: #4a5568; }
+
+/* --- PURE CSS SCREENS --- */
+.css-replica-screen {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+    padding: 45px 15px 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 8px;
+    opacity: 0; visibility: hidden; transform: scale(1.05); transition: all 0.5s ease;
+}
+.css-replica-screen.active { opacity: 1; visibility: visible; transform: scale(1); z-index: 5; }
+
+/* Screen Elements */
+.replica-title { color: #2c3e50; font-size: 14px; font-weight: 900; margin: 0 0 10px 0; background: rgba(255,255,255,0.3); padding: 8px; border-radius: 12px; text-align: center; }
+.replica-nav { background: rgba(255,255,255,0.7); color: #2c3e50; font-size: 11px; font-weight: 800; padding: 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.9); box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
+.replica-logout { background: #ff4757; color: white; font-size: 12px; font-weight: 800; padding: 12px; border-radius: 10px; margin-top: auto; text-align: center; box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4); }
+
+/* Chat Screen CSS */
+.chat-bubble { padding: 10px; border-radius: 12px; font-size: 10px; font-weight: bold; max-width: 80%; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+.chat-bubble.left { background: white; color: #333; align-self: flex-start; border-bottom-left-radius: 2px; }
+.chat-bubble.right { background: #ff6b81; color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
+.chat-input-fake { background: rgba(255,255,255,0.8); color: #7f8fa6; padding: 12px; border-radius: 20px; font-size: 10px; margin-top: auto; font-weight: bold; }
+
+/* Expense/Admin CSS */
+.fake-input { background: rgba(255,255,255,0.9); padding: 10px; border-radius: 8px; font-size: 11px; color: #333; font-weight: bold; border: 1px solid rgba(255,255,255,0.5); }
+.fake-split-box { background: rgba(255,255,255,0.5); padding: 10px; border-radius: 8px; font-size: 10px; font-weight: bold; color: #2c3e50; }
+.fake-checkbox { margin-top: 5px; color: #333; }
+.fake-btn { background: #ff6b81; color: white; padding: 12px; border-radius: 10px; font-size: 11px; font-weight: bold; text-align: center; margin-top: auto; box-shadow: 0 4px 10px rgba(255, 107, 129, 0.4); }
+.admin-box { background: rgba(255,255,255,0.6); padding: 10px; border-radius: 10px; font-size: 11px; font-weight: bold; color: #333; display: flex; flex-direction: column; gap: 8px; }
+.fake-btn-small { background: #3498db; color: white; padding: 8px; border-radius: 6px; text-align: center; }
+
+
+/* --- MOBILE FOLDER WIPE EFFECT --- */
+@media (max-width: 850px) {
+    .pro-showcase-container { flex-direction: column; }
+    
+    /* Phone locks to top */
+    .pro-sticky-col { position: sticky; top: 70px; width: 100%; height: 50vh; padding-top: 20px; z-index: 1; }
+    .pro-phone-frame { width: 180px; height: 380px; transform: scale(1); } /* Removed 3D tilt on mobile for cleaner look */
+    
+    /* Fix Mobile Buttons */
+    .pro-actions { margin-top: 15px; padding: 0 10px; gap: 10px; flex-wrap: nowrap; }
+    .pro-actions button { padding: 12px; font-size: 0.9rem; }
+
+    /* Cards slide over phone */
+    .pro-scroll-col { width: 100%; margin-top: 10vh; position: relative; z-index: 10; padding-bottom: 5vh; }
+    
+    .pro-feature-card {
+        min-height: auto;
+        padding: 30px 20px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        margin: 0 15px 75vh 15px; /* HUGE bottom margin creates the "free scroll space" */
+        border-radius: 20px;
+        box-shadow: 0 -10px 40px rgba(0,0,0,0.1);
+        border: 1px solid rgba(255,255,255,1);
+        opacity: 1; /* Always fully visible on mobile when it wipes up */
+    }
+    .pro-feature-card:last-child { margin-bottom: 5vh; }
+    .pro-feature-card h2 { font-size: 1.8rem; }
+}
