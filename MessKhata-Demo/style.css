@@ -1,0 +1,333 @@
+:root {
+    --bg-gradient: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+    --card-bg: rgba(255, 255, 255, 0.25);
+    --text-main: #333333;
+    --accent: #ff6b81;
+    --accent-hover: #ff4760;
+}
+
+/* Animations */
+@keyframes slideUpFade {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes popIn {
+    0% { opacity: 0; transform: scale(0.8); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+/* Custom Image Loader Animation */
+@keyframes breathingLoader {
+    0% { transform: scale(0.95); opacity: 0.8; }
+    50% { transform: scale(1.05); opacity: 1; }
+    100% { transform: scale(0.95); opacity: 0.8; }
+}
+
+.custom-loader-img {
+    width: 140px; /* Base size for full-screen loaders */
+    height: auto;
+    display: block;
+    margin: 20px auto; 
+    animation: breathingLoader 1.5s infinite ease-in-out;
+    filter: drop-shadow(0px 8px 16px rgba(0,0,0,0.2)); 
+}
+
+body {
+    background: var(--bg-gradient);
+    background-attachment: fixed;
+    color: var(--text-main);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.screen {
+    width: 100%;
+    max-width: 420px; 
+    padding: 15px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* Glassmorphism Card with Entry Animation */
+.login-box {
+    background: var(--card-bg);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 40px 25px; 
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px; 
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+    animation: slideUpFade 0.6s ease-out forwards;
+}
+
+.app-title {
+    margin: 0 0 10px 0;
+    color: #2c3e50;
+    font-weight: 800;
+    font-size: 28px;
+}
+
+.app-logo {
+    width: 140px; 
+    height: 140px;
+    margin: 0 auto 10px auto;
+    object-fit: cover;
+    border-radius: 30%;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    background-color: white;
+    animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+input[type="text"], 
+input[type="password"], 
+input[type="number"] {
+    padding: 16px; 
+    border-radius: 12px;
+    border: 2px solid rgba(255,255,255, 0.6);
+    background: rgba(255,255,255, 0.9);
+    font-size: 16px;
+    color: #333333;
+    outline: none;
+    transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+input:focus {
+    border-color: var(--accent);
+    background: white;
+    box-shadow: 0 0 10px rgba(255, 107, 129, 0.2);
+}
+
+/* Base Button Style */
+button {
+    background-color: var(--accent);
+    color: white;
+    padding: 16px;
+    border: none;
+    border-radius: 12px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 15px rgba(255, 107, 129, 0.4);
+    width: 100%;
+}
+
+button:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 10px rgba(255, 107, 129, 0.3);
+}
+
+/* Custom App-Style Dropdown Menu */
+.custom-dropdown {
+    position: relative;
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.dropdown-btn {
+    padding: 16px;
+    border-radius: 12px;
+    border: 2px solid rgba(255,255,255, 0.6);
+    background: rgba(255,255,255, 0.9) url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23333' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e") no-repeat right 15px center;
+    background-size: 18px;
+    font-size: 16px;
+    color: #333333;
+    text-align: left;
+    cursor: pointer;
+    width: 100%;
+    box-shadow: none;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+    z-index: 100;
+    max-height: 220px;
+    overflow-y: auto;
+    margin-top: 5px;
+    border: 1px solid rgba(255,255,255,0.5);
+}
+
+.dropdown-item {
+    padding: 15px;
+    color: #2c3e50;
+    font-size: 16px;
+    text-align: left;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.dropdown-item:last-child {
+    border-bottom: none;
+}
+
+.dropdown-item:hover {
+    background: rgba(255, 107, 129, 0.15);
+    color: var(--accent);
+}
+
+/* Dashboard Navigation Buttons - Staggered Animations */
+.button-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+}
+
+.nav-btn {
+    background: rgba(255, 255, 255, 0.6);
+    color: #2c3e50;
+    border: 2px solid rgba(255, 255, 255, 0.7);
+    box-shadow: none;
+    text-align: left;
+    padding-left: 20px;
+    opacity: 0; 
+    animation: slideUpFade 0.5s ease-out forwards;
+}
+
+.button-grid button:nth-child(1) { animation-delay: 0.1s; }
+.button-grid button:nth-child(2) { animation-delay: 0.2s; }
+.button-grid button:nth-child(3) { animation-delay: 0.3s; }
+.button-grid button:nth-child(4) { animation-delay: 0.4s; }
+.button-grid button:nth-child(5) { animation-delay: 0.5s; }
+.button-grid button:nth-child(6) { animation-delay: 0.6s; }
+
+.nav-btn:hover {
+    background: rgba(255, 255, 255, 0.9);
+    transform: translateY(-2px);
+}
+
+.logout-btn {
+    background-color: #ff4757;
+    margin-top: 20px;
+}
+
+.back-btn {
+    background-color: #7f8fa6;
+    box-shadow: none;
+}
+
+/* Split Expense Checkboxes */
+.split-section {
+    text-align: left;
+    margin: 5px 0;
+    background: rgba(255,255,255,0.5);
+    padding: 15px;
+    border-radius: 12px;
+}
+
+.split-title {
+    margin: 0 0 10px 0;
+    color: #2c3e50;
+    font-weight: bold;
+}
+
+.split-label {
+    display: block;
+    color: #2c3e50;
+    font-size: 16px;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.split-check, .chore-split-check {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.error-text {
+    color: #d63031;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* --- Live Chat Styles --- */
+#chat-box::-webkit-scrollbar { width: 6px; }
+#chat-box::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 10px; }
+
+.chat-bubble {
+    max-width: 80%;
+    padding: 10px 14px;
+    border-radius: 18px;
+    font-size: 15px;
+    text-align: left;
+    word-wrap: break-word;
+    position: relative;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    animation: slideUpFade 0.3s ease-out forwards;
+}
+
+.msg-mine {
+    align-self: flex-end;
+    background: var(--accent);
+    color: white;
+    border-bottom-right-radius: 4px;
+}
+
+.msg-other {
+    align-self: flex-start;
+    background: white;
+    color: #333;
+    border-bottom-left-radius: 4px;
+}
+
+.msg-admin {
+    align-self: center;
+    background: linear-gradient(135deg, #f39c12, #e67e22);
+    color: white;
+    font-weight: bold;
+    width: 90%;
+    text-align: center;
+    border-radius: 12px;
+    border: 2px solid #fff;
+    box-shadow: 0 4px 12px rgba(243, 156, 18, 0.4);
+    padding: 12px;
+}
+
+.chat-meta {
+    font-size: 11px;
+    opacity: 0.7;
+    margin-bottom: 4px;
+    display: block;
+    font-weight: bold;
+}
+
+.msg-mine .chat-meta {
+    text-align: right;
+    color: rgba(255,255,255,0.8);
+}
+
+.tag-highlight {
+    color: #3498db;
+    font-weight: bold;
+    background: rgba(52, 152, 219, 0.15);
+    padding: 2px 6px;
+    border-radius: 6px;
+}
+
+.msg-mine .tag-highlight {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.25);
+}

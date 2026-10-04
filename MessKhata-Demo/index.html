@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, interactive-widget=resizes-content">
+    <title>Mess Khata</title>
+    <link rel="icon" type="image/png" href="icon-192.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- LOGIN SCREEN -->
+    <div id="login-screen" class="screen">
+        <div class="login-box">
+            <img src="logo.png" alt="Room Book Logo" class="app-logo">
+            <h1 class="app-title">Mess Khata</h1>
+            <input type="text" id="userId" placeholder="User ID">
+            <input type="password" id="password" placeholder="Password">
+            <button onclick="login()">LOGIN</button>
+            <p id="login-message" class="error-text"></p>
+        </div>
+    </div>
+
+    <!-- PASSWORD RESET SCREEN -->
+    <div id="reset-screen" class="screen" style="display: none;">
+        <div class="login-box">
+            <h2 class="app-title">Update Password</h2>
+            <p style="color: #2c3e50; margin-bottom: 15px;">Since this is your first time, please create a new password.</p>
+            <input type="password" id="newPassword" placeholder="New Password">
+            <button onclick="changePassword()">SAVE PASSWORD</button>
+            <p id="reset-message" class="error-text"></p>
+        </div>
+    </div>
+
+    <!-- MAIN DASHBOARD -->
+    <div id="dashboard-screen" class="screen" style="display: none;">
+        <div class="login-box">
+            <h2 id="welcome-text" class="app-title"></h2>
+            
+            <div class="button-grid">
+                <button class="nav-btn">💸 EXPENCE</button>
+                <button class="nav-btn">🧹 COOKING & CLEANING</button>
+                <button class="nav-btn">💳 Pay Detels</button>
+                <button class="nav-btn">📊 EXPENCE REVIEW</button>
+                <button class="nav-btn" id="chat-nav-btn">💬 Chat <span id="chat-badge" style="display: none; background: #e74c3c; color: white; border-radius: 50%; padding: 3px 8px; font-size: 11px; font-weight: bold; margin-left: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">New</span></button>
+                <button id="admin-btn" class="nav-btn" style="display: none; background: rgba(243, 156, 18, 0.8); color: white; border: 2px solid #e67e22;">👑 Admin Panel</button>
+            </div>
+            
+            <button onclick="logout()" class="logout-btn">🚪 Logout</button>
+        </div>
+    </div>
+
+    <!-- EXPENSE ENTRY SCREEN -->
+    <div id="expense-screen" class="screen" style="display: none;">
+        <div class="login-box">
+            <h2 class="app-title">Add Expense</h2>
+            
+            <input type="text" id="expenseFor" placeholder="What is it for? (e.g. Dinner)">
+            <input type="number" id="expenseAmount" placeholder="Amount (₹)">
+            
+            <div class="split-section">
+                <p class="split-title">Split With:</p>
+                <div id="dynamic-split-users">
+                    <p style="font-size: 14px; color: #333;">Loading users...</p>
+                </div>
+            </div>
+
+            <button onclick="saveExpense()">SAVE EXPENSE</button>
+            <button onclick="goBackToDashboard()" class="back-btn">BACK</button>
+            <p id="expense-message" class="error-text"></p>
+        </div>
+    </div>
+
+    <!-- CHORE ENTRY SCREEN -->
+    <div id="chore-screen" class="screen" style="display: none;">
+        <div class="login-box">
+            <h2 class="app-title">Log Work</h2>
+            
+            <!-- NEW CUSTOM DROPDOWN -->
+            <div class="custom-dropdown" style="margin-bottom: 15px;">
+                <button type="button" class="dropdown-btn" id="choreSelectBtn" onclick="toggleDropdown('choreOptions')">Select Work...</button>
+                <div class="dropdown-content" id="choreOptions"></div>
+                <input type="hidden" id="choreSelect">
+                <input type="hidden" id="choreSelectAmount">
+            </div>
+            
+            <p id="choreAmountDisplay" style="color: #2c3e50; font-weight: bold; margin-bottom: 15px;">Amount: ₹0</p>
+
+            <div class="split-section">
+                <p class="split-title">Who pays for this?</p>
+                <div id="dynamic-chore-split-users">
+                    <p style="font-size: 14px; color: #333;">Loading users...</p>
+                </div>
+            </div>
+
+            <button onclick="saveChore()">SAVE WORK</button>
+            <button onclick="goBackToDashboard()" class="back-btn" style="margin-top: 10px;">BACK</button>
+            <p id="chore-message" class="error-text"></p>
+        </div>
+    </div>
+
+    <!-- PAY DETAILS SCREEN -->
+    <div id="pay-details-screen" class="screen" style="display: none;">
+        <div class="login-box">
+            <h2 class="app-title">Pay Detels</h2>
+            
+            <div id="pay-details-content" style="background: rgba(255,255,255,0.8); padding: 15px; border-radius: 12px; color: #2c3e50; text-align: left; font-size: 14px; font-weight: bold; overflow-x: auto;">
+                Loading...
+            </div>
+
+            <button onclick="goBackToDashboard()" class="back-btn" style="margin-top: 15px;">BACK</button>
+        </div>
+    </div>
+
+    <!-- EXPENSE REVIEW SCREEN -->
+    <div id="expense-review-screen" class="screen" style="display: none;">
+        <div class="login-box">
+            <h2 class="app-title">History</h2>
+            
+            <!-- TAB BUTTONS -->
+            <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                <button id="tab-btn-expenses" onclick="switchHistoryTab('expenses')" style="padding: 12px; font-size: 15px; background: var(--accent); color: white; border-radius: 12px; box-shadow: none;">💸 Expenses</button>
+                <button id="tab-btn-chores" onclick="switchHistoryTab('chores')" style="padding: 12px; font-size: 15px; background: rgba(255,255,255,0.6); color: #333; border-radius: 12px; box-shadow: none;">🧹 Work Log</button>
+            </div>
+
+            <!-- PILL TOGGLE FILTER -->
+            <div style="display: flex; background: rgba(255, 255, 255, 0.4); border-radius: 20px; padding: 4px; margin-bottom: 15px;">
+                <button id="filter-btn-all" onclick="switchHistoryFilter('all')" style="flex: 1; padding: 8px; font-size: 13px; background: #3498db; color: white; border-radius: 16px; box-shadow: none;">Everyone</button>
+                <button id="filter-btn-me" onclick="switchHistoryFilter('me')" style="flex: 1; padding: 8px; font-size: 13px; background: transparent; color: #333; border-radius: 16px; box-shadow: none;">Only Me</button>
+            </div>
+
+            <div id="review-content" style="background: rgba(255,255,255,0.8); padding: 15px; border-radius: 12px; color: #2c3e50; text-align: left; max-height: 400px; overflow-y: auto;">
+                Loading history...
+            </div>
+
+            <button onclick="goBackToDashboard()" class="back-btn" style="margin-top: 15px;">BACK</button>
+        </div>
+    </div>
+    
+    <!-- ADMIN SCREEN -->
+    <div id="admin-screen" class="screen" style="display: none;">
+        <div class="login-box">
+            <h2 class="app-title" style="color: #d35400;">👑 Admin Panel</h2>
+            <p id="admin-message" class="error-text"></p>
+            
+            <!-- User Management -->
+            <div style="background: rgba(255,255,255,0.6); padding: 15px; border-radius: 12px; margin-bottom: 15px; text-align: left;">
+                <h4 style="margin: 0 0 10px 0; color: #333;">👥 Manage Users</h4>
+                
+                <div style="display: flex; gap: 5px; margin-bottom: 10px;">
+                    <input type="text" id="newUsername" placeholder="New Username" style="padding: 10px; font-size: 14px;">
+                    <button onclick="adminUser('add')" style="padding: 10px; font-size: 14px; width: auto;">Add</button>
+                </div>
+                
+                <!-- CUSTOM ADMIN USER DROPDOWN -->
+                <div class="custom-dropdown">
+                    <button type="button" class="dropdown-btn" id="adminUserSelectBtn" style="padding: 12px; font-size: 14px;" onclick="toggleDropdown('adminUserOptions')">Select a user...</button>
+                    <div class="dropdown-content" id="adminUserOptions"></div>
+                    <input type="hidden" id="adminUserSelect">
+                </div>
+                
+                <div style="display: flex; gap: 5px; margin-top: 10px;">
+                    <button onclick="adminUser('reset')" style="padding: 10px; font-size: 12px; background: #3498db;">Reset Pass</button>
+                    <button onclick="adminUser('delete')" style="padding: 10px; font-size: 12px; background: #e74c3c;">Delete User</button>
+                </div>
+            </div>
+
+            <!-- Chore Management -->
+            <div style="background: rgba(255,255,255,0.6); padding: 15px; border-radius: 12px; text-align: left;">
+                <h4 style="margin: 0 0 10px 0; color: #333;">🧹 Manage Work</h4>
+                
+                <div style="display: flex; gap: 5px; margin-bottom: 10px;">
+                    <input type="text" id="newChoreName" placeholder="Work Name" style="padding: 10px; width: 65%; font-size: 14px;">
+                    <input type="number" id="newChoreAmount" placeholder="₹" style="padding: 10px; width: 35%; font-size: 14px;">
+                </div>
+                <button onclick="adminChore('add')" style="padding: 10px; font-size: 14px; margin-bottom: 15px;">Add Work</button>
+                
+                <!-- CUSTOM ADMIN CHORE DROPDOWN -->
+                <div class="custom-dropdown">
+                    <button type="button" class="dropdown-btn" id="adminChoreSelectBtn" style="padding: 12px; font-size: 14px;" onclick="toggleDropdown('adminChoreOptions')">Select work to edit/delete...</button>
+                    <div class="dropdown-content" id="adminChoreOptions"></div>
+                    <input type="hidden" id="adminChoreSelect">
+                    <input type="hidden" id="adminChoreSelectAmount">
+                </div>
+                
+                <div style="display: flex; gap: 5px; margin-top: 10px;">
+                    <button onclick="adminChore('edit')" style="padding: 10px; font-size: 12px; background: #f39c12;">Edit Work</button>
+                    <button onclick="adminChore('delete')" style="padding: 10px; font-size: 12px; background: #e74c3c;">Delete Work</button>
+                </div>
+            </div>
+
+            <button onclick="goBackToDashboard()" class="back-btn" style="margin-top: 15px;">BACK TO DASHBOARD</button>
+        </div>
+    </div>
+
+    <!-- Custom Edit Modal (Full Screen & Clean) -->
+    <div id="custom-edit-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-gradient); z-index: 1000; justify-content: center; align-items: center;">
+        <div class="login-box" style="width: 85%; max-width: 340px; animation: popIn 0.3s ease-out forwards;">
+            <h3 style="margin-top: 0; margin-bottom: 20px; color: #2c3e50; font-size: 24px;">Edit Work</h3>
+            <input type="hidden" id="editOldName">
+            <input type="text" id="editNewName" placeholder="New Name" style="margin-bottom: 15px;">
+            <input type="number" id="editNewAmount" placeholder="New Amount (₹)" style="margin-bottom: 25px;">
+            <div style="display: flex; gap: 15px;">
+                <button onclick="saveEditedChore()" style="background: #27ae60;">SAVE</button>
+                <button onclick="closeEditModal()" style="background: #7f8fa6; box-shadow: none;">CANCEL</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CHAT SCREEN -->
+    <div id="chat-screen" class="screen" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 9999; padding: 10px; box-sizing: border-box;">
+        <div class="login-box" style="height: 100%; max-width: 420px; margin: 0 auto; display: flex; flex-direction: column; box-sizing: border-box; justify-content: space-between; padding: 15px;">
+            
+            <!-- Header with integrated Back button -->
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-shrink: 0;">
+                <h2 class="app-title" style="margin: 0; font-size: 22px;">Live Chat</h2>
+                <button onclick="goBackToDashboard()" style="width: auto; padding: 8px 15px; background: #7f8fa6; box-shadow: none; font-size: 14px; border-radius: 8px;">BACK</button>
+            </div>
+            
+            <!-- Chat Messages Area -->
+            <div id="chat-box" style="flex: 1; overflow-y: auto; background: rgba(255,255,255,0.5); border-radius: 15px; padding: 15px; display: flex; flex-direction: column; gap: 12px; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.6);">
+                <!-- Messages will load here -->
+            </div>
+
+            <!-- Input Area -->
+            <div style="display: flex; gap: 8px; flex-shrink: 0;">
+                <input type="text" id="chatInput" placeholder="Type a message..." style="flex: 1; padding: 14px; margin-bottom: 0;">
+                <button onclick="sendChatMessage()" style="width: auto; padding: 14px 22px; margin-bottom: 0; display: flex; align-items: center; justify-content: center;">Send</button>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- CUSTOM PWA INSTALL BANNER -->
+<div id="pwa-install-banner" style="display: none; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 380px; background: rgba(255, 255, 255, 0.35); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6); padding: 18px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); z-index: 10000; text-align: center; box-sizing: border-box;">
+    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+        <img src="icon-192.png" alt="App Logo" style="width: 48px; height: 48px; border-radius: 12px; background: white; padding: 2px;">
+        <div style="text-align: left;">
+            <h4 style="margin: 0; color: #2c3e50; font-size: 16px;">Install Mess Khata</h4>
+            <p style="margin: 2px 0 0 0; color: #555; font-size: 12px;">Add to Home Screen for quick access!</p>
+        </div>
+    </div>
+    <div style="display: flex; gap: 10px;">
+        <button id="pwa-install-btn" style="flex: 1; padding: 10px; font-size: 14px; background: #27ae60;">INSTALL</button>
+        <button onclick="dismissInstallBanner()" style="flex: 1; padding: 10px; font-size: 14px; background: #7f8fa6; box-shadow: none;">LATER</button>
+    </div>
+</div>
+    
+    <script src="app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js');
+        }
+    </script>
+</body>
+</html>
