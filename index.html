@@ -117,106 +117,61 @@
             </div>
         </div>
     </section>
-    
-    <!-- PROJECTS SECTION -->
-    <section id="projects" class="projects-section reveal">
-        <h2>Our Products</h2>
-        <div class="card-container">
+        
+        <!-- PREMIUM ZAPPY-STYLE STICKY SCROLL SECTION FOR MESS KHATA -->
+    <section class="sticky-showcase-section">
+        <div class="sticky-container">
             
-            <!-- 1. Mess Khata (Zappy Style 3D Frame & Demo Link) -->
-            <div class="project-card">
-                <div class="card-header">
-                    <h3>Mess Khata</h3>
-                    <p>Complete PG Management</p>
+            <!-- LEFT: The Sticky Phone that stays in place -->
+            <div class="sticky-phone-col">
+                <div class="zappy-phone-frame" id="dynamic-phone">
+                    <div class="iphone-notch"></div>
+                    <!-- The Screen Images (Overlapped for crossfading) -->
+                    <div class="screen-image-container">
+                        <!-- Default Screen -->
+                        <img src="Mess Khata/Mess Khata Home.png" class="scroll-screen active" id="screen-home" alt="Home">
+                        <img src="Mess Khata/Mess Khata Chat.png" class="scroll-screen" id="screen-chat" alt="Chat">
+                        <img src="Mess Khata/Mess Khata Expence.png" class="scroll-screen" id="screen-expense" alt="Expense">
+                        <img src="Mess Khata/Mess Khata Admin Home.png" class="scroll-screen" id="screen-admin" alt="Admin">
+                    </div>
+                </div>
+                <!-- Explore/Purchase Buttons locked under the phone -->
+                <div class="sticky-actions">
+                    <button class="btn-secondary" onclick="window.open('MessKhata-Demo/index.html', '_blank')">Explore Sandbox <span>&#8594;</span></button>
+                    <button class="btn-purchase" onclick="directPurchase('Mess Khata', event)">Purchase 🛒 <span class="btn-price-tag">₹99</span></button>
+                </div>
+            </div>
+    
+            <!-- RIGHT: The Scrolling Features -->
+            <div class="scroll-text-col">
+                <!-- Block 1 -->
+                <div class="feature-text-block" data-image="screen-home">
+                    <h2 style="text-align: left;">Mess Khata.<br>Manage PG like a Pro.</h2>
+                    <p>Catch up with roomates, split bills instantly, and log chores without the headache of a physical ledger. Everything is synced to the cloud in real-time.</p>
                 </div>
                 
-                <!-- Zappy Style 3D Phone Wrapper -->
-                <div class="image-wrapper zappy-wrapper">
-                    <div class="zappy-phone-frame">
-                        <div class="iphone-notch"></div>
-                        <div class="replica-screen">
-                            <h4 class="replica-title">Welcome, Dipun</h4>
-                            <div class="replica-nav">💸 EXPENCE</div>
-                            <div class="replica-nav">🧹 COOKING & CLEANING</div>
-                            <div class="replica-nav">💳 Pay Detels</div>
-                            <div class="replica-nav">📊 EXPENCE REVIEW</div>
-                            <div class="replica-nav">💬 Chat</div>
-                            <div class="replica-logout">🚪 Logout</div>
-                        </div>
-                    </div>
-                    <div class="glass-specs">
-                        <ul>
-                            <li>⚡ Interactive Chat System</li>
-                            <li>📊 Live Expense Logging</li>
-                            <li>🔐 Multi-tier Admin Access</li>
-                        </ul>
-                    </div>
+                <!-- Block 2 -->
+                <div class="feature-text-block" data-image="screen-chat">
+                    <h2 style="text-align: left;">Live Chat.<br>Stay in the loop.</h2>
+                    <p>Communicate seamlessly with your roommates or PG manager through the built-in interactive chat system. Discuss groceries, bills, and maintenance in one place.</p>
                 </div>
                 
-                <div class="card-buttons">
-                    <!-- EXPLORE BUTTON NOW LINKS TO THE DEMO -->
-                    <button class="btn-secondary" onclick="window.open('MessKhata-Demo/index.html', '_blank')">Explore <span>&#8594;</span></button>
-                    <button class="btn-purchase" onclick="directPurchase('Mess Khata', event)">
-                        <span>Purchase 🛒</span>
-                        <span class="btn-price-tag" id="badge-Mess Khata">₹--</span>
-                    </button>
+                <!-- Block 3 -->
+                <div class="feature-text-block" data-image="screen-expense">
+                    <h2 style="text-align: left;">Live Expense.<br>Zero confusion.</h2>
+                    <p>Log daily expenses, select who pays for what, and let our algorithm calculate the exact balances instantly. No more end-of-month math anxiety.</p>
+                </div>
+    
+                <!-- Block 4 -->
+                <div class="feature-text-block" data-image="screen-admin">
+                    <h2 style="text-align: left;">Multi-tier Admin.<br>Total control.</h2>
+                    <p>PG Owners get a dedicated dashboard to manage users, reset passwords, and track global transaction history securely.</p>
                 </div>
             </div>
-            <!-- 2. Billflow (Moved to Second) -->
-            <div class="project-card" onclick="openModal('billflowModal')">
-                <div class="card-header">
-                    <h3>Billflow</h3>
-                    <p>3-Tap Retail Billing</p>
-                </div>
-                <div class="image-wrapper">
-                    <img src="BillFlow/Dasbord Dextop.png" alt="Billflow Dashboard">
-                    <div class="glass-specs">
-                        <ul>
-                            <li>⚡ Real-time Cloud Sync</li>
-                            <li>📊 Automated Invoicing</li>
-                            <li>🔐 Secure Encrypted Login</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="card-buttons">
-                    <button class="btn-secondary">Explore <span>&#8594;</span></button>
-                    <!-- New Direct Purchase Button -->
-                    <button class="btn-purchase" onclick="directPurchase('Bill Flow', event)">
-                        <span>Purchase 🛒</span>
-                        <span class="btn-price-tag" id="badge-Bill Flow">₹--</span>
-                    </button>
-                </div>
-            </div>
-
-            <!-- 3. Moktest (Third) -->
-            <div class="project-card" onclick="openModal('mocktestModal')">
-                <div class="card-header">
-                    <h3>Moktest</h3>
-                    <p>Custom CBT Platform</p>
-                </div>
-                <div class="image-wrapper">
-                    <img src="Moktest/dasbord.png" alt="Moktest Dashboard">
-                    <div class="glass-specs">
-                        <ul>
-                            <li>🖼️ Image-Supported Questions</li>
-                            <li>⏱️ Live Exam Timer Controls</li>
-                            <li>📊 Automated PDF Scoring</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="card-buttons">
-                    <button class="btn-secondary">Explore <span>&#8594;</span></button>
-                    <!-- New Direct Purchase Button -->
-                    <button class="btn-purchase" onclick="directPurchase('Mok Test APK', event)">
-                        <span>Purchase 🛒</span>
-                        <span class="btn-price-tag" id="badge-Mok Test APK">₹--</span>
-                    </button>
-                </div>
-            </div>
-
+    
         </div>
     </section>
-
+            
     <!-- PREMIUM FLOATING STAT CARDS (UPDATED STATS) -->
     <section class="premium-stats-section reveal">
         <div class="stats-container">
