@@ -429,3 +429,59 @@ window.addEventListener('DOMContentLoaded', (event) => {
         window.history.replaceState({}, document.title, window.location.pathname);
     }
 });
+
+// =========================================================
+// ZAPPY-STYLE STICKY SCROLL & TILT ENGINE
+// =========================================================
+
+document.addEventListener("DOMContentLoaded", () => {
+    const textBlocks = document.querySelectorAll('.feature-text-block');
+    const phoneScreens = document.querySelectorAll('.scroll-screen');
+    const phoneFrame = document.getElementById('dynamic-phone');
+
+    // 1. Image Crossfade Observer
+    const scrollObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Highlight the active text block
+                textBlocks.forEach(block => block.classList.remove('active-text'));
+                entry.target.classList.add('active-text');
+
+                // Get the target image ID from the data attribute
+                const targetImageId = entry.target.getAttribute('data-image');
+
+                // Crossfade images
+                phoneScreens.forEach(screen => {
+                    if (screen.id === targetImageId) {
+                        screen.classList.add('active');
+                    } else {
+                        screen.classList.remove('active');
+                    }
+                });
+            }
+        });
+    }, { 
+        root: null, 
+        threshold: 0.5, // Triggers when text block is 50% visible in the viewport
+        rootMargin: "-10% 0px -10% 0px" 
+    });
+
+    textBlocks.forEach(block => scrollObserver.observe(block));
+
+    // 2. Dynamic Scroll Tilt (The Zappy Hover/Float Effect)
+    window.addEventListener('scroll', () => {
+        if (!phoneFrame) return;
+        
+        // Only apply tilt on desktop to save mobile performance
+        if (window.innerWidth > 850) {
+            const scrollY = window.scrollY;
+            
+            // Calculate a gentle math sine wave based on scroll position
+            const tiltY = Math.sin(scrollY * 0.003) * 8; // Rocks left/right up to 8 degrees
+            const tiltX = Math.cos(scrollY * 0.003) * -4; // Rocks up/down slightly
+            
+            // Apply the transformation
+            phoneFrame.style.transform = `perspective(1000px) rotateY(${tiltY}deg) rotateX(${tiltX}deg) scale(1.02)`;
+        }
+    });
+});
