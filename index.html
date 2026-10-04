@@ -123,15 +123,17 @@
         <h2>Our Products</h2>
         <div class="card-container">
             
-            <!-- 1. Mess Khata (Moved to First) -->
-            <div class="project-card" onclick="openModal('messkhataModal')">
+            <!-- 1. Mess Khata (Zappy Style 3D Frame & Demo Link) -->
+            <div class="project-card">
                 <div class="card-header">
                     <h3>Mess Khata</h3>
                     <p>Complete PG Management</p>
                 </div>
-                                <!-- REPLACED: Static image removed, CSS Replica added -->
-                <div class="image-wrapper replica-wrapper">
-                    <div class="css-phone-replica">
+                
+                <!-- Zappy Style 3D Phone Wrapper -->
+                <div class="image-wrapper zappy-wrapper">
+                    <div class="zappy-phone-frame">
+                        <div class="iphone-notch"></div>
                         <div class="replica-screen">
                             <h4 class="replica-title">Welcome, Dipun</h4>
                             <div class="replica-nav">💸 EXPENCE</div>
@@ -150,16 +152,16 @@
                         </ul>
                     </div>
                 </div>
+                
                 <div class="card-buttons">
-                    <button class="btn-secondary">Explore <span>&#8594;</span></button>
-                    <!-- New Direct Purchase Button -->
+                    <!-- EXPLORE BUTTON NOW LINKS TO THE DEMO -->
+                    <button class="btn-secondary" onclick="window.open('MessKhata-Demo/index.html', '_blank')">Explore <span>&#8594;</span></button>
                     <button class="btn-purchase" onclick="directPurchase('Mess Khata', event)">
                         <span>Purchase 🛒</span>
                         <span class="btn-price-tag" id="badge-Mess Khata">₹--</span>
                     </button>
                 </div>
             </div>
-
             <!-- 2. Billflow (Moved to Second) -->
             <div class="project-card" onclick="openModal('billflowModal')">
                 <div class="card-header">
