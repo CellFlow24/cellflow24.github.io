@@ -456,54 +456,85 @@ footer { background: #1a202c; color: #a0aec0; padding: 60px 20px 20px; margin-to
 }
 
 /* =========================================================
-   PURE CSS APP DASHBOARD REPLICA
+   ZAPPY-STYLE PREMIUM 3D PHONE MOCKUP (MESS KHATA)
 ========================================================= */
-.replica-wrapper { display: flex; justify-content: center; align-items: center; }
-
-.css-phone-replica {
-    width: 150px;
-    height: 300px;
-    border-radius: 24px;
-    background: #ffffff;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.1), inset 0 0 0 4px #e2e8f0;
-    padding: 6px;
-    box-sizing: border-box;
-    position: relative;
-    transition: transform 0.4s ease;
+.zappy-wrapper { 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    perspective: 1000px; /* Enables 3D depth */
+    padding: 20px 0 40px 0;
+    overflow: visible !important; /* Allows the phone to pop out */
 }
 
-.project-card:hover .css-phone-replica { transform: translateY(-5px) scale(1.02); }
+.zappy-phone-frame {
+    width: 170px;
+    height: 340px;
+    background: #000000; /* Realistic black bezel */
+    border-radius: 36px;
+    padding: 8px; /* Thickness of the bezel */
+    box-sizing: border-box;
+    position: relative;
+    /* The Zappy Tilt: angled, slightly scaled, with a deep drop shadow */
+    transform: rotate(-6deg) rotateY(-10deg) scale(1.05);
+    box-shadow: 
+        -20px 20px 30px rgba(0,0,0,0.15), 
+        inset 0 0 0 2px #333333; /* Outer shadow + inner metallic lip */
+    transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Make it pop further on hover */
+.project-card:hover .zappy-phone-frame { 
+    transform: rotate(-3deg) rotateY(-5deg) scale(1.1) translateY(-10px); 
+    box-shadow: -25px 25px 40px rgba(0, 86, 179, 0.2), inset 0 0 0 2px #333333;
+}
+
+/* The iPhone style Dynamic Island/Notch */
+.iphone-notch {
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 14px;
+    background: #000000;
+    border-radius: 10px;
+    z-index: 10;
+}
 
 .replica-screen {
     width: 100%;
     height: 100%;
-    border-radius: 18px;
+    border-radius: 28px; /* Matches the inner curve of the bezel */
     background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
-    padding: 18px 12px;
+    padding: 35px 12px 15px; /* Extra top padding for the notch */
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
     align-items: center;
+    position: relative;
     overflow: hidden;
 }
 
+/* Inner App UI Styling */
 .replica-title { 
-    color: #2c3e50; font-size: 11px; font-weight: 800; 
-    margin: 0 0 5px 0; background: rgba(255,255,255,0.25);
-    padding: 4px 10px; border-radius: 10px; width: 100%; text-align: center;
+    color: #2c3e50; font-size: 13px; font-weight: 900; 
+    margin: 0 0 5px 0; background: rgba(255,255,255,0.3);
+    padding: 6px 10px; border-radius: 12px; width: 100%; text-align: center;
 }
 
 .replica-nav { 
-    background: rgba(255,255,255,0.6); color: #2c3e50; 
-    font-size: 8px; font-weight: 800; width: 100%; 
-    padding: 8px 10px; border-radius: 8px; text-align: left; 
-    border: 1px solid rgba(255,255,255,0.7); box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    background: rgba(255,255,255,0.7); color: #2c3e50; 
+    font-size: 10px; font-weight: 800; width: 100%; 
+    padding: 10px 12px; border-radius: 10px; text-align: left; 
+    border: 1px solid rgba(255,255,255,0.9); 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
 }
 
 .replica-logout { 
-    background: #ff4757; color: white; font-size: 9px; 
-    font-weight: 800; width: 100%; padding: 8px 10px; 
-    border-radius: 8px; margin-top: auto; text-align: center;
-    box-shadow: 0 4px 10px rgba(255, 71, 87, 0.3);
+    background: #ff4757; color: white; font-size: 11px; 
+    font-weight: 800; width: 100%; padding: 12px 10px; 
+    border-radius: 10px; margin-top: auto; text-align: center;
+    box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
 }
