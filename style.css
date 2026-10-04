@@ -454,3 +454,56 @@ footer { background: #1a202c; color: #a0aec0; padding: 60px 20px 20px; margin-to
         -webkit-backdrop-filter: blur(8px) !important; 
     }
 }
+
+/* =========================================================
+   PURE CSS APP DASHBOARD REPLICA
+========================================================= */
+.replica-wrapper { display: flex; justify-content: center; align-items: center; }
+
+.css-phone-replica {
+    width: 150px;
+    height: 300px;
+    border-radius: 24px;
+    background: #ffffff;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1), inset 0 0 0 4px #e2e8f0;
+    padding: 6px;
+    box-sizing: border-box;
+    position: relative;
+    transition: transform 0.4s ease;
+}
+
+.project-card:hover .css-phone-replica { transform: translateY(-5px) scale(1.02); }
+
+.replica-screen {
+    width: 100%;
+    height: 100%;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+    padding: 18px 12px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+    overflow: hidden;
+}
+
+.replica-title { 
+    color: #2c3e50; font-size: 11px; font-weight: 800; 
+    margin: 0 0 5px 0; background: rgba(255,255,255,0.25);
+    padding: 4px 10px; border-radius: 10px; width: 100%; text-align: center;
+}
+
+.replica-nav { 
+    background: rgba(255,255,255,0.6); color: #2c3e50; 
+    font-size: 8px; font-weight: 800; width: 100%; 
+    padding: 8px 10px; border-radius: 8px; text-align: left; 
+    border: 1px solid rgba(255,255,255,0.7); box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.replica-logout { 
+    background: #ff4757; color: white; font-size: 9px; 
+    font-weight: 800; width: 100%; padding: 8px 10px; 
+    border-radius: 8px; margin-top: auto; text-align: center;
+    box-shadow: 0 4px 10px rgba(255, 71, 87, 0.3);
+}
