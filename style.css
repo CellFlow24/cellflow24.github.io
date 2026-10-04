@@ -538,3 +538,164 @@ footer { background: #1a202c; color: #a0aec0; padding: 60px 20px 20px; margin-to
     border-radius: 10px; margin-top: auto; text-align: center;
     box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
 }
+
+/* =========================================================
+   SCROLLYTELLING STICKY SHOWCASE (ZAPPY STYLE)
+========================================================= */
+.sticky-showcase-section {
+    padding: 0;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.sticky-container {
+    display: flex;
+    position: relative;
+    align-items: flex-start; /* Required for sticky to work */
+}
+
+/* --- Left Column: The Sticky Phone --- */
+.sticky-phone-col {
+    position: sticky;
+    top: 10vh; /* Locks the phone 10% from the top of the screen */
+    width: 50%;
+    height: 90vh; /* Takes up most of the viewport height */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+/* The actual phone mockup */
+.zappy-phone-frame {
+    width: 260px;
+    height: 540px;
+    background: #000000;
+    border-radius: 40px;
+    padding: 10px;
+    box-sizing: border-box;
+    position: relative;
+    box-shadow: -20px 20px 40px rgba(0,0,0,0.15), inset 0 0 0 2px #333333;
+    transition: transform 0.1s linear; /* Smooth scroll tilting */
+    transform-origin: center center;
+}
+
+.iphone-notch {
+    position: absolute;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 22px;
+    background: #000000;
+    border-radius: 12px;
+    z-index: 20;
+}
+
+/* Screen Image Container */
+.screen-image-container {
+    width: 100%;
+    height: 100%;
+    border-radius: 32px;
+    overflow: hidden;
+    position: relative;
+    background: #e2e8f0;
+}
+
+/* Image Crossfade Logic */
+.scroll-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transform: scale(1.05);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.scroll-screen.active {
+    opacity: 1;
+    transform: scale(1);
+    z-index: 5;
+}
+
+.sticky-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+/* --- Right Column: Scrolling Text --- */
+.scroll-text-col {
+    width: 50%;
+    padding-bottom: 20vh; /* Space at the end */
+}
+
+.feature-text-block {
+    min-height: 80vh; /* Spacing between features */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 40px;
+    opacity: 0.3; /* Faded when inactive */
+    transform: translateY(20px);
+    transition: all 0.6s ease;
+}
+
+.feature-text-block.active-text {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.feature-text-block h2 {
+    font-size: 2.8rem;
+    line-height: 1.1;
+    margin-bottom: 20px;
+}
+
+.feature-text-block p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #4a5568;
+}
+
+/* --- MOBILE OPTIMIZATION --- */
+@media (max-width: 850px) {
+    .sticky-container {
+        flex-direction: column;
+    }
+    
+    .sticky-phone-col {
+        width: 100%;
+        height: 60vh; /* Shorter on mobile */
+        top: 80px; /* Pin right below mobile header */
+        padding-top: 20px;
+    }
+
+    .zappy-phone-frame {
+        width: 200px;
+        height: 420px;
+    }
+    
+    .scroll-text-col {
+        width: 100%;
+        margin-top: -20vh; /* Overlap slightly */
+        position: relative;
+        z-index: 20;
+    }
+
+    .feature-text-block {
+        min-height: 60vh;
+        padding: 40px 20px;
+        background: rgba(255, 255, 255, 0.85); /* Glass effect behind text */
+        backdrop-filter: blur(10px);
+        margin: 20px 15px;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+
+    .feature-text-block h2 { font-size: 2rem; }
+}
