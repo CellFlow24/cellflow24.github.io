@@ -6,14 +6,13 @@
     <meta name="description" content="Cellflow offers simple billing (Billflow) and PG management (Mess Khata) software for small businesses.">
     <title>Cellflow | Business Software Simplified</title>
     <link rel="icon" type="image/png" href="logo.png">
-    <link rel="stylesheet" href="style.css?v=3.0">
+    <link rel="stylesheet" href="style.css?v=4.0">
 </head>
 <body>
 
-    <!-- HERO SECTION -->
+    <!-- HERO SECTION (With Momento Zoom Logo) -->
     <header class="hero">
         <div class="hero-left">
-            <!-- Added IDs for the new Momento Scroll-to-Zoom effect -->
             <div class="logo-wrapper" id="hero-logo-wrapper">
                 <div class="cloud-blob"></div>
                 <img src="logo.png" alt="Cellflow Logo" class="logo" id="hero-logo">
@@ -23,10 +22,8 @@
             <a href="#projects" class="btn-primary">Explore Our Apps</a>
         </div>
         
-        <!-- Right Side (Toptal Style Stacked Cards) -->
         <div class="hero-right">
             <div class="stacked-carousel" id="feedbackCarousel">
-                
                 <!-- Feedback 1: Agropoti -->
                 <div class="stacked-card card-front">
                     <div class="card-image-top"><img src="feedback/dokal.png" alt="Subbrata Dokal" class="big-user-img"></div>
@@ -48,12 +45,11 @@
                         <p>"Mess Khata has completely eliminated the headache of manual ledger management. Tracking payments and expenses is now incredibly fast and transparent."</p>
                     </div>
                 </div>
-
             </div>
         </div>
     </header>
 
-    <!-- PREMIUM MARKETING & CUSTOM DEV SECTION -->
+    <!-- PREMIUM MARKETING PROMO SECTION -->
     <section class="premium-promo-section reveal">
         <div class="promo-container">
             <div class="promo-text">
@@ -63,7 +59,6 @@
             </div>
             
             <div class="promo-carousel" id="promoCarousel">
-                <!-- Card 1: Social Media Sellers -->
                 <div class="promo-card promo-front">
                     <div class="promo-card-header">
                         <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0056b3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
@@ -77,7 +72,6 @@
                     <div class="promo-price">Complete Setup: <strong>₹5,999</strong></div>
                 </div>
                 
-                <!-- Card 2: B2B & Retail -->
                 <div class="promo-card promo-middle">
                     <div class="promo-card-header">
                         <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0056b3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
@@ -91,7 +85,6 @@
                     <div class="promo-price">Complete Setup: <strong>₹5,999</strong></div>
                 </div>
 
-                <!-- Card 3: Custom & Trust -->
                 <div class="promo-card promo-back">
                     <div class="promo-card-header">
                         <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0056b3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="m12 15-3-3a22 22 0 0 1 3.81-11 22 22 0 0 1 11 3.81A22 22 0 0 1 15 12z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path></svg>
@@ -108,17 +101,18 @@
         </div>
     </section>
         
-    <!-- PRO SCROLLYTELLING SHOWCASE: MESS KHATA -->
-    <section class="pro-showcase-section" id="projects">
-        <div class="pro-showcase-container">
+    <!-- NEW HORIZONTAL SWIPE SHOWCASE: MESS KHATA -->
+    <section class="mk-showcase-section" id="projects">
+        <div class="mk-container">
             
-            <!-- LEFT/TOP: The Sticky Phone -->
-            <div class="pro-sticky-col">
-                <div class="pro-phone-frame" id="pro-phone">
-                    <div class="pro-notch"></div>
-                    <div class="pro-screen-container">
+            <!-- LEFT/TOP: The Flat Perfect Phone -->
+            <div class="mk-phone-col">
+                <!-- Phone click triggers same tab dummy app link -->
+                <div class="mk-phone-bezel" onclick="window.location.href='MessKhata-Demo/index.html'">
+                    <div class="mk-notch"></div>
+                    <div class="mk-screen-container">
                         
-                        <!-- Screen 1: Home (Default) -->
+                        <!-- Screen 1: Home -->
                         <div class="css-replica-screen active" id="css-screen-home">
                             <h4 class="replica-title">Welcome, Dipun</h4>
                             <div class="replica-nav">💸 EXPENCE</div>
@@ -168,8 +162,8 @@
                     </div>
                 </div>
                 
-                <!-- Actions: Fixed CSS classes and routing -->
-                <div class="pro-actions">
+                <!-- Fixed Action Buttons -->
+                <div class="mk-actions">
                     <button class="btn-secondary" onclick="window.location.href='MessKhata-Demo/index.html'">Explore Sandbox &rarr;</button>
                     <button class="btn-purchase" onclick="directPurchase('Mess Khata', event)">
                         <span>Purchase 🛒</span>
@@ -178,37 +172,41 @@
                 </div>
             </div>
     
-            <!-- RIGHT/BOTTOM: The Scrolling Folder Cards -->
-            <div class="pro-scroll-col">
-                <div class="pro-feature-card" data-screen="css-screen-home">
-                    <h2>Mess Khata.<br>Manage PG like a Pro.</h2>
-                    <p>Catch up with roomates, split bills instantly, and log chores without the headache of a physical ledger. Everything is synced to the cloud in real-time.</p>
-                </div>
-                
-                <div class="pro-feature-card" data-screen="css-screen-chat">
-                    <h2>Live Chat.<br>Stay in the loop.</h2>
-                    <p>Communicate seamlessly with your roommates or PG manager through the built-in interactive chat system. Discuss groceries, bills, and maintenance in one place.</p>
-                </div>
-                
-                <div class="pro-feature-card" data-screen="css-screen-expense">
-                    <h2>Live Expense.<br>Zero confusion.</h2>
-                    <p>Log daily expenses, select who pays for what, and let our algorithm calculate the exact balances instantly. No more end-of-month math anxiety.</p>
-                </div>
-    
-                <div class="pro-feature-card" data-screen="css-screen-admin">
-                    <h2>Multi-tier Admin.<br>Total control.</h2>
-                    <p>PG Owners get a dedicated dashboard to manage users, reset passwords, and track global transaction history securely.</p>
+            <!-- RIGHT/BOTTOM: The Horizontal Swipe Track -->
+            <div class="mk-cards-col">
+                <div class="mk-swipe-track">
+                    
+                    <div class="mk-feature-card active-card" data-screen="css-screen-home">
+                        <h2>Mess Khata.<br>Manage PG like a Pro.</h2>
+                        <p>Catch up with roommates, split bills instantly, and log chores without the headache of a physical ledger. Everything is synced to the cloud in real-time.</p>
+                    </div>
+                    
+                    <div class="mk-feature-card" data-screen="css-screen-chat">
+                        <h2>Live Chat.<br>Stay in the loop.</h2>
+                        <p>Communicate seamlessly with your roommates or PG manager through the built-in interactive chat system. Discuss groceries, bills, and maintenance in one place.</p>
+                    </div>
+                    
+                    <div class="mk-feature-card" data-screen="css-screen-expense">
+                        <h2>Live Expense.<br>Zero confusion.</h2>
+                        <p>Log daily expenses, select who pays for what, and let our algorithm calculate the exact balances instantly. No more end-of-month math anxiety.</p>
+                    </div>
+        
+                    <div class="mk-feature-card" data-screen="css-screen-admin">
+                        <h2>Multi-tier Admin.<br>Total control.</h2>
+                        <p>PG Owners get a dedicated dashboard to manage users, reset passwords, and track global transaction history securely.</p>
+                    </div>
+
                 </div>
             </div>
     
         </div>
     </section>
 
-    <!-- OTHER PRODUCTS (Billflow & Moktest stay as standard cards for now) -->
+    <!-- OTHER PRODUCTS (Modals removed until we rebuild them later) -->
     <section class="projects-section reveal">
         <div class="card-container">
-            <!-- 2. Billflow -->
-            <div class="project-card" onclick="openModal('billflowModal')">
+            <!-- Billflow -->
+            <div class="project-card">
                 <div class="card-header">
                     <h3>Billflow</h3>
                     <p>3-Tap Retail Billing</p>
@@ -224,7 +222,7 @@
                     </div>
                 </div>
                 <div class="card-buttons">
-                    <button class="btn-secondary">Explore <span>&#8594;</span></button>
+                    <button class="btn-secondary" onclick="alert('Demo coming soon!')">Explore <span>&#8594;</span></button>
                     <button class="btn-purchase" onclick="directPurchase('Bill Flow', event)">
                         <span>Purchase 🛒</span>
                         <span class="btn-price-tag" id="badge-Bill Flow">₹--</span>
@@ -232,8 +230,8 @@
                 </div>
             </div>
 
-            <!-- 3. Moktest -->
-            <div class="project-card" onclick="openModal('mocktestModal')">
+            <!-- Moktest -->
+            <div class="project-card">
                 <div class="card-header">
                     <h3>Moktest</h3>
                     <p>Custom CBT Platform</p>
@@ -249,7 +247,7 @@
                     </div>
                 </div>
                 <div class="card-buttons">
-                    <button class="btn-secondary">Explore <span>&#8594;</span></button>
+                    <button class="btn-secondary" onclick="alert('Demo coming soon!')">Explore <span>&#8594;</span></button>
                     <button class="btn-purchase" onclick="directPurchase('Mok Test APK', event)">
                         <span>Purchase 🛒</span>
                         <span class="btn-price-tag" id="badge-Mok Test APK">₹--</span>
@@ -289,7 +287,6 @@
                 <input type="text" name="name" placeholder="Your Name" required>
                 <input type="email" name="email" placeholder="Your Email (Required)" required>
 
-                <!-- Custom Styleable Dropdown -->
                 <div class="custom-dropdown-container">
                     <div class="custom-dropdown-selected" id="customDropdownSelected">How can we help you?</div>
                     <div class="custom-dropdown-options" id="customDropdownOptions">
@@ -301,7 +298,6 @@
                     <input type="hidden" name="inquiryType" id="inquiryTypeHidden" required>
                 </div>
 
-                <!-- Dynamic Product List -->
                 <div id="productContainer" style="display: none;">
                     <p class="select-prompt">Select your application:</p>
                     <div id="productList" class="product-grid"></div>
@@ -314,7 +310,6 @@
             </form>
         </div>
 
-        <!-- Success State -->
         <div id="successState" class="blast-container" style="display:none;">
             <div class="success-blob" id="successBlob"></div>
             <div class="success-content" id="successContent">
@@ -353,55 +348,7 @@
     
     <a href="#contact" class="floating-cta" id="floatingCta">Order Your App</a>
 
-    <!-- MODALS (Only Billflow & Moktest left, Mess Khata removed) -->
-    
-    <!-- Billflow Modal -->
-    <div id="billflowModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('billflowModal')">Back</span>
-            <h2>Billflow Previews</h2>
-            <div class="slider-wrapper">
-                <button class="slide-arrow prev" onclick="slideGallery('billflow-slider', -1)">&#10094;</button>
-                <div class="slider" id="billflow-slider">
-                    <img src="BillFlow/Log%20In%20dextop.png" alt="Login Desktop">
-                    <img src="BillFlow/Dasbord%20Dextop.png" alt="Dashboard Desktop">
-                    <img src="BillFlow/New%20invoise%20Dextop.png" alt="New Invoice Desktop">
-                    <img src="BillFlow/Bill%20history%20Dextop.png" alt="Bill History Desktop">
-                    <img src="BillFlow/Log%20In%20Ph.png" alt="Login Mobile">
-                    <img src="BillFlow/Dasbord%20Ph.png" alt="Dashboard Mobile">
-                    <img src="BillFlow/New%20Invoise%20Ph.png" alt="New Invoice Mobile">
-                    <img src="BillFlow/Due%20Bill%20Ph.png" alt="Due Bills Mobile">
-                    <img src="BillFlow/Clear%20due.png" alt="Clear Due Interface">
-                    <img src="BillFlow/Bill%20History%20ph.png" alt="Bill History Mobile">
-                    <img src="BillFlow/Bill%20Dummy.png" alt="Sample Bill PDF">
-                </div>
-                <button class="slide-arrow next" onclick="slideGallery('billflow-slider', 1)">&#10095;</button>
-            </div>
-            <p class="swipe-text">Swipe or click arrows to view more</p>
-        </div>
-    </div>
-
-    <!-- Moktest Modal -->
-    <div id="mocktestModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('mocktestModal')">Back</span>
-            <h2>Moktest Previews</h2>
-            <div class="slider-wrapper">
-                <button class="slide-arrow prev" onclick="slideGallery('mocktest-slider', -1)">&#10094;</button>
-                <div class="slider" id="mocktest-slider">
-                    <img src="Moktest/login.png" alt="Login Screen">
-                    <img src="Moktest/registation.png" alt="Registration Screen">
-                    <img src="Moktest/dasbord.png" alt="Dashboard Area">
-                    <img src="Moktest/examp.png" alt="Exam Interface with Image Support">
-                    <img src="Moktest/answar.png" alt="Automated Answer Results">
-                </div>
-                <button class="slide-arrow next" onclick="slideGallery('mocktest-slider', 1)">&#10095;</button>
-            </div>
-            <p class="swipe-text">Swipe or click arrows to view more</p>
-        </div>
-    </div>
-
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-    <script src="script.js?v=6.1"></script>
+    <script src="script.js?v=7.0"></script>
 </body>
 </html>
