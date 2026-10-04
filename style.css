@@ -19,38 +19,30 @@ html, body {
 }
 
 /* =========================================================
-   2. HERO SECTION & CLOUD BLOB
+   2. HERO SECTION & SCROLL-ZOOM LOGO PREP
+   *Breathing animations removed for scroll-zoom effect*[cite: 22, 23]
 ========================================================= */
-.hero { position: relative; display: flex; align-items: center; justify-content: space-between; min-height: 90vh; padding: 60px 5%; }
+.hero { position: relative; display: flex; align-items: center; justify-content: space-between; min-height: 90vh; padding: 60px 5%; margin-bottom: 50px; }
 .hero-left { position: relative; z-index: 2; width: 45%; padding-right: 20px; opacity: 0; animation: slideInLeft 1s ease-out forwards; }
 @keyframes slideInLeft { from { transform: translateX(-50px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
-.logo-wrapper { position: relative; display: inline-block; margin-bottom: 25px; }
-.cloud-blob { position: absolute; top: 50%; left: 50%; width: 240px; height: 240px; background: radial-gradient(circle, rgba(0,86,179,0.15) 0%, rgba(0,176,80,0.1) 60%, rgba(255,255,255,0) 80%); border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; transform: translate(-50%, -50%); animation: morphBlob 8s ease-in-out infinite alternate; z-index: 0; }
-@keyframes morphBlob { 0% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; transform: translate(-50%, -50%) scale(1); } 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; transform: translate(-50%, -50%) scale(1.1); } }
-
-.logo { position: relative; z-index: 1; width: 140px; height: 140px; object-fit: contain; background: white; border-radius: 50%; padding: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); animation: floatOnly 4s ease-in-out infinite; }
-@keyframes floatOnly { 0%, 100% { transform: translateY(0); box-shadow: 0 10px 25px rgba(0,0,0,0.08); } 50% { transform: translateY(-10px); box-shadow: 0 20px 35px rgba(0,0,0,0.15); } }
+.logo-wrapper { position: relative; display: inline-block; margin-bottom: 25px; transition: transform 0.1s ease-out, opacity 0.1s ease-out; }
+.cloud-blob { position: absolute; top: 50%; left: 50%; width: 240px; height: 240px; background: radial-gradient(circle, rgba(0,86,179,0.15) 0%, rgba(0,176,80,0.1) 60%, rgba(255,255,255,0) 80%); border-radius: 50%; transform: translate(-50%, -50%); z-index: 0; }
+.logo { position: relative; z-index: 1; width: 140px; height: 140px; object-fit: contain; background: white; border-radius: 50%; padding: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); transition: transform 0.1s ease-out; }
 
 .hero h1 { font-size: 3rem; margin-bottom: 15px; font-weight: 800; color: #1a202c; line-height: 1.2; }
 .hero p { font-size: 1.2rem; margin-bottom: 30px; color: #4a5568; }
 
 /* =========================================================
-   3. TOPTAL-STYLE STACKED CAROUSEL (Now with Breathing Animation)
+   3. TOPTAL-STYLE STACKED CAROUSEL
 ========================================================= */
 .hero-right { position: relative; z-index: 2; width: 50%; display: flex; justify-content: flex-end; padding-right: 40px; }
-.stacked-carousel { 
-    position: relative; width: 100%; max-width: 380px; height: 680px; 
-    animation: floatBreathe 6s ease-in-out infinite; /* Brings the section to life */
-}
-@keyframes floatBreathe { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
-
+.stacked-carousel { position: relative; width: 100%; max-width: 380px; height: 680px; }
 .stacked-card { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #ffffff; border-radius: 16px; box-shadow: 0 20px 40px rgba(0,0,0,0.08); border: 1px solid rgba(255,255,255,0.8); display: flex; flex-direction: column; overflow: hidden; transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1); }
 .card-front { z-index: 3; transform: translateX(0) scale(1); opacity: 1; }
 .card-middle { z-index: 2; transform: translateX(35px) scale(0.92); opacity: 0.9; box-shadow: -10px 0 20px rgba(0,0,0,0.04); }
 .card-back { z-index: 1; transform: translateX(70px) scale(0.84); opacity: 0.6; box-shadow: -10px 0 20px rgba(0,0,0,0.04); }
 .card-hidden { z-index: 0; transform: translateX(105px) scale(0.76); opacity: 0; }
-
 .card-image-top { height: 62%; width: 100%; background: #e2e8f0; overflow: hidden; }
 .big-user-img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
 .floating-company-badge { position: absolute; top: calc(62% - 28px); right: 25px; width: 56px; height: 56px; background: rgba(255,255,255,0.9); backdrop-filter: blur(8px); border-radius: 50%; box-shadow: 0 8px 20px rgba(0,0,0,0.12); display: flex; align-items: center; justify-content: center; z-index: 10; border: 2px solid #ffffff; }
@@ -64,58 +56,151 @@ html, body {
 .card-content-bottom p { font-size: 1rem; color: #4a5568; font-style: italic; line-height: 1.5; margin: 0; }
 
 /* =========================================================
-   4. PREMIUM 3D STACKED BADGES (Glassmorphism Upgrade)
+   4. PREMIUM MARKETING & PROMO CAROUSEL (WITH TRACKER)
 ========================================================= */
-.trusted-section { 
-    background: rgba(255, 255, 255, 0.4); 
-    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-    padding: 60px 20px; 
-    border-bottom: 1px solid rgba(226, 232, 240, 0.6); 
-    border-top: 1px solid rgba(226, 232, 240, 0.6); 
-    display: flex; flex-direction: column; align-items: center; overflow: hidden; 
-}
-.trusted-title { text-align: center; font-size: 0.9rem; color: #4a5568; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; margin-bottom: 40px; }
-.trusted-carousel-container { position: relative; width: 260px; height: 55px; transform: translateX(-35px); }
-.mini-card { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(8px); color: #2d3748; font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; justify-content: center; border-radius: 50px; box-shadow: 0 8px 20px rgba(0,0,0,0.06); border: 1px solid rgba(255,255,255,1); transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1); cursor: default; }
-.mini-front:hover { color: #0056b3; box-shadow: 0 10px 25px rgba(0, 86, 179, 0.15); border-color: rgba(0, 86, 179, 0.3); }
-.mini-front  { z-index: 4; transform: translateX(0) scale(1); opacity: 1; }
-.mini-middle { z-index: 3; transform: translateX(35px) scale(0.92); opacity: 0.8; box-shadow: -5px 0 15px rgba(0,0,0,0.03); }
-.mini-back   { z-index: 2; transform: translateX(70px) scale(0.84); opacity: 0.5; box-shadow: -5px 0 15px rgba(0,0,0,0.03); }
-.mini-hidden { z-index: 1; transform: translateX(105px) scale(0.76); opacity: 0; }
+.premium-promo-section { max-width: 1050px; margin: 0 auto 80px auto; padding: 40px 20px 0; }
+.promo-container { background: linear-gradient(135deg, #0056b3 0%, #00b050 100%); border-radius: 20px; padding: 45px 50px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 15px 35px rgba(0, 86, 179, 0.25); flex-wrap: wrap; gap: 40px; }
+.promo-text { flex: 1; min-width: 300px; color: white; }
+.promo-text h2 { color: white; font-size: 2.3rem; margin-bottom: 15px; text-align: left; font-weight: 800; line-height: 1.2; }
+.promo-text p { color: rgba(255, 255, 255, 0.95); font-size: 1.1rem; line-height: 1.6; margin-bottom: 20px; }
+.custom-dev-btn { background: white; color: #0056b3; font-size: 1.1rem; padding: 16px 32px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 10px; border-radius: 50px; border: none; font-weight: bold; cursor: pointer; transition: all 0.3s ease; }
+.custom-dev-btn:hover { background: #f8fafc; color: #00b050; transform: translateY(-3px); box-shadow: 0 12px 25px rgba(0,0,0,0.25); }
+
+.promo-carousel { position: relative; width: 100%; max-width: 370px; height: 320px; }
+.promo-card { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-radius: 16px; box-shadow: 0 15px 35px rgba(0,0,0,0.15); padding: 25px; display: flex; flex-direction: column; transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1); border: 1px solid rgba(255,255,255,1); overflow: hidden; }
+.promo-front { z-index: 3; transform: translateX(0) scale(1); opacity: 1; }
+.promo-middle { z-index: 2; transform: translateX(25px) translateY(25px) scale(0.92); opacity: 0.95; box-shadow: -10px -10px 20px rgba(0,0,0,0.05); }
+.promo-back { z-index: 1; transform: translateX(50px) translateY(50px) scale(0.84); opacity: 0.85; box-shadow: -10px -10px 20px rgba(0,0,0,0.05); }
+.promo-card-header { display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #e2e8f0; padding-bottom: 12px; margin-bottom: 15px; }
+.promo-card-header h3 { color: #0056b3; font-size: 1.3rem; margin: 0; font-weight: 800; }
+.promo-tracker { list-style: none; padding: 0; margin: 0; border-left: 2px solid #e2e8f0; margin-left: 10px; padding-left: 18px; position: relative; }
+.promo-tracker li { position: relative; font-size: 0.95rem; color: #4a5568; margin-bottom: 14px; font-weight: 600; line-height: 1.4; opacity: 0; }
+.promo-tracker li::before { content: ''; position: absolute; left: -25px; top: 4px; width: 10px; height: 10px; border-radius: 50%; background: #e2e8f0; border: 2px solid white; transition: all 0.3s ease; }
+.promo-front .promo-tracker li { animation: trackPointFade 0.4s ease forwards; animation-delay: calc(var(--step) * 0.5s); }
+.promo-front .promo-tracker li::before { animation: trackDotLightUp 0.4s ease forwards; animation-delay: calc(var(--step) * 0.5s); }
+@keyframes trackPointFade { 0% { opacity: 0; transform: translateX(-10px); } 100% { opacity: 1; transform: translateX(0); } }
+@keyframes trackDotLightUp { 0% { background: #e2e8f0; transform: scale(1); } 100% { background: #00b050; border-color: #d1fae5; transform: scale(1.3); box-shadow: 0 0 8px rgba(0,176,80,0.4); } }
+.promo-price { background: #f8fafc; padding: 12px; border-radius: 10px; text-align: center; color: #64748B; font-weight: 600; border: 1px solid #e2e8f0; margin-top: auto; font-size: 0.95rem; }
+.promo-price strong { color: #00b050; font-size: 1.35rem; display: block; margin-top: 2px; font-weight: 800; }
 
 /* =========================================================
-   5. OUR PRODUCTS (Layered Shadows & Hover Glows)
+   5. PRO SCROLLYTELLING SHOWCASE (MESS KHATA)
+   *Updated for proper spacing, button styling, and mobile folder wipe*[cite: 20, 21]
 ========================================================= */
-.projects-section { background: transparent; } /* Lets the main grid show through */
-.card-container { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
-.project-card { 
-    background: rgba(255, 255, 255, 0.95); 
-    padding: 35px 25px; border-radius: 20px; 
-    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05), 0 8px 10px -6px rgba(0,0,0,0.01); /* Layered 3D Shadow */
-    cursor: pointer; transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); 
-    width: 100%; max-width: 360px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; 
-    border: 1px solid rgba(255, 255, 255, 0.8); position: relative; 
-}
-.project-card:hover { 
-    transform: translateY(-12px); 
-    box-shadow: 0 25px 50px -12px rgba(0,86,179,0.15), 0 0 20px rgba(0,176,80,0.08); /* Premium Hover Glow */
-    border-color: rgba(0, 86, 179, 0.2); 
-}
-.card-header { margin-bottom: 20px; }
-.project-card h3 { font-size: 1.6rem; color: #1a202c; margin-bottom: 8px; font-weight: 800; }
-.project-card p { font-size: 1rem; color: #718096; font-weight: 500; }
-.image-wrapper { margin: 20px 0; padding: 10px; transition: transform 0.4s ease; position: relative; overflow: hidden; border-radius: 12px; }
-.project-card img { max-width: 100%; height: auto; border-radius: 12px; max-height: 220px; object-fit: contain; }
+.pro-showcase-section { max-width: 1200px; margin: 0 auto 100px auto; padding: 0 20px; }
+.pro-showcase-container { display: flex; align-items: flex-start; position: relative; gap: 40px; }
 
-.glass-specs { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); display: flex; flex-direction: column; justify-content: center; transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); padding: 20px; text-align: left; border-top: 1px solid rgba(255,255,255,0.9); }
-.project-card:hover .glass-specs { transform: translateY(0); }
-.glass-specs ul { list-style: none; padding: 0; margin: 0; }
-.glass-specs li { font-size: 0.95rem; font-weight: bold; color: #1a202c; margin-bottom: 10px; }
+/* Sticky Left Column */
+.pro-sticky-col {
+    position: sticky; top: 15vh; width: 50%; height: 85vh;
+    display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10;
+}
+
+/* 3D Phone Hardware */
+.pro-phone-frame {
+    width: 260px; height: 540px; background: #1a202c; border-radius: 44px; padding: 12px; box-sizing: border-box;
+    position: relative; box-shadow: -25px 25px 50px rgba(0,0,0,0.2), inset 0 0 0 3px #3a414c;
+    transform: perspective(1000px) rotateY(-8deg) rotateX(2deg) scale(1.02);
+    transition: transform 0.1s linear; transform-origin: center center;
+}
+.pro-notch { position: absolute; top: 22px; left: 50%; transform: translateX(-50%); width: 85px; height: 22px; background: #1a202c; border-radius: 15px; z-index: 20; }
+.pro-screen-container { width: 100%; height: 100%; border-radius: 32px; overflow: hidden; position: relative; background: #f8fafc; }
+
+/* Actions (Buttons Fixed)[cite: 20] */
+.pro-actions { display: flex; gap: 15px; margin-top: 35px; width: 100%; max-width: 380px; justify-content: center; flex-wrap: wrap; }
+.pro-actions .btn-secondary {
+    flex: 1; padding: 14px 20px; font-size: 1rem; background-color: transparent; color: #0056b3;
+    border: 2px solid #cbd5e0; border-radius: 12px; cursor: pointer; font-weight: 700; transition: all 0.3s ease;
+    display: flex; align-items: center; justify-content: center; min-width: 150px;
+}
+.pro-actions .btn-secondary:hover { background-color: #0056b3; color: white; border-color: #0056b3; box-shadow: 0 4px 15px rgba(0,86,179,0.15); }
+.pro-actions .btn-purchase {
+    flex: 1; background-color: transparent; color: #00b050; border: 2px solid #cbd5e0; border-radius: 12px;
+    cursor: pointer; font-weight: 700; font-size: 1rem; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; padding: 8px 10px; transition: all 0.3s ease; min-width: 150px;
+}
+.pro-actions .btn-purchase:hover { background-color: #00b050; color: white; border-color: #00b050; box-shadow: 0 4px 15px rgba(0, 176, 80, 0.2); }
+.pro-actions .btn-price-tag { font-size: 0.85rem; background: rgba(0, 176, 80, 0.1); padding: 2px 10px; border-radius: 20px; color: #00b050; transition: all 0.3s ease; }
+.pro-actions .btn-purchase:hover .btn-price-tag { background: rgba(255,255,255,0.25); color: white; }
+
+/* Right Column (Desktop Scroll Cards) */
+.pro-scroll-col { width: 50%; padding-bottom: 20vh; }
+.pro-feature-card {
+    min-height: 40vh; display: flex; flex-direction: column; justify-content: center;
+    padding: 0 20px; margin-bottom: 50vh; 
+    opacity: 0.3; transform: translateY(20px); transition: all 0.6s ease;
+}
+.pro-feature-card.active-text { opacity: 1; transform: translateY(0); }
+.pro-feature-card:last-child { margin-bottom: 10vh; }
+.pro-feature-card h2 { font-size: 2.6rem; line-height: 1.15; margin-bottom: 20px; text-align: left; color: #1a202c; font-weight: 800; }
+.pro-feature-card p { font-size: 1.15rem; line-height: 1.6; color: #4a5568; }
+
+/* --- PURE CSS SCREENS --- */
+.css-replica-screen {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+    padding: 55px 15px 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px;
+    opacity: 0; visibility: hidden; transform: scale(1.05); transition: all 0.5s ease;
+}
+.css-replica-screen.active { opacity: 1; visibility: visible; transform: scale(1); z-index: 5; }
+
+/* Screen Elements */
+.replica-title { color: #2c3e50; font-size: 14px; font-weight: 900; margin: 0 0 10px 0; background: rgba(255,255,255,0.4); padding: 10px; border-radius: 12px; text-align: center; }
+.replica-nav { background: rgba(255,255,255,0.7); color: #2c3e50; font-size: 12px; font-weight: 800; padding: 14px 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.9); box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
+.replica-logout { background: #ff4757; color: white; font-size: 13px; font-weight: 800; padding: 14px; border-radius: 10px; margin-top: auto; text-align: center; box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4); }
+
+/* Chat Screen CSS */
+.chat-bubble { padding: 12px; border-radius: 14px; font-size: 11px; font-weight: bold; max-width: 80%; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+.chat-bubble.left { background: white; color: #333; align-self: flex-start; border-bottom-left-radius: 3px; }
+.chat-bubble.right { background: #ff6b81; color: white; align-self: flex-end; border-bottom-right-radius: 3px; }
+.chat-input-fake { background: rgba(255,255,255,0.8); color: #7f8fa6; padding: 14px; border-radius: 20px; font-size: 11px; margin-top: auto; font-weight: bold; }
+
+/* Expense/Admin CSS */
+.fake-input { background: rgba(255,255,255,0.9); padding: 12px; border-radius: 10px; font-size: 12px; color: #333; font-weight: bold; border: 1px solid rgba(255,255,255,0.5); }
+.fake-split-box { background: rgba(255,255,255,0.5); padding: 12px; border-radius: 10px; font-size: 11px; font-weight: bold; color: #2c3e50; }
+.fake-checkbox { margin-top: 6px; color: #333; }
+.fake-btn { background: #ff6b81; color: white; padding: 14px; border-radius: 10px; font-size: 12px; font-weight: bold; text-align: center; margin-top: auto; box-shadow: 0 4px 10px rgba(255, 107, 129, 0.4); }
+.admin-box { background: rgba(255,255,255,0.6); padding: 12px; border-radius: 12px; font-size: 12px; font-weight: bold; color: #333; display: flex; flex-direction: column; gap: 8px; }
+.fake-btn-small { background: #3498db; color: white; padding: 10px; border-radius: 8px; text-align: center; }
+
+/* --- MOBILE FOLDER WIPE EFFECT --- 
+   *Using sticky stacking for text cards to mimic a vertical folder wipe*[cite: 21] 
+*/
+@media (max-width: 850px) {
+    .pro-showcase-container { flex-direction: column; gap: 0; }
+    
+    /* Phone locks to top securely, beautifully scaled */
+    .pro-sticky-col { position: sticky; top: 80px; width: 100%; height: auto; padding-top: 10px; z-index: 1; }
+    .pro-phone-frame { width: 220px; height: 460px; transform: scale(1); box-shadow: 0 20px 40px rgba(0,0,0,0.15); margin: 0 auto; } 
+    
+    /* Mobile Buttons */
+    .pro-actions { margin: 20px auto 30px; padding: 0 15px; flex-wrap: nowrap; max-width: 100%; }
+    .pro-actions button { padding: 12px; font-size: 0.95rem; }
+
+    /* Cards stack on top of each other like folders */
+    .pro-scroll-col { width: 100%; position: relative; z-index: 10; padding-bottom: 20vh; }
+    
+    .pro-feature-card {
+        position: sticky;
+        top: 55vh; /* Stops right under the phone */
+        background: #ffffff;
+        padding: 35px 25px;
+        min-height: 45vh;
+        margin-bottom: 50vh; /* Free space between wipes */
+        border-radius: 30px 30px 0 0; /* Folder tab look */
+        box-shadow: 0 -15px 30px rgba(0,0,0,0.08); /* Shadow above to show stacking */
+        border: 1px solid rgba(226, 232, 240, 0.8);
+        opacity: 1; /* Keep fully visible for folder effect */
+        transform: none;
+    }
+    
+    .pro-feature-card h2 { font-size: 2rem; margin-bottom: 15px; }
+    .pro-feature-card p { font-size: 1rem; line-height: 1.5; }
+}
 
 /* =========================================================
    6. PREMIUM FLOATING STAT CARDS
 ========================================================= */
-.premium-stats-section { background: transparent; padding: 80px 20px; }
+.premium-stats-section { background: transparent; padding: 80px 20px; border-top: 1px solid rgba(226, 232, 240, 0.6); }
 .stats-container { max-width: 1000px; margin: 0 auto; display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
 .premium-stat-card { background: rgba(255,255,255,0.9); flex: 1; min-width: 250px; padding: 40px 20px; border-radius: 20px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.04); border: 1px solid rgba(255, 255, 255, 1); transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); backdrop-filter: blur(5px); }
 .premium-stat-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0, 86, 179, 0.08); border-color: rgba(0, 86, 179, 0.2); }
@@ -129,20 +214,9 @@ html, body {
 .btn-primary { background-color: #0056b3; color: white; padding: 14px 32px; border: none; border-radius: 30px; cursor: pointer; font-weight: 700; text-decoration: none; display: inline-block; transition: all 0.3s ease; box-shadow: 0 8px 20px rgba(0,86,179,0.2); font-family: inherit;}
 .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(0,86,179,0.3); }
 
-/* Explore & Purchase Buttons Side-by-Side */
-.card-buttons { display: flex; gap: 10px; margin-top: 15px; width: 100%; }
-.project-card .btn-secondary { margin-top: 0; flex: 1; padding: 12px 5px; font-size: 0.95rem; background-color: transparent; color: #0056b3; border: 2px solid #e2e8f0; border-radius: 12px; cursor: pointer; font-weight: 700; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 6px; }
-.btn-purchase { flex: 1; background-color: transparent; color: #00b050; border: 2px solid #e2e8f0; border-radius: 12px; cursor: pointer; font-weight: 700; font-size: 0.95rem; font-family: inherit; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; gap: 6px; }
-
-/* The Hover Magic */
-.project-card:hover .btn-secondary { background-color: #0056b3; color: white; border-color: #0056b3; }
-.project-card:hover .btn-purchase { background-color: #00b050; color: white; border-color: #00b050; box-shadow: 0 4px 15px rgba(0, 176, 80, 0.2); }
-.project-card:hover .btn-purchase:hover { background-color: #008a3e; border-color: #008a3e; transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0, 176, 80, 0.3); }
-
 .floating-cta { position: fixed; bottom: 30px; right: 30px; z-index: 999; background: #00b050; color: white; padding: 16px 28px; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 1.1rem; box-shadow: 0 10px 25px rgba(0,176,80,0.4); transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); display: flex; align-items: center; justify-content: center; }
 .floating-cta:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,176,80,0.5); }
 .floating-cta.hidden-cta { opacity: 0; visibility: hidden; transform: scale(0.8); pointer-events: none; }
-/* Fix the overlapping Floating CTA */
 .floating-cta { bottom: 15px !important; right: 15px !important; padding: 12px 20px !important; font-size: 0.95rem !important; }
 
 section { max-width: 1200px; margin: 0 auto; padding: 80px 20px; }
@@ -152,56 +226,24 @@ h2 { font-size: 2.2rem; color: #1a202c; margin-bottom: 40px; text-align: center;
    FORM WITH PREMIUM GLASSMORPHISM & AURORA GLOW
 ========================================================= */
 .contact-section { text-align: center; min-height: 500px; display: flex; flex-direction: column; justify-content: center; position: relative; z-index: 1; }
-
-/* The Rotating Aurora Glow Behind the Form */
-.contact-section::before {
-    content: ''; position: absolute; top: 50%; left: 50%; width: 100%; max-width: 600px; height: 110%;
-    background: radial-gradient(circle, rgba(0, 176, 80, 0.12) 0%, rgba(0, 86, 179, 0.12) 40%, transparent 70%);
-    transform: translate(-50%, -50%); z-index: 0; animation: slowSpin 12s linear infinite; pointer-events: none;
-}
+.contact-section::before { content: ''; position: absolute; top: 50%; left: 50%; width: 100%; max-width: 600px; height: 110%; background: radial-gradient(circle, rgba(0, 176, 80, 0.12) 0%, rgba(0, 86, 179, 0.12) 40%, transparent 70%); transform: translate(-50%, -50%); z-index: 0; animation: slowSpin 12s linear infinite; pointer-events: none; }
 @keyframes slowSpin { 0% { transform: translate(-50%, -50%) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg); } }
 
-/* The Floating Glass Form */
-form { 
-    display: flex; flex-direction: column; gap: 20px; max-width: 500px; margin: 0 auto; 
-    background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); 
-    padding: 40px; border-radius: 20px; 
-    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.1), inset 0 0 0 1px rgba(255,255,255,0.6); 
-    position: relative; z-index: 2; transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
+form { display: flex; flex-direction: column; gap: 20px; max-width: 500px; margin: 0 auto; background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 40px; border-radius: 20px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.1), inset 0 0 0 1px rgba(255,255,255,0.6); position: relative; z-index: 2; transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); }
 form:hover { transform: translateY(-5px); box-shadow: 0 30px 60px -15px rgba(0,0,0,0.12), inset 0 0 0 1px rgba(255,255,255,0.8); }
 
-/* Floating Inputs */
-input, select, textarea { 
-    padding: 16px; border: 1px solid rgba(203, 213, 224, 0.8); border-radius: 10px; font-size: 1rem; font-family: inherit; 
-    background: rgba(255, 255, 255, 0.6); color: #2d3748; transition: all 0.4s ease; 
-}
+input, select, textarea { padding: 16px; border: 1px solid rgba(203, 213, 224, 0.8); border-radius: 10px; font-size: 1rem; font-family: inherit; background: rgba(255, 255, 255, 0.6); color: #2d3748; transition: all 0.4s ease; }
 input:hover, select:hover, textarea:hover { background: #ffffff; border-color: #a0aec0; }
-input:focus, select:focus, textarea:focus { 
-    outline: none; border-color: #0056b3; background: #ffffff; 
-    box-shadow: 0 10px 20px rgba(0, 86, 179, 0.1), 0 0 0 3px rgba(0,86,179,0.1); 
-    transform: translateY(-2px); 
-}
+input:focus, select:focus, textarea:focus { outline: none; border-color: #0056b3; background: #ffffff; box-shadow: 0 10px 20px rgba(0, 86, 179, 0.1), 0 0 0 3px rgba(0,86,179,0.1); transform: translateY(-2px); }
 textarea { resize: vertical; min-height: 140px; }
 
-/* The Shimmering Submit Button */
-#submitBtn {
-    position: relative; overflow: hidden; padding: 16px; font-size: 1.1rem; border-radius: 30px;
-    background-color: #0056b3; color: white; border: none; font-weight: 700; cursor: pointer;
-    box-shadow: 0 8px 20px rgba(0,86,179,0.2); transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-/* The Light Sweep Animation */
-#submitBtn::after {
-    content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-    animation: shimmer 3s infinite ease-in-out; pointer-events: none;
-}
+#submitBtn { position: relative; overflow: hidden; padding: 16px; font-size: 1.1rem; border-radius: 30px; background-color: #0056b3; color: white; border: none; font-weight: 700; cursor: pointer; box-shadow: 0 8px 20px rgba(0,86,179,0.2); transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); }
+#submitBtn::after { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); animation: shimmer 3s infinite ease-in-out; pointer-events: none; }
 @keyframes shimmer { 0% { left: -100%; } 100% { left: 200%; } }
 #submitBtn:hover { background-color: #004494; transform: translateY(-3px) scale(1.02); box-shadow: 0 12px 25px rgba(0,86,179,0.35); }
 
-/* Blast Container (Unchanged) */
 .blast-container { position: relative; width: 100%; max-width: 500px; margin: 0 auto; padding: 60px 20px; text-align: center; overflow: hidden; border-radius: 20px; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); box-shadow: 0 20px 40px rgba(0,0,0,0.06); border: 1px solid #ffffff;}
-.success-blob { position: absolute; top: 20%; left: 50%; width: 150%; height: 450px; background: linear-gradient(135deg, rgba(0,86,179,0.08), rgba(0,176,80,0.12)); border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; transform: translate(-50%, -50%); animation: morphBlob 6s ease-in-out infinite alternate; z-index: 0; opacity: 0; transition: opacity 0.6s ease; }
+.success-blob { position: absolute; top: 20%; left: 50%; width: 150%; height: 450px; background: linear-gradient(135deg, rgba(0,86,179,0.08), rgba(0,176,80,0.12)); border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; transform: translate(-50%, -50%); z-index: 0; opacity: 0; transition: opacity 0.6s ease; }
 .success-blob.active { opacity: 1; }
 .success-content { position: relative; z-index: 2; opacity: 0; transform: translateY(20px); transition: all 0.5s ease 0.4s; display: flex; flex-direction: column; align-items: center;}
 .success-content.active { opacity: 1; transform: translateY(0); }
@@ -209,7 +251,6 @@ textarea { resize: vertical; min-height: 140px; }
 .success-content h3 { font-size: 1.8rem; color: #0056b3; margin-bottom: 10px; }
 .success-content p { color: #4a5568; }
 
-/* Custom Dropdown Styling (Upgraded with Float) */
 .custom-dropdown-container { position: relative; width: 100%; margin-bottom: 0px; }
 .custom-dropdown-selected { padding: 16px; border: 1px solid rgba(203, 213, 224, 0.8); border-radius: 10px; font-size: 1rem; background: rgba(255, 255, 255, 0.6); color: #718096; cursor: pointer; text-align: left; transition: all 0.4s ease; position: relative; font-family: inherit; }
 .custom-dropdown-selected:hover { background: #ffffff; border-color: #a0aec0; }
@@ -222,9 +263,6 @@ textarea { resize: vertical; min-height: 140px; }
 .custom-option:last-child { border-bottom: none; }
 .custom-option:hover { background: #f8fafc; color: #0056b3; padding-left: 22px; }
 
-/* =========================================================
-   DYNAMIC APP ORDER SELECTION & LOADER
-========================================================= */
 .select-prompt { font-weight: 700; color: #4a5568; margin-bottom: 12px; text-align: left; font-size: 0.95rem;}
 .product-grid { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
 .checkout-item { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border: 2px solid #e2e8f0; border-radius: 12px; cursor: pointer; transition: all 0.3s ease; background: #ffffff; margin-bottom: 12px; }
@@ -235,18 +273,8 @@ textarea { resize: vertical; min-height: 140px; }
 .price-strike { text-decoration: line-through; color: #a0aec0; font-size: 0.95rem; font-weight: 600; }
 .price-final { color: #00b050; font-size: 1.3rem; font-weight: 800; }
 
-/* --- Premium Jumping Dots Loader --- */
-.loader-container { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 25px 0; }
-.loader-text { font-weight: 700; color: #0056b3; font-size: 1.1rem; letter-spacing: 0.5px; }
-.jumping-dots { display: flex; gap: 6px; align-items: flex-end; height: 15px; }
-.jumping-dots .dot { width: 8px; height: 8px; background-color: #00b050; border-radius: 50%; animation: waveBounce 1.2s infinite ease-in-out both; }
-.jumping-dots .dot:nth-child(1) { animation-delay: -0.32s; }
-.jumping-dots .dot:nth-child(2) { animation-delay: -0.16s; }
-.jumping-dots .dot:nth-child(3) { animation-delay: 0s; }
-@keyframes waveBounce { 0%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-12px); } }
-
 /* =========================================================
-   8. FOOTER, MODALS & RESPONSIVE DESIGN
+   8. FOOTER & RESPONSIVE
 ========================================================= */
 footer { background: #1a202c; color: #a0aec0; padding: 60px 20px 20px; margin-top: 40px; }
 .footer-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 40px; border-bottom: 1px solid #2d3748; padding-bottom: 40px; }
@@ -256,23 +284,11 @@ footer { background: #1a202c; color: #a0aec0; padding: 60px 20px 20px; margin-to
 .footer-right a { color: #cbd5e0; text-decoration: none; transition: 0.3s; }
 .footer-right a:hover { color: white; padding-left: 5px; }
 .footer-bottom { text-align: center; padding-top: 20px; font-size: 0.9rem; }
-
 .reveal { opacity: 0; transform: translateY(20px); transition: all 0.8s ease-out; }
 .reveal.active { opacity: 1; transform: translateY(0); }
+.btn-outline { background-color: transparent; color: #0056b3; padding: 12px 24px; border: 2px solid #cbd5e0; border-radius: 30px; cursor: pointer; font-weight: 700; font-size: 1rem; transition: all 0.3s ease; display: inline-block; font-family: inherit; }
+.btn-outline:hover { background-color: #f8fafc; border-color: #0056b3; box-shadow: 0 4px 15px rgba(0,86,179,0.1); }
 
-.modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(15, 23, 42, 0.8); z-index: 1000; overflow-y: auto; backdrop-filter: blur(10px); }
-.modal-content { background: #ffffff; margin: 5% auto; padding: 40px 30px; width: 90%; max-width: 950px; border-radius: 20px; position: relative; text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.2); }
-.close-btn { position: absolute; top: 20px; right: 25px; font-size: 15px; font-weight: 600; cursor: pointer; color: #4a5568; background: #f1f5f9; padding: 8px 20px; border-radius: 30px; transition: 0.3s; z-index: 10; border: 1px solid #e2e8f0; }
-.close-btn:hover { background: #e2e8f0; color: #1a202c; transform: translateY(-2px); }
-.slider-wrapper { position: relative; width: 100%; display: flex; align-items: center; margin-top: 20px; }
-.slider { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; gap: 30px; padding-bottom: 15px; width: 100%; -ms-overflow-style: none; scrollbar-width: none; }
-.slider img { scroll-snap-align: center; flex: 0 0 100%; max-width: 100%; height: 65vh; object-fit: contain; border-radius: 12px; }
-.slide-arrow { background: rgba(255, 255, 255, 0.9); color: #1a202c; border: none; font-size: 18px; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; cursor: pointer; border-radius: 50%; z-index: 5; transition: all 0.3s; box-shadow: 0 4px 15px rgba(0,0,0,0.1); backdrop-filter: blur(4px); }
-.slide-arrow:hover { background: #ffffff; transform: scale(1.1); box-shadow: 0 8px 25px rgba(0,0,0,0.15);}
-.slide-arrow.prev { position: absolute; left: 10px; }
-.slide-arrow.next { position: absolute; right: 10px; }
-
-/* Responsive Mobile Layout */
 @media (max-width: 850px) {
     .hero { flex-direction: column; text-align: center; padding-top: 80px; }
     .hero-left, .hero-right { width: 100%; padding: 0; max-width: 100%; justify-content: center; }
@@ -283,517 +299,17 @@ footer { background: #1a202c; color: #a0aec0; padding: 60px 20px 20px; margin-to
     .logo-wrapper { margin: 0 auto 20px; }
     .stats-section { flex-direction: column; gap: 30px; }
     .premium-stat-card { min-width: 100%; margin-bottom: 20px; }
-    .floating-cta { bottom: 20px; right: 20px; padding: 14px 22px; font-size: 1rem; }
-}
-
-/*CUSTOM DEV BANNER & SUCCESS BUTTON FIX */
-.custom-dev-section { max-width: 1000px; padding: 40px 20px 0; margin-bottom: -20px; }
-.custom-dev-card { background: linear-gradient(135deg, #0056b3 0%, #00b050 100%); border-radius: 20px; padding: 40px 50px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 15px 35px rgba(0, 86, 179, 0.25); flex-wrap: wrap; gap: 20px; }
-.custom-dev-text { flex: 1; min-width: 300px; }
-.custom-dev-text h2 { color: white; margin-bottom: 15px; font-size: 2rem; text-align: left; }
-.custom-dev-text p { color: rgba(255, 255, 255, 0.9); font-size: 1.1rem; line-height: 1.5; margin: 0; }
-.custom-dev-btn { background: white; color: #0056b3; font-size: 1.1rem; padding: 16px 32px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 10px; border-radius: 50px; border: none; font-weight: bold; }
-.custom-dev-btn:hover { background: #f8fafc; color: #00b050; transform: translateY(-3px); box-shadow: 0 12px 25px rgba(0,0,0,0.25); }
-
-/* Fix for the Success Popup Button */
-.btn-outline { background-color: transparent; color: #0056b3; padding: 12px 24px; border: 2px solid #cbd5e0; border-radius: 30px; cursor: pointer; font-weight: 700; font-size: 1rem; transition: all 0.3s ease; display: inline-block; font-family: inherit; }
-.btn-outline:hover { background-color: #f8fafc; border-color: #0056b3; box-shadow: 0 4px 15px rgba(0,86,179,0.1); }
-
-@media (max-width: 850px) {
-    .custom-dev-card { flex-direction: column; text-align: center; padding: 30px 20px; }
-    .custom-dev-text h2 { text-align: center; }
-    .custom-dev-btn { width: 100%; justify-content: center; }
-}
-
-/* =========================================================
-   MARKETING STORY CAROUSEL & DYNAMIC PRICE BADGES
-========================================================= */
-/* Price Badges inside Purchase Buttons */
-.btn-purchase { flex-direction: column; gap: 4px; padding: 8px 5px; }
-.btn-price-tag { font-size: 0.85rem; background: rgba(0, 176, 80, 0.1); padding: 2px 10px; border-radius: 20px; color: #00b050; transition: all 0.3s ease; font-weight: 800; letter-spacing: 0.5px; }
-.project-card:hover .btn-price-tag { background: rgba(255,255,255,0.25); color: white; }
-
-/* =========================================================
-   PREMIUM MARKETING & PROMO CAROUSEL (WITH TRACKER)
-========================================================= */
-.premium-promo-section { max-width: 1050px; margin: 0 auto 40px auto; padding: 40px 20px 0; }
-.promo-container { background: linear-gradient(135deg, #0056b3 0%, #00b050 100%); border-radius: 20px; padding: 45px 50px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 15px 35px rgba(0, 86, 179, 0.25); flex-wrap: wrap; gap: 40px; }
-
-.promo-text { flex: 1; min-width: 300px; color: white; }
-.promo-text h2 { color: white; font-size: 2.3rem; margin-bottom: 15px; text-align: left; font-weight: 800; line-height: 1.2; }
-.promo-text p { color: rgba(255, 255, 255, 0.95); font-size: 1.1rem; line-height: 1.6; margin-bottom: 20px; }
-
-/* The Breathing Animation applied to the card stack */
-.promo-carousel { position: relative; width: 100%; max-width: 370px; height: 320px; animation: floatBreathe 5s ease-in-out infinite; }
-.promo-card { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-radius: 16px; box-shadow: 0 15px 35px rgba(0,0,0,0.15); padding: 25px; display: flex; flex-direction: column; transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1); border: 1px solid rgba(255,255,255,1); overflow: hidden; }
-
-.promo-front { z-index: 3; transform: translateX(0) scale(1); opacity: 1; }
-.promo-middle { z-index: 2; transform: translateX(25px) translateY(25px) scale(0.92); opacity: 0.95; box-shadow: -10px -10px 20px rgba(0,0,0,0.05); }
-.promo-back { z-index: 1; transform: translateX(50px) translateY(50px) scale(0.84); opacity: 0.85; box-shadow: -10px -10px 20px rgba(0,0,0,0.05); }
-
-/* Header with SVG Icon */
-.promo-card-header { display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #e2e8f0; padding-bottom: 12px; margin-bottom: 15px; }
-.promo-card-header h3 { color: #0056b3; font-size: 1.3rem; margin: 0; font-weight: 800; }
-
-/* --- THE TRACKER ANIMATION --- */
-.promo-tracker { list-style: none; padding: 0; margin: 0; border-left: 2px solid #e2e8f0; margin-left: 10px; padding-left: 18px; position: relative; }
-.promo-tracker li { position: relative; font-size: 0.95rem; color: #4a5568; margin-bottom: 14px; font-weight: 600; line-height: 1.4; opacity: 0; }
-/* The little circles on the timeline */
-.promo-tracker li::before { content: ''; position: absolute; left: -25px; top: 4px; width: 10px; height: 10px; border-radius: 50%; background: #e2e8f0; border: 2px solid white; transition: all 0.3s ease; }
-
-/* Trigger tracker points to fade in sequentially ONLY when the card is in the front */
-.promo-front .promo-tracker li { animation: trackPointFade 0.4s ease forwards; animation-delay: calc(var(--step) * 0.5s); }
-/* Trigger tracker circles to light up green sequentially */
-.promo-front .promo-tracker li::before { animation: trackDotLightUp 0.4s ease forwards; animation-delay: calc(var(--step) * 0.5s); }
-
-@keyframes trackPointFade { 0% { opacity: 0; transform: translateX(-10px); } 100% { opacity: 1; transform: translateX(0); } }
-@keyframes trackDotLightUp { 0% { background: #e2e8f0; transform: scale(1); } 100% { background: #00b050; border-color: #d1fae5; transform: scale(1.3); box-shadow: 0 0 8px rgba(0,176,80,0.4); } }
-
-/* Price Tag */
-.promo-price { background: #f8fafc; padding: 12px; border-radius: 10px; text-align: center; color: #64748B; font-weight: 600; border: 1px solid #e2e8f0; margin-top: auto; font-size: 0.95rem; }
-.promo-price strong { color: #00b050; font-size: 1.35rem; display: block; margin-top: 2px; font-weight: 800; }
-
-/* HIGHLY OPTIMIZED MOBILE VIEW */
-@media (max-width: 850px) {
-    .premium-promo-section { padding: 20px 15px 0; }
-    .promo-container { flex-direction: column; text-align: center; padding: 35px 20px; gap: 30px; }
-    .promo-text h2 { text-align: center; font-size: 1.9rem; }
-    .promo-carousel { height: 350px; max-width: 320px; }
-    .promo-middle { transform: translateX(15px) translateY(15px) scale(0.92); }
-    .promo-back { transform: translateX(30px) translateY(30px) scale(0.84); }
-}
-
-/* =========================================================
-   ULTIMATE MOBILE OPTIMIZATION (PHONES ONLY)
-========================================================= */
-@media (max-width: 768px) {
-    /* 1. Global Spacing & Typography */
-    section { padding: 50px 15px !important; }
-    h2 { font-size: 1.8rem !important; margin-bottom: 25px !important; }
-    p { font-size: 1rem !important; }
-
-    /* 2. Hero Section (Left-Aligned App Style for Mobile) */
-    .hero { padding-top: 30px !important; min-height: auto; text-align: left !important; }
-    .hero-left { display: flex !important; flex-direction: column !important; align-items: flex-start !important; width: 100% !important; padding: 0 !important; }
-    .logo-wrapper { margin: 0 0 20px 0 !important; }
-    .logo { width: 90px !important; height: 90px !important; padding: 8px !important; }
-    .cloud-blob { width: 140px !important; height: 140px !important; }
-    .hero h1 { font-size: 2.1rem !important; margin-bottom: 12px !important; text-align: left !important; }
-    .hero p { text-align: left !important; }
     
-    /* 3. Feedback Carousel */
-    .hero-right { width: 100% !important; margin-top: 50px !important; justify-content: center !important; padding-right: 0 !important; }
-    .stacked-carousel { height: 500px !important; max-width: 320px !important; margin: 0 auto !important; }
-    .card-content-bottom { padding: 15px 20px !important; }
-    .card-content-bottom h4 { font-size: 1.2rem !important; }
-    .card-content-bottom p { font-size: 0.9rem !important; line-height: 1.4 !important; }
-
-    /* 4. Product Cards */
-    .project-card { padding: 25px 20px !important; border-radius: 16px !important; }
-    .project-card h3 { font-size: 1.4rem !important; }
-    .image-wrapper { margin: 15px 0 !important; }
-    .glass-specs { padding: 15px !important; }
-    .glass-specs li { font-size: 0.85rem !important; margin-bottom: 8px !important; }
-    .card-buttons { flex-direction: column !important; gap: 12px !important; } 
-    .project-card .btn-secondary, .btn-purchase { padding: 12px !important; width: 100% !important; }
-    .btn-purchase { flex-direction: row !important; justify-content: center !important; gap: 10px !important; }
-
-    /* 5. Promo/Tracker Cards & Text */
-    .promo-container { padding: 30px 20px !important; gap: 20px !important; }
-    .promo-text h2 { font-size: 1.7rem !important; line-height: 1.3 !important; }
-    .custom-dev-btn { padding: 12px 24px !important; font-size: 1rem !important; width: 100% !important; justify-content: center !important; }
-    .promo-carousel { height: 280px !important; max-width: 300px !important; margin: 10px auto 0 !important; }
-    .promo-card { padding: 20px 15px !important; }
-    .promo-card-header { margin-bottom: 10px !important; padding-bottom: 8px !important; }
-    .promo-card-header h3 { font-size: 1.15rem !important; }
-    .promo-card-header svg { width: 22px !important; height: 22px !important; }
-    .promo-tracker { margin-left: 5px !important; padding-left: 15px !important; }
-    .promo-tracker li { font-size: 0.85rem !important; margin-bottom: 12px !important; }
-    .promo-price { padding: 10px !important; font-size: 0.85rem !important; }
-    .promo-price strong { font-size: 1.2rem !important; }
-
-    /* 6. Form Section */
     form { padding: 25px 15px !important; border-radius: 16px !important; }
     input, select, textarea, .custom-dropdown-selected { padding: 14px !important; font-size: 0.95rem !important; }
     .checkout-item { padding: 12px 15px !important; flex-direction: column !important; align-items: flex-start !important; gap: 8px !important; }
     .prod-pricing { width: 100% !important; justify-content: space-between !important; }
     
-    /* 7. Stats Area */
-    .stats-container { gap: 15px !important; }
-    .premium-stat-card { padding: 25px 15px !important; min-width: 100% !important; margin-bottom: 0 !important; }
-    .stat-icon { font-size: 2rem !important; margin-bottom: 10px !important; }
-    .premium-stat-card h3 { font-size: 2.2rem !important; }
-
-    /* 8. Footer */
     .footer-content { gap: 25px !important; text-align: center; flex-direction: column; }
     .footer-left, .footer-right { width: 100%; align-items: center; }
     .footer-right { display: flex; flex-direction: column; gap: 12px; }
-
-    /* 9. Floating CTA Fix */
-    .floating-cta { bottom: 15px !important; right: 15px !important; padding: 12px 20px !important; font-size: 0.95rem !important; }
-
-   /* 10. Performance & GPU Acceleration (Fixes Mobile Scroll Lag) */
-    html, body { 
-        background-attachment: scroll !important; /* Fixed backgrounds destroy mobile framerates */
-    }
-    * {
-        -webkit-font-smoothing: antialiased; /* Smoother text rendering while scrolling */
-    }
-    /* Force elements to render on their own GPU layer */
-    .hero, .contact-section::before, .stacked-carousel, .promo-carousel, form, .project-card {
-        will-change: transform;
-        backface-visibility: hidden; 
-    }
-    /* Slightly reduce the heavy blur for smoother rendering on older phones */
-    form { 
-        backdrop-filter: blur(12px) !important; 
-        -webkit-backdrop-filter: blur(12px) !important; 
-    }
-    .promo-card { 
-        backdrop-filter: blur(8px) !important; 
-        -webkit-backdrop-filter: blur(8px) !important; 
-    }
-}
-
-/* =========================================================
-   ZAPPY-STYLE PREMIUM 3D PHONE MOCKUP (MESS KHATA)
-========================================================= */
-.zappy-wrapper { 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    perspective: 1000px; /* Enables 3D depth */
-    padding: 20px 0 40px 0;
-    overflow: visible !important; /* Allows the phone to pop out */
-}
-
-.zappy-phone-frame {
-    width: 170px;
-    height: 340px;
-    background: #000000; /* Realistic black bezel */
-    border-radius: 36px;
-    padding: 8px; /* Thickness of the bezel */
-    box-sizing: border-box;
-    position: relative;
-    /* The Zappy Tilt: angled, slightly scaled, with a deep drop shadow */
-    transform: rotate(-6deg) rotateY(-10deg) scale(1.05);
-    box-shadow: 
-        -20px 20px 30px rgba(0,0,0,0.15), 
-        inset 0 0 0 2px #333333; /* Outer shadow + inner metallic lip */
-    transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-/* Make it pop further on hover */
-.project-card:hover .zappy-phone-frame { 
-    transform: rotate(-3deg) rotateY(-5deg) scale(1.1) translateY(-10px); 
-    box-shadow: -25px 25px 40px rgba(0, 86, 179, 0.2), inset 0 0 0 2px #333333;
-}
-
-/* The iPhone style Dynamic Island/Notch */
-.iphone-notch {
-    position: absolute;
-    top: 15px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 50px;
-    height: 14px;
-    background: #000000;
-    border-radius: 10px;
-    z-index: 10;
-}
-
-.replica-screen {
-    width: 100%;
-    height: 100%;
-    border-radius: 28px; /* Matches the inner curve of the bezel */
-    background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
-    padding: 35px 12px 15px; /* Extra top padding for the notch */
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
-}
-
-/* Inner App UI Styling */
-.replica-title { 
-    color: #2c3e50; font-size: 13px; font-weight: 900; 
-    margin: 0 0 5px 0; background: rgba(255,255,255,0.3);
-    padding: 6px 10px; border-radius: 12px; width: 100%; text-align: center;
-}
-
-.replica-nav { 
-    background: rgba(255,255,255,0.7); color: #2c3e50; 
-    font-size: 10px; font-weight: 800; width: 100%; 
-    padding: 10px 12px; border-radius: 10px; text-align: left; 
-    border: 1px solid rgba(255,255,255,0.9); 
-    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
-}
-
-.replica-logout { 
-    background: #ff4757; color: white; font-size: 11px; 
-    font-weight: 800; width: 100%; padding: 12px 10px; 
-    border-radius: 10px; margin-top: auto; text-align: center;
-    box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
-}
-
-/* =========================================================
-   SCROLLYTELLING STICKY SHOWCASE (ZAPPY STYLE)
-========================================================= */
-.sticky-showcase-section {
-    padding: 0;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.sticky-container {
-    display: flex;
-    position: relative;
-    align-items: flex-start; /* Required for sticky to work */
-}
-
-/* --- Left Column: The Sticky Phone --- */
-.sticky-phone-col {
-    position: sticky;
-    top: 10vh; /* Locks the phone 10% from the top of the screen */
-    width: 50%;
-    height: 90vh; /* Takes up most of the viewport height */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 10;
-}
-
-/* The actual phone mockup */
-.zappy-phone-frame {
-    width: 260px;
-    height: 540px;
-    background: #000000;
-    border-radius: 40px;
-    padding: 10px;
-    box-sizing: border-box;
-    position: relative;
-    box-shadow: -20px 20px 40px rgba(0,0,0,0.15), inset 0 0 0 2px #333333;
-    transition: transform 0.1s linear; /* Smooth scroll tilting */
-    transform-origin: center center;
-}
-
-.iphone-notch {
-    position: absolute;
-    top: 18px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 22px;
-    background: #000000;
-    border-radius: 12px;
-    z-index: 20;
-}
-
-/* Screen Image Container */
-.screen-image-container {
-    width: 100%;
-    height: 100%;
-    border-radius: 32px;
-    overflow: hidden;
-    position: relative;
-    background: #e2e8f0;
-}
-
-/* Image Crossfade Logic */
-.scroll-screen {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0;
-    transform: scale(1.05);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.scroll-screen.active {
-    opacity: 1;
-    transform: scale(1);
-    z-index: 5;
-}
-
-.sticky-actions {
-    display: flex;
-    gap: 15px;
-    margin-top: 30px;
-}
-
-/* --- Right Column: Scrolling Text --- */
-.scroll-text-col {
-    width: 50%;
-    padding-bottom: 20vh; /* Space at the end */
-}
-
-.feature-text-block {
-    min-height: 80vh; /* Spacing between features */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 0 40px;
-    opacity: 0.3; /* Faded when inactive */
-    transform: translateY(20px);
-    transition: all 0.6s ease;
-}
-
-.feature-text-block.active-text {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.feature-text-block h2 {
-    font-size: 2.8rem;
-    line-height: 1.1;
-    margin-bottom: 20px;
-}
-
-.feature-text-block p {
-    font-size: 1.2rem;
-    line-height: 1.6;
-    color: #4a5568;
-}
-
-/* --- MOBILE OPTIMIZATION --- */
-@media (max-width: 850px) {
-    .sticky-container {
-        flex-direction: column;
-    }
     
-    .sticky-phone-col {
-        width: 100%;
-        height: 60vh; /* Shorter on mobile */
-        top: 80px; /* Pin right below mobile header */
-        padding-top: 20px;
-    }
-
-    .zappy-phone-frame {
-        width: 200px;
-        height: 420px;
-    }
-    
-    .scroll-text-col {
-        width: 100%;
-        margin-top: -20vh; /* Overlap slightly */
-        position: relative;
-        z-index: 20;
-    }
-
-    .feature-text-block {
-        min-height: 60vh;
-        padding: 40px 20px;
-        background: rgba(255, 255, 255, 0.85); /* Glass effect behind text */
-        backdrop-filter: blur(10px);
-        margin: 20px 15px;
-        border-radius: 20px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    }
-
-    .feature-text-block h2 { font-size: 2rem; }
-}
-
-/* =========================================================
-   PRO SHOWCASE (ZAPPY STYLE + PURE CSS SCREENS)
-========================================================= */
-.pro-showcase-section { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-.pro-showcase-container { display: flex; align-items: flex-start; position: relative; }
-
-/* Sticky Left Column */
-.pro-sticky-col {
-    position: sticky; top: 12vh; width: 50%; height: 85vh;
-    display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 10;
-}
-
-/* 3D Phone Hardware */
-.pro-phone-frame {
-    width: 250px; height: 520px; background: #000000; border-radius: 40px; padding: 10px; box-sizing: border-box;
-    position: relative; box-shadow: -20px 20px 40px rgba(0,0,0,0.15), inset 0 0 0 2px #333333;
-    transform: perspective(1000px) rotateY(-8deg) rotateX(2deg) scale(1.02);
-    transition: transform 0.1s linear; transform-origin: center center;
-}
-.pro-notch { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); width: 70px; height: 18px; background: #000000; border-radius: 12px; z-index: 20; }
-.pro-screen-container { width: 100%; height: 100%; border-radius: 32px; overflow: hidden; position: relative; background: #e2e8f0; }
-
-/* Actions (Buttons) */
-.pro-actions { display: flex; gap: 15px; margin-top: 30px; width: 100%; max-width: 350px; justify-content: center; flex-wrap: wrap; }
-.pro-actions button { flex: 1; min-width: 140px; }
-
-/* Right Column (Scroll Cards) */
-.pro-scroll-col { width: 50%; padding-bottom: 20vh; }
-.pro-feature-card {
-    min-height: 40vh; display: flex; flex-direction: column; justify-content: center;
-    padding: 0 40px; margin-bottom: 60vh; /* Massive gap for desktop scrolling */
-    opacity: 0.3; transform: translateY(20px); transition: all 0.6s ease;
-}
-.pro-feature-card.active-text { opacity: 1; transform: translateY(0); }
-.pro-feature-card:last-child { margin-bottom: 10vh; }
-.pro-feature-card h2 { font-size: 2.6rem; line-height: 1.1; margin-bottom: 20px; text-align: left; }
-.pro-feature-card p { font-size: 1.1rem; line-height: 1.6; color: #4a5568; }
-
-/* --- PURE CSS SCREENS --- */
-.css-replica-screen {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
-    padding: 45px 15px 20px; box-sizing: border-box; display: flex; flex-direction: column; gap: 8px;
-    opacity: 0; visibility: hidden; transform: scale(1.05); transition: all 0.5s ease;
-}
-.css-replica-screen.active { opacity: 1; visibility: visible; transform: scale(1); z-index: 5; }
-
-/* Screen Elements */
-.replica-title { color: #2c3e50; font-size: 14px; font-weight: 900; margin: 0 0 10px 0; background: rgba(255,255,255,0.3); padding: 8px; border-radius: 12px; text-align: center; }
-.replica-nav { background: rgba(255,255,255,0.7); color: #2c3e50; font-size: 11px; font-weight: 800; padding: 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.9); box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
-.replica-logout { background: #ff4757; color: white; font-size: 12px; font-weight: 800; padding: 12px; border-radius: 10px; margin-top: auto; text-align: center; box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4); }
-
-/* Chat Screen CSS */
-.chat-bubble { padding: 10px; border-radius: 12px; font-size: 10px; font-weight: bold; max-width: 80%; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-.chat-bubble.left { background: white; color: #333; align-self: flex-start; border-bottom-left-radius: 2px; }
-.chat-bubble.right { background: #ff6b81; color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
-.chat-input-fake { background: rgba(255,255,255,0.8); color: #7f8fa6; padding: 12px; border-radius: 20px; font-size: 10px; margin-top: auto; font-weight: bold; }
-
-/* Expense/Admin CSS */
-.fake-input { background: rgba(255,255,255,0.9); padding: 10px; border-radius: 8px; font-size: 11px; color: #333; font-weight: bold; border: 1px solid rgba(255,255,255,0.5); }
-.fake-split-box { background: rgba(255,255,255,0.5); padding: 10px; border-radius: 8px; font-size: 10px; font-weight: bold; color: #2c3e50; }
-.fake-checkbox { margin-top: 5px; color: #333; }
-.fake-btn { background: #ff6b81; color: white; padding: 12px; border-radius: 10px; font-size: 11px; font-weight: bold; text-align: center; margin-top: auto; box-shadow: 0 4px 10px rgba(255, 107, 129, 0.4); }
-.admin-box { background: rgba(255,255,255,0.6); padding: 10px; border-radius: 10px; font-size: 11px; font-weight: bold; color: #333; display: flex; flex-direction: column; gap: 8px; }
-.fake-btn-small { background: #3498db; color: white; padding: 8px; border-radius: 6px; text-align: center; }
-
-
-/* --- MOBILE FOLDER WIPE EFFECT --- */
-@media (max-width: 850px) {
-    .pro-showcase-container { flex-direction: column; }
-    
-    /* Phone locks to top */
-    .pro-sticky-col { position: sticky; top: 70px; width: 100%; height: 50vh; padding-top: 20px; z-index: 1; }
-    .pro-phone-frame { width: 180px; height: 380px; transform: scale(1); } /* Removed 3D tilt on mobile for cleaner look */
-    
-    /* Fix Mobile Buttons */
-    .pro-actions { margin-top: 15px; padding: 0 10px; gap: 10px; flex-wrap: nowrap; }
-    .pro-actions button { padding: 12px; font-size: 0.9rem; }
-
-    /* Cards slide over phone */
-    .pro-scroll-col { width: 100%; margin-top: 10vh; position: relative; z-index: 10; padding-bottom: 5vh; }
-    
-    .pro-feature-card {
-        min-height: auto;
-        padding: 30px 20px;
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(15px);
-        -webkit-backdrop-filter: blur(15px);
-        margin: 0 15px 75vh 15px; /* HUGE bottom margin creates the "free scroll space" */
-        border-radius: 20px;
-        box-shadow: 0 -10px 40px rgba(0,0,0,0.1);
-        border: 1px solid rgba(255,255,255,1);
-        opacity: 1; /* Always fully visible on mobile when it wipes up */
-    }
-    .pro-feature-card:last-child { margin-bottom: 5vh; }
-    .pro-feature-card h2 { font-size: 1.8rem; }
+    html, body { background-attachment: scroll !important; }
+    * { -webkit-font-smoothing: antialiased; }
+    .hero, .contact-section::before, .stacked-carousel, .promo-carousel, form, .pro-phone-frame { will-change: transform; backface-visibility: hidden; }
 }
