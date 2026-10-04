@@ -118,53 +118,92 @@
         </div>
     </section>
         
-        <!-- PREMIUM ZAPPY-STYLE STICKY SCROLL SECTION FOR MESS KHATA -->
-    <section class="sticky-showcase-section">
-        <div class="sticky-container">
+        <!-- PRO SCROLLYTELLING SHOWCASE: MESS KHATA -->
+    <section class="pro-showcase-section" id="mess-khata-showcase">
+        <div class="pro-showcase-container">
             
-            <!-- LEFT: The Sticky Phone that stays in place -->
-            <div class="sticky-phone-col">
-                <div class="zappy-phone-frame" id="dynamic-phone">
-                    <div class="iphone-notch"></div>
-                    <!-- The Screen Images (Overlapped for crossfading) -->
-                    <div class="screen-image-container">
-                        <!-- Default Screen -->
-                        <img src="Mess Khata/Mess Khata Home.png" class="scroll-screen active" id="screen-home" alt="Home">
-                        <img src="Mess Khata/Mess Khata Chat.png" class="scroll-screen" id="screen-chat" alt="Chat">
-                        <img src="Mess Khata/Mess Khata Expence.png" class="scroll-screen" id="screen-expense" alt="Expense">
-                        <img src="Mess Khata/Mess Khata Admin Home.png" class="scroll-screen" id="screen-admin" alt="Admin">
+            <!-- LEFT/TOP: The Sticky Phone -->
+            <div class="pro-sticky-col">
+                <div class="pro-phone-frame" id="pro-phone">
+                    <div class="pro-notch"></div>
+                    <div class="pro-screen-container">
+                        
+                        <!-- Screen 1: Home (Default) -->
+                        <div class="css-replica-screen active" id="css-screen-home">
+                            <h4 class="replica-title">Welcome, Dipun</h4>
+                            <div class="replica-nav">💸 EXPENCE</div>
+                            <div class="replica-nav">🧹 COOKING & CLEANING</div>
+                            <div class="replica-nav">💳 Pay Detels</div>
+                            <div class="replica-nav">📊 EXPENCE REVIEW</div>
+                            <div class="replica-nav">💬 Chat</div>
+                            <div class="replica-logout">🚪 Logout</div>
+                        </div>
+    
+                        <!-- Screen 2: Live Chat -->
+                        <div class="css-replica-screen" id="css-screen-chat">
+                            <h4 class="replica-title">💬 Live Chat</h4>
+                            <div class="chat-bubble left">Hey, are you adding the grocery bill?</div>
+                            <div class="chat-bubble right">Yes, doing it right now! 💸</div>
+                            <div class="chat-bubble left">Perfect, thanks.</div>
+                            <div class="chat-input-fake">Type a message...</div>
+                        </div>
+    
+                        <!-- Screen 3: Expense Logging -->
+                        <div class="css-replica-screen" id="css-screen-expense">
+                            <h4 class="replica-title">💸 Add Expense</h4>
+                            <div class="fake-input">Dinner</div>
+                            <div class="fake-input">₹ 450</div>
+                            <div class="fake-split-box">
+                                <div>Split With:</div>
+                                <div class="fake-checkbox">☑ Asib</div>
+                                <div class="fake-checkbox">☑ Khadimul</div>
+                            </div>
+                            <div class="fake-btn">SAVE EXPENSE</div>
+                        </div>
+    
+                        <!-- Screen 4: Admin Panel -->
+                        <div class="css-replica-screen" id="css-screen-admin">
+                            <h4 class="replica-title" style="color: #d35400;">👑 Admin Panel</h4>
+                            <div class="admin-box">
+                                <div>👥 Manage Users</div>
+                                <div class="fake-input">Select a user...</div>
+                                <div class="fake-btn-small">Reset Pass</div>
+                            </div>
+                            <div class="admin-box">
+                                <div>🧹 Manage Work</div>
+                                <div class="fake-input">Add new work...</div>
+                            </div>
+                        </div>
+    
                     </div>
                 </div>
-                <!-- Explore/Purchase Buttons locked under the phone -->
-                <div class="sticky-actions">
-                    <button class="btn-secondary" onclick="window.open('MessKhata-Demo/index.html', '_blank')">Explore Sandbox <span>&#8594;</span></button>
+                
+                <!-- Actions: Restructured to prevent squishing -->
+                <div class="pro-actions">
+                    <button class="btn-secondary" onclick="window.location.href='MessKhata-Demo/index.html'">Explore Sandbox &rarr;</button>
                     <button class="btn-purchase" onclick="directPurchase('Mess Khata', event)">Purchase 🛒 <span class="btn-price-tag">₹99</span></button>
                 </div>
             </div>
     
-            <!-- RIGHT: The Scrolling Features -->
-            <div class="scroll-text-col">
-                <!-- Block 1 -->
-                <div class="feature-text-block" data-image="screen-home">
-                    <h2 style="text-align: left;">Mess Khata.<br>Manage PG like a Pro.</h2>
+            <!-- RIGHT/BOTTOM: The Scrolling Folder Cards -->
+            <div class="pro-scroll-col">
+                <div class="pro-feature-card" data-screen="css-screen-home">
+                    <h2>Mess Khata.<br>Manage PG like a Pro.</h2>
                     <p>Catch up with roomates, split bills instantly, and log chores without the headache of a physical ledger. Everything is synced to the cloud in real-time.</p>
                 </div>
                 
-                <!-- Block 2 -->
-                <div class="feature-text-block" data-image="screen-chat">
-                    <h2 style="text-align: left;">Live Chat.<br>Stay in the loop.</h2>
+                <div class="pro-feature-card" data-screen="css-screen-chat">
+                    <h2>Live Chat.<br>Stay in the loop.</h2>
                     <p>Communicate seamlessly with your roommates or PG manager through the built-in interactive chat system. Discuss groceries, bills, and maintenance in one place.</p>
                 </div>
                 
-                <!-- Block 3 -->
-                <div class="feature-text-block" data-image="screen-expense">
-                    <h2 style="text-align: left;">Live Expense.<br>Zero confusion.</h2>
+                <div class="pro-feature-card" data-screen="css-screen-expense">
+                    <h2>Live Expense.<br>Zero confusion.</h2>
                     <p>Log daily expenses, select who pays for what, and let our algorithm calculate the exact balances instantly. No more end-of-month math anxiety.</p>
                 </div>
     
-                <!-- Block 4 -->
-                <div class="feature-text-block" data-image="screen-admin">
-                    <h2 style="text-align: left;">Multi-tier Admin.<br>Total control.</h2>
+                <div class="pro-feature-card" data-screen="css-screen-admin">
+                    <h2>Multi-tier Admin.<br>Total control.</h2>
                     <p>PG Owners get a dedicated dashboard to manage users, reset passwords, and track global transaction history securely.</p>
                 </div>
             </div>
