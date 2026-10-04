@@ -6,16 +6,17 @@
     <meta name="description" content="Cellflow offers simple billing (Billflow) and PG management (Mess Khata) software for small businesses.">
     <title>Cellflow | Business Software Simplified</title>
     <link rel="icon" type="image/png" href="logo.png">
-    <link rel="stylesheet" href="style.css?v=2.0">
+    <link rel="stylesheet" href="style.css?v=3.0">
 </head>
 <body>
 
     <!-- HERO SECTION -->
     <header class="hero">
         <div class="hero-left">
-            <div class="logo-wrapper">
+            <!-- Added IDs for the new Momento Scroll-to-Zoom effect -->
+            <div class="logo-wrapper" id="hero-logo-wrapper">
                 <div class="cloud-blob"></div>
-                <img src="logo.png" alt="Cellflow Logo" class="logo">
+                <img src="logo.png" alt="Cellflow Logo" class="logo" id="hero-logo">
             </div>
             <h1>Is your business still run by a ledger?</h1>
             <p>Upgrade to simple, fast, and secure apps designed for your daily needs.</p>
@@ -37,18 +38,7 @@
                     </div>
                 </div>
 
-                <!-- Feedback 2: syz foundation (AUTHENTIC REVIEW) -->
-               <!-- <div class="stacked-card card-back">
-                    <div class="card-image-top"><img src="feedback/khadi.png" alt="Khadimul Islam" class="big-user-img"></div>
-                    <div class="floating-company-badge"><img src="feedback/khadi_logo.png" alt="syz foundation Logo"></div>
-                    <div class="card-content-bottom">
-                        <h4>Khadimul Islam</h4><span class="user-role">JEE/NEET Educator</span>
-                        <div class="card-rating">⭐⭐⭐⭐⭐ <span>5.0/5.0</span></div>
-                        <p>"Cellflow built the exact mock test platform I needed. It makes uploading image-based questions incredibly easy, and my students love getting their automated PDF answer keys emailed right to them. A perfect, user-friendly system."</p>
-                    </div>
-                </div> -->
-
-                <!-- Feedback 3: Mess Khata -->
+                <!-- Feedback 2: Mess Khata -->
                 <div class="stacked-card card-middle">
                     <div class="card-image-top"><img src="feedback/asib.png" alt="SK MD Asib" class="big-user-img"></div>
                     <div class="floating-company-badge"><span class="emoji">🏠</span></div>
@@ -69,7 +59,7 @@
             <div class="promo-text">
                 <h2>Stop Selling in DMs. Build Your Empire.</h2>
                 <p>Selling on Facebook or WhatsApp? Manual tracking limits your growth. We build custom, automated web platforms and B2B systems that make your business look premium and run on autopilot—just like the website you are on right now.</p>
-                <button class="btn-primary custom-dev-btn" style="background: white; color: #0056b3; margin-top: 15px;" onclick="requestCustomBuild(event)">Request a Custom Build <span>&#8594;</span></button>
+                <button class="btn-primary custom-dev-btn" onclick="requestCustomBuild(event)">Request a Custom Build <span>&#8594;</span></button>
             </div>
             
             <div class="promo-carousel" id="promoCarousel">
@@ -118,8 +108,8 @@
         </div>
     </section>
         
-        <!-- PRO SCROLLYTELLING SHOWCASE: MESS KHATA -->
-    <section class="pro-showcase-section" id="mess-khata-showcase">
+    <!-- PRO SCROLLYTELLING SHOWCASE: MESS KHATA -->
+    <section class="pro-showcase-section" id="projects">
         <div class="pro-showcase-container">
             
             <!-- LEFT/TOP: The Sticky Phone -->
@@ -178,10 +168,13 @@
                     </div>
                 </div>
                 
-                <!-- Actions: Restructured to prevent squishing -->
+                <!-- Actions: Fixed CSS classes and routing -->
                 <div class="pro-actions">
                     <button class="btn-secondary" onclick="window.location.href='MessKhata-Demo/index.html'">Explore Sandbox &rarr;</button>
-                    <button class="btn-purchase" onclick="directPurchase('Mess Khata', event)">Purchase 🛒 <span class="btn-price-tag">₹99</span></button>
+                    <button class="btn-purchase" onclick="directPurchase('Mess Khata', event)">
+                        <span>Purchase 🛒</span>
+                        <span class="btn-price-tag" id="badge-Mess Khata">₹99</span>
+                    </button>
                 </div>
             </div>
     
@@ -210,8 +203,63 @@
     
         </div>
     </section>
+
+    <!-- OTHER PRODUCTS (Billflow & Moktest stay as standard cards for now) -->
+    <section class="projects-section reveal">
+        <div class="card-container">
+            <!-- 2. Billflow -->
+            <div class="project-card" onclick="openModal('billflowModal')">
+                <div class="card-header">
+                    <h3>Billflow</h3>
+                    <p>3-Tap Retail Billing</p>
+                </div>
+                <div class="image-wrapper">
+                    <img src="BillFlow/Dasbord Dextop.png" alt="Billflow Dashboard">
+                    <div class="glass-specs">
+                        <ul>
+                            <li>⚡ Real-time Cloud Sync</li>
+                            <li>📊 Automated Invoicing</li>
+                            <li>🔐 Secure Encrypted Login</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-buttons">
+                    <button class="btn-secondary">Explore <span>&#8594;</span></button>
+                    <button class="btn-purchase" onclick="directPurchase('Bill Flow', event)">
+                        <span>Purchase 🛒</span>
+                        <span class="btn-price-tag" id="badge-Bill Flow">₹--</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 3. Moktest -->
+            <div class="project-card" onclick="openModal('mocktestModal')">
+                <div class="card-header">
+                    <h3>Moktest</h3>
+                    <p>Custom CBT Platform</p>
+                </div>
+                <div class="image-wrapper">
+                    <img src="Moktest/dasbord.png" alt="Moktest Dashboard">
+                    <div class="glass-specs">
+                        <ul>
+                            <li>🖼️ Image-Supported Questions</li>
+                            <li>⏱️ Live Exam Timer Controls</li>
+                            <li>📊 Automated PDF Scoring</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-buttons">
+                    <button class="btn-secondary">Explore <span>&#8594;</span></button>
+                    <button class="btn-purchase" onclick="directPurchase('Mok Test APK', event)">
+                        <span>Purchase 🛒</span>
+                        <span class="btn-price-tag" id="badge-Mok Test APK">₹--</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
             
-    <!-- PREMIUM FLOATING STAT CARDS (UPDATED STATS) -->
+    <!-- PREMIUM FLOATING STAT CARDS -->
     <section class="premium-stats-section reveal">
         <div class="stats-container">
             <div class="premium-stat-card">
@@ -236,41 +284,37 @@
     <section id="contact" class="contact-section reveal">
         <h2>Order an App or Request Support</h2>
         
-        <!-- The Form -->
         <div id="formContainer">
             <form id="leadForm">
                 <input type="text" name="name" placeholder="Your Name" required>
                 <input type="email" name="email" placeholder="Your Email (Required)" required>
 
                 <!-- Custom Styleable Dropdown -->
-            <div class="custom-dropdown-container">
-                <div class="custom-dropdown-selected" id="customDropdownSelected">How can we help you?</div>
-                <div class="custom-dropdown-options" id="customDropdownOptions">
-                    <div class="custom-option" data-value="Order Your App">Order Your App</div>
-                    <div class="custom-option" data-value="Inquiry about Apps">Inquiry about Apps</div>
-                    <div class="custom-option" data-value="Need a Custom Website/App">Need a Custom Website/App</div>
-                    <div class="custom-option" data-value="Technical Support/Complaint">Technical Support or Complaint</div>
+                <div class="custom-dropdown-container">
+                    <div class="custom-dropdown-selected" id="customDropdownSelected">How can we help you?</div>
+                    <div class="custom-dropdown-options" id="customDropdownOptions">
+                        <div class="custom-option" data-value="Order Your App">Order Your App</div>
+                        <div class="custom-option" data-value="Inquiry about Apps">Inquiry about Apps</div>
+                        <div class="custom-option" data-value="Need a Custom Website/App">Need a Custom Website/App</div>
+                        <div class="custom-option" data-value="Technical Support/Complaint">Technical Support or Complaint</div>
+                    </div>
+                    <input type="hidden" name="inquiryType" id="inquiryTypeHidden" required>
                 </div>
-                <!-- Hidden input stores the actual value for the form submission -->
-                <input type="hidden" name="inquiryType" id="inquiryTypeHidden" required>
-            </div>
 
-                <!-- Dynamic Product List (Hidden by default) -->
+                <!-- Dynamic Product List -->
                 <div id="productContainer" style="display: none;">
                     <p class="select-prompt">Select your application:</p>
                     <div id="productList" class="product-grid"></div>
-                    <!-- Hidden inputs -->
                     <input type="hidden" name="selectedProduct" id="selectedProduct" value="">
                     <input type="hidden" id="selectedProductPrice" value="">
                 </div>
 
                 <textarea name="message" id="messageBox" placeholder="Tell us more details..." required></textarea>
-    
                 <button type="submit" class="btn-primary" id="submitBtn">Send Request</button>
             </form>
         </div>
 
-        <!-- The Professional Cloud Blob Success State -->
+        <!-- Success State -->
         <div id="successState" class="blast-container" style="display:none;">
             <div class="success-blob" id="successBlob"></div>
             <div class="success-content" id="successContent">
@@ -307,12 +351,9 @@
         </div>
     </footer>
     
-    <!-- FLOATING CTA BUTTON -->
-    <a href="#contact" class="floating-cta" id="floatingCta">
-        Order Your App
-    </a>
+    <a href="#contact" class="floating-cta" id="floatingCta">Order Your App</a>
 
-<!-- MODALS -->
+    <!-- MODALS (Only Billflow & Moktest left, Mess Khata removed) -->
     
     <!-- Billflow Modal -->
     <div id="billflowModal" class="modal">
@@ -322,13 +363,10 @@
             <div class="slider-wrapper">
                 <button class="slide-arrow prev" onclick="slideGallery('billflow-slider', -1)">&#10094;</button>
                 <div class="slider" id="billflow-slider">
-                    <!-- The User Journey: Login -> Dashboard -> Invoice -> Due Bills -> History -->
                     <img src="BillFlow/Log%20In%20dextop.png" alt="Login Desktop">
                     <img src="BillFlow/Dasbord%20Dextop.png" alt="Dashboard Desktop">
                     <img src="BillFlow/New%20invoise%20Dextop.png" alt="New Invoice Desktop">
                     <img src="BillFlow/Bill%20history%20Dextop.png" alt="Bill History Desktop">
-                    
-                    <!-- Mobile Responsiveness Previews -->
                     <img src="BillFlow/Log%20In%20Ph.png" alt="Login Mobile">
                     <img src="BillFlow/Dasbord%20Ph.png" alt="Dashboard Mobile">
                     <img src="BillFlow/New%20Invoise%20Ph.png" alt="New Invoice Mobile">
@@ -343,33 +381,6 @@
         </div>
     </div>
 
-    <!-- Mess Khata Modal -->
-    <div id="messkhataModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal('messkhataModal')">Back</span>
-            <h2>Mess Khata Previews</h2>
-            <div class="slider-wrapper">
-                <button class="slide-arrow prev" onclick="slideGallery('messkhata-slider', -1)">&#10094;</button>
-                <div class="slider" id="messkhata-slider">
-                    <!-- The User Journey: Login -> Home -> Features -> Admin Controls -->
-                    <img src="Mess%20Khata/Mess%20Khata%20Log%20In.png" alt="Log In Screen">
-                    <img src="Mess%20Khata/Mess%20Khata%20Home.png" alt="User Home Dashboard">
-                    <img src="Mess%20Khata/Mess%20Khata%20Chat.png" alt="Interactive Chat System">
-                    <img src="Mess%20Khata/Mess%20Khata%20Log%20Work.png" alt="Log Daily Work">
-                    <img src="Mess%20Khata/Mess%20Khata%20Expence.png" alt="Track Expenses">
-                    <img src="Mess%20Khata/Mess%20Khata%20Pay%20Detels.png" alt="Payment Details">
-                    
-                    <!-- Admin Specific Views -->
-                    <img src="Mess%20Khata/Mess%20Khata%20Admin%20Home.png" alt="Admin Dashboard">
-                    <img src="Mess%20Khata/Mess%20Khata%20Admin%20Work.png" alt="Admin Work Logs">
-                    <img src="Mess%20Khata/Mess%20Khata%20History.png" alt="Transaction History">
-                </div>
-                <button class="slide-arrow next" onclick="slideGallery('messkhata-slider', 1)">&#10095;</button>
-            </div>
-            <p class="swipe-text">Swipe or click arrows to view more</p>
-        </div>
-    </div>
-
     <!-- Moktest Modal -->
     <div id="mocktestModal" class="modal">
         <div class="modal-content">
@@ -378,7 +389,6 @@
             <div class="slider-wrapper">
                 <button class="slide-arrow prev" onclick="slideGallery('mocktest-slider', -1)">&#10094;</button>
                 <div class="slider" id="mocktest-slider">
-                    <!-- Pulling all your uploaded GitHub images exactly as spelled -->
                     <img src="Moktest/login.png" alt="Login Screen">
                     <img src="Moktest/registation.png" alt="Registration Screen">
                     <img src="Moktest/dasbord.png" alt="Dashboard Area">
