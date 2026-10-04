@@ -431,28 +431,28 @@ window.addEventListener('DOMContentLoaded', (event) => {
 });
 
 // =========================================================
-// ZAPPY-STYLE STICKY SCROLL & TILT ENGINE
+// PURE CSS SCREEN OBSERVER & DESKTOP TILT
 // =========================================================
 
 document.addEventListener("DOMContentLoaded", () => {
-    const textBlocks = document.querySelectorAll('.feature-text-block');
-    const phoneScreens = document.querySelectorAll('.scroll-screen');
-    const phoneFrame = document.getElementById('dynamic-phone');
+    const textCards = document.querySelectorAll('.pro-feature-card');
+    const cssScreens = document.querySelectorAll('.css-replica-screen');
+    const phoneFrame = document.getElementById('pro-phone');
 
-    // 1. Image Crossfade Observer
+    // 1. Observer for scrolling text cards
     const scrollObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                // Highlight the active text block
-                textBlocks.forEach(block => block.classList.remove('active-text'));
+                // Fade text on desktop
+                textCards.forEach(card => card.classList.remove('active-text'));
                 entry.target.classList.add('active-text');
 
-                // Get the target image ID from the data attribute
-                const targetImageId = entry.target.getAttribute('data-image');
+                // Get target screen ID
+                const targetScreenId = entry.target.getAttribute('data-screen');
 
-                // Crossfade images
-                phoneScreens.forEach(screen => {
-                    if (screen.id === targetImageId) {
+                // Switch CSS Screens
+                cssScreens.forEach(screen => {
+                    if (screen.id === targetScreenId) {
                         screen.classList.add('active');
                     } else {
                         screen.classList.remove('active');
@@ -462,26 +462,20 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }, { 
         root: null, 
-        threshold: 0.5, // Triggers when text block is 50% visible in the viewport
-        rootMargin: "-10% 0px -10% 0px" 
+        threshold: 0.4, 
+        rootMargin: "0px 0px -20% 0px" // Triggers right as the card slides comfortably into view
     });
 
-    textBlocks.forEach(block => scrollObserver.observe(block));
+    textCards.forEach(card => scrollObserver.observe(card));
 
-    // 2. Dynamic Scroll Tilt (The Zappy Hover/Float Effect)
+    // 2. Desktop Phone Hover/Tilt (Disabled on mobile for performance)
     window.addEventListener('scroll', () => {
-        if (!phoneFrame) return;
+        if (!phoneFrame || window.innerWidth <= 850) return;
         
-        // Only apply tilt on desktop to save mobile performance
-        if (window.innerWidth > 850) {
-            const scrollY = window.scrollY;
-            
-            // Calculate a gentle math sine wave based on scroll position
-            const tiltY = Math.sin(scrollY * 0.003) * 8; // Rocks left/right up to 8 degrees
-            const tiltX = Math.cos(scrollY * 0.003) * -4; // Rocks up/down slightly
-            
-            // Apply the transformation
-            phoneFrame.style.transform = `perspective(1000px) rotateY(${tiltY}deg) rotateX(${tiltX}deg) scale(1.02)`;
-        }
+        const scrollY = window.scrollY;
+        const tiltY = (Math.sin(scrollY * 0.002) * 12) - 5; 
+        const tiltX = Math.cos(scrollY * 0.002) * 5; 
+        
+        phoneFrame.style.transform = `perspective(1000px) rotateY(${tiltY}deg) rotateX(${tiltX}deg) scale(1.05)`;
     });
 });
