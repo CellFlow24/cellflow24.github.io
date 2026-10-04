@@ -6,7 +6,29 @@ window.onload = function() {
     window.scrollTo(0, 0);
 };
 
-// Scroll Reveal Animations (Upgraded for Zero Lag on Mobile)
+// =========================================================
+// 1. MOMENTO-STYLE HERO LOGO SCROLL-TO-ZOOM
+// =========================================================
+const heroLogoWrapper = document.getElementById('hero-logo-wrapper');
+if (heroLogoWrapper) {
+    window.addEventListener('scroll', () => {
+        let scrollY = window.scrollY;
+        // Only calculate if near the top to save performance
+        if (scrollY < 800) {
+            let scaleValue = 1 + (scrollY * 0.003);
+            let opacityValue = 1 - (scrollY * 0.002);
+            
+            if (opacityValue < 0) opacityValue = 0;
+
+            heroLogoWrapper.style.transform = `scale(${scaleValue})`;
+            heroLogoWrapper.style.opacity = opacityValue;
+        }
+    });
+}
+
+// =========================================================
+// 2. SCROLL REVEAL ANIMATIONS
+// =========================================================
 const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -20,74 +42,8 @@ document.querySelectorAll('.reveal').forEach(el => {
 });
 
 // =========================================================
-// 1. MOMENTO-STYLE LOGO ZOOM & PRO PHONE SCROLL SYNC
+// 3. TOPTAL-STYLE STACKED CAROUSEL
 // =========================================================
-document.addEventListener("DOMContentLoaded", () => {
-    const heroLogoWrapper = document.getElementById('hero-logo-wrapper');
-    const phoneFrame = document.getElementById('pro-phone');
-    const textCards = document.querySelectorAll('.pro-feature-card');
-    const cssScreens = document.querySelectorAll('.css-replica-screen');
-
-    // A. The Momento Scroll-to-Zoom & Fade Effect
-    window.addEventListener('scroll', () => {
-        const scrollY = window.scrollY;
-
-        // Logo Zoom & Fade
-        if (heroLogoWrapper) {
-            // Scales up and fades out gently as you scroll down
-            let scaleValue = 1 + (scrollY / 400); 
-            let opacityValue = 1 - (scrollY / 350); 
-            
-            // Lock values so it doesn't scale infinitely or glitch
-            if (opacityValue < 0) opacityValue = 0;
-            if (scaleValue > 2.5) scaleValue = 2.5;
-
-            heroLogoWrapper.style.transform = `scale(${scaleValue})`;
-            heroLogoWrapper.style.opacity = opacityValue;
-            
-            // Disable pointer events when faded out so it doesn't block clicks
-            heroLogoWrapper.style.pointerEvents = opacityValue < 0.1 ? 'none' : 'auto';
-        }
-
-        // Desktop Phone Gentle 3D Tilt (Disabled on mobile for a clean folder wipe)
-        if (phoneFrame && window.innerWidth > 850) {
-            const tiltY = (Math.sin(scrollY * 0.002) * 12) - 5; 
-            const tiltX = Math.cos(scrollY * 0.002) * 5; 
-            phoneFrame.style.transform = `perspective(1000px) rotateY(${tiltY}deg) rotateX(${tiltX}deg) scale(1.02)`;
-        }
-    });
-
-    // B. The Zappy Intersection Observer (Syncs scrolling folders with CSS screens)
-    const scrollObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                // Highlight the active text card
-                textCards.forEach(card => card.classList.remove('active-text'));
-                entry.target.classList.add('active-text');
-
-                // Get target screen ID from the data attribute
-                const targetScreenId = entry.target.getAttribute('data-screen');
-
-                // Switch CSS Screens seamlessly
-                cssScreens.forEach(screen => {
-                    if (screen.id === targetScreenId) {
-                        screen.classList.add('active');
-                    } else {
-                        screen.classList.remove('active');
-                    }
-                });
-            }
-        });
-    }, { 
-        root: null, 
-        threshold: 0.4, 
-        rootMargin: "0px 0px -20% 0px" // Triggers when the folder reaches a perfect reading spot
-    });
-
-    textCards.forEach(card => scrollObserver.observe(card));
-});
-
-// --- Toptal-Style Stacked Carousel Logic ---
 const cards = document.querySelectorAll('.stacked-card');
 let classArray = ['card-front', 'card-middle']; 
 let carouselInterval;
@@ -116,7 +72,9 @@ if (carouselContainer) {
     startStackedCarousel();
 }
 
-// --- Colorful Promo 3D Carousel Logic ---
+// =========================================================
+// 4. E-COMMERCE PROMO 3D CAROUSEL
+// =========================================================
 const promoCards = document.querySelectorAll('.promo-card');
 let promoClassArray = ['promo-front', 'promo-middle', 'promo-back'];
 let promoInterval;
@@ -148,7 +106,46 @@ if (promoCarouselContainer) {
     startPromoCarousel();
 }
 
-// --- Hide Floating CTA when Form is Visible ---
+// =========================================================
+// 5. MESS KHATA: SYNCED SCREENS (HORIZONTAL SWIPE SUPPORT)
+// =========================================================
+document.addEventListener("DOMContentLoaded", () => {
+    const textCards = document.querySelectorAll('.mk-feature-card');
+    const cssScreens = document.querySelectorAll('.css-replica-screen');
+
+    if (textCards.length > 0 && cssScreens.length > 0) {
+        const scrollyObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // 1. Outline the active card in blue
+                    textCards.forEach(card => card.classList.remove('active-card'));
+                    entry.target.classList.add('active-card');
+
+                    // 2. Find the target screen ID
+                    const targetScreenId = entry.target.getAttribute('data-screen');
+
+                    // 3. Fade in the correct CSS screen inside the phone
+                    cssScreens.forEach(screen => {
+                        if (screen.id === targetScreenId) {
+                            screen.classList.add('active');
+                        } else {
+                            screen.classList.remove('active');
+                        }
+                    });
+                }
+            });
+        }, { 
+            root: null, 
+            threshold: 0.6 // 60% of the card must be visible to trigger (perfect for mobile swiping)
+        });
+
+        textCards.forEach(card => scrollyObserver.observe(card));
+    }
+});
+
+// =========================================================
+// 6. UTILITIES (Modals, CTA)
+// =========================================================
 const ctaBtn = document.getElementById('floatingCta');
 const contactSection = document.getElementById('contact');
 
@@ -165,21 +162,9 @@ if (ctaBtn && contactSection) {
     observer.observe(contactSection);
 }
 
-// Modal System (Pop-ups for Billflow & Moktest)
-function openModal(modalId) { document.getElementById(modalId).style.display = 'block'; }
-function closeModal(modalId) { document.getElementById(modalId).style.display = 'none'; }
-window.onclick = function(event) {
-    if (event.target.classList.contains('modal')) {
-        event.target.style.display = "none";
-    }
-}
-function slideGallery(sliderId, direction) {
-    const slider = document.getElementById(sliderId);
-    const scrollAmount = slider.clientWidth; 
-    slider.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
-}
-
-// --- Form Submission & Razorpay Integration ---
+// =========================================================
+// 7. FORM SUBMISSION & RAZORPAY INTEGRATION
+// =========================================================
 document.getElementById('leadForm').addEventListener('submit', function(e) {
     e.preventDefault(); 
     
@@ -191,7 +176,6 @@ document.getElementById('leadForm').addEventListener('submit', function(e) {
     
     var webAppUrl = "https://script.google.com/macros/s/AKfycbzWinkvpaQNr25tKjePWeubGhEAV-ApWWJ_ELZcv7UJRr9xSxB4DRDehRnv6S4PZMIXKg/exec"; 
 
-    // 1. App Orders (Native Popup with Pre-Logging)
     if (inquiryType === 'Order Your App') {
         var productName = document.getElementById('selectedProduct').value;
         var productPrice = document.getElementById('selectedProductPrice').value;
@@ -227,7 +211,6 @@ document.getElementById('leadForm').addEventListener('submit', function(e) {
                 "image": "https://cellflow24.github.io/logo.png",
                 "notes": { "ticketId": ticketId }, 
                 "payment_capture": 1,
-                
                 "handler": function (response) {
                     sessionStorage.removeItem("cellflowPaymentSuccess");
                     
@@ -249,7 +232,6 @@ document.getElementById('leadForm').addEventListener('submit', function(e) {
                         btn.style.opacity = "1";
                     }
                 },
-                
                 "prefill": { "name": name, "email": email },
                 "theme": { "color": "#0056b3" },
                 "modal": {
@@ -275,7 +257,6 @@ document.getElementById('leadForm').addEventListener('submit', function(e) {
         });
 
     } else {
-        // 2. Normal Support / Complaints / Custom Dev
         submitBtn.innerHTML = "Sending...";
         submitBtn.style.opacity = "0.7";
         
@@ -321,17 +302,20 @@ function resetForm() {
     }, 400); 
 }
 
-// --- Custom Dropdown & Product Logic ---
+// =========================================================
+// 8. DROPDOWN & DYNAMIC PRODUCT SELECTION
+// =========================================================
 const customDropdownSelected = document.getElementById('customDropdownSelected');
 const customDropdownOptions = document.getElementById('customDropdownOptions');
 const inquiryTypeHidden = document.getElementById('inquiryTypeHidden');
 const customOptions = document.querySelectorAll('.custom-option');
-
 const messageBox = document.getElementById('messageBox');
 const productContainer = document.getElementById('productContainer');
 const submitBtn = document.getElementById('submitBtn');
 const productList = document.getElementById('productList');
 const selectedProductInput = document.getElementById('selectedProduct');
+
+localStorage.removeItem('cellflowProducts'); 
 
 const availableProducts = [
     { name: "Mess Khata", originalPrice: 199, discountedPrice: 99 }, 
@@ -454,6 +438,9 @@ window.requestCustomBuild = function(event) {
     }, 600);
 };
 
+// =========================================================
+// 9. INSTANT SUCCESS ANIMATION RECOVERY
+// =========================================================
 window.addEventListener('DOMContentLoaded', (event) => {
     const urlParams = new URLSearchParams(window.location.search);
     
