@@ -19,6 +19,74 @@ document.querySelectorAll('.reveal').forEach(el => {
     revealObserver.observe(el);
 });
 
+// =========================================================
+// 1. MOMENTO-STYLE LOGO ZOOM & PRO PHONE SCROLL SYNC
+// =========================================================
+document.addEventListener("DOMContentLoaded", () => {
+    const heroLogoWrapper = document.getElementById('hero-logo-wrapper');
+    const phoneFrame = document.getElementById('pro-phone');
+    const textCards = document.querySelectorAll('.pro-feature-card');
+    const cssScreens = document.querySelectorAll('.css-replica-screen');
+
+    // A. The Momento Scroll-to-Zoom & Fade Effect
+    window.addEventListener('scroll', () => {
+        const scrollY = window.scrollY;
+
+        // Logo Zoom & Fade
+        if (heroLogoWrapper) {
+            // Scales up and fades out gently as you scroll down
+            let scaleValue = 1 + (scrollY / 400); 
+            let opacityValue = 1 - (scrollY / 350); 
+            
+            // Lock values so it doesn't scale infinitely or glitch
+            if (opacityValue < 0) opacityValue = 0;
+            if (scaleValue > 2.5) scaleValue = 2.5;
+
+            heroLogoWrapper.style.transform = `scale(${scaleValue})`;
+            heroLogoWrapper.style.opacity = opacityValue;
+            
+            // Disable pointer events when faded out so it doesn't block clicks
+            heroLogoWrapper.style.pointerEvents = opacityValue < 0.1 ? 'none' : 'auto';
+        }
+
+        // Desktop Phone Gentle 3D Tilt (Disabled on mobile for a clean folder wipe)
+        if (phoneFrame && window.innerWidth > 850) {
+            const tiltY = (Math.sin(scrollY * 0.002) * 12) - 5; 
+            const tiltX = Math.cos(scrollY * 0.002) * 5; 
+            phoneFrame.style.transform = `perspective(1000px) rotateY(${tiltY}deg) rotateX(${tiltX}deg) scale(1.02)`;
+        }
+    });
+
+    // B. The Zappy Intersection Observer (Syncs scrolling folders with CSS screens)
+    const scrollObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Highlight the active text card
+                textCards.forEach(card => card.classList.remove('active-text'));
+                entry.target.classList.add('active-text');
+
+                // Get target screen ID from the data attribute
+                const targetScreenId = entry.target.getAttribute('data-screen');
+
+                // Switch CSS Screens seamlessly
+                cssScreens.forEach(screen => {
+                    if (screen.id === targetScreenId) {
+                        screen.classList.add('active');
+                    } else {
+                        screen.classList.remove('active');
+                    }
+                });
+            }
+        });
+    }, { 
+        root: null, 
+        threshold: 0.4, 
+        rootMargin: "0px 0px -20% 0px" // Triggers when the folder reaches a perfect reading spot
+    });
+
+    textCards.forEach(card => scrollObserver.observe(card));
+});
+
 // --- Toptal-Style Stacked Carousel Logic ---
 const cards = document.querySelectorAll('.stacked-card');
 let classArray = ['card-front', 'card-middle']; 
@@ -97,7 +165,7 @@ if (ctaBtn && contactSection) {
     observer.observe(contactSection);
 }
 
-// Modal System (Pop-ups)
+// Modal System (Pop-ups for Billflow & Moktest)
 function openModal(modalId) { document.getElementById(modalId).style.display = 'block'; }
 function closeModal(modalId) { document.getElementById(modalId).style.display = 'none'; }
 window.onclick = function(event) {
@@ -111,7 +179,7 @@ function slideGallery(sliderId, direction) {
     slider.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
 }
 
-// --- Form Submission & Razorpay Integration (UPGRADED TO PREVENT TIMEOUTS) ---
+// --- Form Submission & Razorpay Integration ---
 document.getElementById('leadForm').addEventListener('submit', function(e) {
     e.preventDefault(); 
     
@@ -144,10 +212,8 @@ document.getElementById('leadForm').addEventListener('submit', function(e) {
         submitBtn.innerHTML = "Securely Logging Order...";
         submitBtn.style.opacity = "0.7";
 
-        // --- THE TEMPORARY TOKEN ---
         sessionStorage.setItem("cellflowPaymentSuccess", "true");
 
-        // FIX: WAIT FOR GOOGLE SHEETS BEFORE OPENING RAZORPAY!
         fetch(webAppUrl, { method: 'POST', body: formData })
         .then(() => {
             submitBtn.innerHTML = "Opening Secure Checkout...";
@@ -160,16 +226,11 @@ document.getElementById('leadForm').addEventListener('submit', function(e) {
                 "description": "Order: " + productName,
                 "image": "https://cellflow24.github.io/logo.png",
                 "notes": { "ticketId": ticketId }, 
-                
-                // 1. FIX FOR "AUTHORIZED" PAYMENTS: Force Auto-Capture!
                 "payment_capture": 1,
                 
-                // 2. FIX FOR 405 ERROR: Use the handler instead of callback_url
                 "handler": function (response) {
-                    // Destroy token so it doesn't replay later
                     sessionStorage.removeItem("cellflowPaymentSuccess");
                     
-                    // Instantly show the success animation
                     document.getElementById('formContainer').style.display = 'none';
                     document.getElementById('successState').style.display = 'block';
                     
@@ -178,7 +239,6 @@ document.getElementById('leadForm').addEventListener('submit', function(e) {
                         document.getElementById('successContent').classList.add('active');
                     }, 50);
                     
-                    // Reset the form
                     document.getElementById('leadForm').reset();
                     document.getElementById('customDropdownSelected').textContent = "How can we help you?";
                     document.getElementById('customDropdownSelected').classList.remove('has-value');
@@ -194,7 +254,6 @@ document.getElementById('leadForm').addEventListener('submit', function(e) {
                 "theme": { "color": "#0056b3" },
                 "modal": {
                     "ondismiss": function() {
-                        // IF THEY CANCEL: Delete the token
                         sessionStorage.removeItem("cellflowPaymentSuccess");
                         var btn = document.getElementById('submitBtn');
                         if (btn) {
@@ -262,7 +321,7 @@ function resetForm() {
     }, 400); 
 }
 
-// --- Custom Dropdown, Background Loading & Direct Purchase Logic ---
+// --- Custom Dropdown & Product Logic ---
 const customDropdownSelected = document.getElementById('customDropdownSelected');
 const customDropdownOptions = document.getElementById('customDropdownOptions');
 const inquiryTypeHidden = document.getElementById('inquiryTypeHidden');
@@ -274,10 +333,6 @@ const submitBtn = document.getElementById('submitBtn');
 const productList = document.getElementById('productList');
 const selectedProductInput = document.getElementById('selectedProduct');
 
-// 1. HARDCODED PRODUCT CATALOG (Zero Lag, Instant Load)
-localStorage.removeItem('cellflowProducts'); 
-
-// ⚠️ Change prices here
 const availableProducts = [
     { name: "Mess Khata", originalPrice: 199, discountedPrice: 99 }, 
     { name: "Bill Flow", originalPrice: 8999, discountedPrice: 5999 },
@@ -294,7 +349,6 @@ function updateProductUI() {
 }
 updateProductUI();
 
-// 2. Render Products Logic
 function renderProductCards(autoSelectName = null) {
     productList.innerHTML = '';
     availableProducts.forEach(item => {
@@ -323,7 +377,6 @@ function renderProductCards(autoSelectName = null) {
     });
 }
 
-// 3. Direct Purchase Button Function
 window.directPurchase = function(appName, event) {
     event.stopPropagation();
     document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
@@ -344,7 +397,6 @@ window.directPurchase = function(appName, event) {
     }, 600);
 };
 
-// 4. Manual Dropdown Interaction
 customDropdownSelected.addEventListener('click', function(event) {
     event.stopPropagation();
     customDropdownOptions.classList.toggle('open');
@@ -381,7 +433,6 @@ customOptions.forEach(option => {
     });
 });
 
-// 5. Custom Build Request Function
 window.requestCustomBuild = function(event) {
     event.stopPropagation();
     document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
@@ -403,7 +454,6 @@ window.requestCustomBuild = function(event) {
     }, 600);
 };
 
-// --- TEMPORARY TOKEN CHECKER (Instant Success Animation) ---
 window.addEventListener('DOMContentLoaded', (event) => {
     const urlParams = new URLSearchParams(window.location.search);
     
@@ -428,54 +478,4 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
         window.history.replaceState({}, document.title, window.location.pathname);
     }
-});
-
-// =========================================================
-// PURE CSS SCREEN OBSERVER & DESKTOP TILT
-// =========================================================
-
-document.addEventListener("DOMContentLoaded", () => {
-    const textCards = document.querySelectorAll('.pro-feature-card');
-    const cssScreens = document.querySelectorAll('.css-replica-screen');
-    const phoneFrame = document.getElementById('pro-phone');
-
-    // 1. Observer for scrolling text cards
-    const scrollObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                // Fade text on desktop
-                textCards.forEach(card => card.classList.remove('active-text'));
-                entry.target.classList.add('active-text');
-
-                // Get target screen ID
-                const targetScreenId = entry.target.getAttribute('data-screen');
-
-                // Switch CSS Screens
-                cssScreens.forEach(screen => {
-                    if (screen.id === targetScreenId) {
-                        screen.classList.add('active');
-                    } else {
-                        screen.classList.remove('active');
-                    }
-                });
-            }
-        });
-    }, { 
-        root: null, 
-        threshold: 0.4, 
-        rootMargin: "0px 0px -20% 0px" // Triggers right as the card slides comfortably into view
-    });
-
-    textCards.forEach(card => scrollObserver.observe(card));
-
-    // 2. Desktop Phone Hover/Tilt (Disabled on mobile for performance)
-    window.addEventListener('scroll', () => {
-        if (!phoneFrame || window.innerWidth <= 850) return;
-        
-        const scrollY = window.scrollY;
-        const tiltY = (Math.sin(scrollY * 0.002) * 12) - 5; 
-        const tiltX = Math.cos(scrollY * 0.002) * 5; 
-        
-        phoneFrame.style.transform = `perspective(1000px) rotateY(${tiltY}deg) rotateX(${tiltX}deg) scale(1.05)`;
-    });
 });
