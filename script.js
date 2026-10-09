@@ -7,7 +7,7 @@ window.onload = function() {
 };
 
 // =========================================================
-// 1. MOMENTO-STYLE HERO LOGO SCROLL-TO-ZOOM
+// 1. MOMENTO-STYLE HERO LOGO SCROLL-TO-ZOOM & MOVE
 // =========================================================
 const heroLogoWrapper = document.getElementById('hero-logo-wrapper');
 if (heroLogoWrapper) {
@@ -15,12 +15,14 @@ if (heroLogoWrapper) {
         let scrollY = window.scrollY;
         // Only calculate if near the top to save performance
         if (scrollY < 800) {
-            let scaleValue = 1 + (scrollY * 0.003);
-            let opacityValue = 1 - (scrollY * 0.002);
+            let scaleValue = 1 + (scrollY * 0.005); // Zooms the logo
+            let moveX = scrollY * 0.8; // Moves the logo to the RIGHT
+            let opacityValue = 1 - (scrollY * 0.002); // Fades it out
             
             if (opacityValue < 0) opacityValue = 0;
 
-            heroLogoWrapper.style.transform = `scale(${scaleValue})`;
+            // Apply BOTH the movement to the right and the zoom scale
+            heroLogoWrapper.style.transform = `translateX(${moveX}px) scale(${scaleValue})`;
             heroLogoWrapper.style.opacity = opacityValue;
         }
     });
