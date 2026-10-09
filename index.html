@@ -346,7 +346,17 @@
         </div>
     </footer>
     
-    <a href="#contact" class="floating-cta" id="floatingCta">Order Your App</a>
+    <div class="floating-menu-container" id="floatingMenuContainer">
+        <div class="floating-options" id="floatingOptions">
+            <a href="https://wa.me/919330224549" target="_blank" class="float-opt whatsapp">💬 WhatsApp Us</a>
+            <a href="mailto:cellflow24@gmail.com" class="float-opt email">✉️ Email Us</a>
+            <a href="#contact" class="float-opt order" onclick="toggleFloatingMenu()">🛒 Order App</a>
+        </div>
+        <button class="water-drop-btn" onclick="toggleFloatingMenu()">
+            <div class="holo-fluid"></div>
+            <span class="drop-icon" id="dropIcon">👋</span>
+        </button>
+    </div>
 
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script src="script.js?v=7.0"></script>
