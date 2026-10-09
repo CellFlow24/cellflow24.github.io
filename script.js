@@ -148,20 +148,33 @@ document.addEventListener("DOMContentLoaded", () => {
 // =========================================================
 // 6. UTILITIES (Modals, CTA)
 // =========================================================
-const ctaBtn = document.getElementById('floatingCta');
-const contactSection = document.getElementById('contact');
+const floatingMenuContainer = document.getElementById('floatingMenuContainer');
 
-if (ctaBtn && contactSection) {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                ctaBtn.classList.add('hidden-cta');
-            } else {
-                ctaBtn.classList.remove('hidden-cta');
-            }
-        });
-    }, { threshold: 0.15 }); 
-    observer.observe(contactSection);
+if (floatingMenuContainer) {
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            floatingMenuContainer.classList.add('visible');
+        } else {
+            floatingMenuContainer.classList.remove('visible');
+            document.getElementById('floatingOptions').classList.remove('open');
+            floatingMenuContainer.classList.remove('menu-open');
+            document.getElementById('dropIcon').innerText = '👋';
+        }
+    });
+}
+
+function toggleFloatingMenu() {
+    const options = document.getElementById('floatingOptions');
+    const icon = document.getElementById('dropIcon');
+    
+    options.classList.toggle('open');
+    floatingMenuContainer.classList.toggle('menu-open');
+    
+    if (options.classList.contains('open')) {
+        icon.innerText = '✖';
+    } else {
+        icon.innerText = '👋';
+    }
 }
 
 // =========================================================
