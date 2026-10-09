@@ -109,43 +109,57 @@ if (promoCarouselContainer) {
 }
 
 // =========================================================
-// 5. MESS KHATA: SYNCED SCREENS (VERTICAL & HORIZONTAL)
+// 5. MESS KHATA: AUTO-CHANGING 3D CAROUSEL & SYNCED SCREENS
 // =========================================================
-document.addEventListener("DOMContentLoaded", () => {
-    const textCards = document.querySelectorAll('.mk-feature-card');
-    const cssScreens = document.querySelectorAll('.css-replica-screen');
+const mkCards = document.querySelectorAll('.mk-feature-card');
+const cssScreens = document.querySelectorAll('.css-replica-screen');
+let mkClassArray = ['mk-front', 'mk-middle', 'mk-back', 'mk-hidden'];
+let mkInterval;
 
-    if (textCards.length > 0 && cssScreens.length > 0) {
+function rotateMkCards() {
+    if (mkCards.length === 0) return;
+    
+    // Rotate the classes array
+    const last = mkClassArray.pop();
+    mkClassArray.unshift(last);
+    
+    // Apply classes to text cards and sync the phone screen
+    mkCards.forEach((card, index) => {
+        card.className = 'mk-feature-card ' + mkClassArray[index];
         
-        // Smart threshold: Triggers earlier on desktop, requires a fuller snap on mobile
-        const isDesktop = window.innerWidth > 850;
-
-        const scrollyObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    textCards.forEach(card => card.classList.remove('active-card'));
-                    entry.target.classList.add('active-card');
-
-                    const targetScreenId = entry.target.getAttribute('data-screen');
-
-                    cssScreens.forEach(screen => {
-                        if (screen.id === targetScreenId) {
-                            screen.classList.add('active');
-                        } else {
-                            screen.classList.remove('active');
-                        }
-                    });
+        // If this card is now the front card, trigger the phone screen update
+        if (mkClassArray[index] === 'mk-front') {
+            const targetScreenId = card.getAttribute('data-screen');
+            cssScreens.forEach(screen => {
+                if (screen.id === targetScreenId) {
+                    screen.classList.add('active');
+                } else {
+                    screen.classList.remove('active');
                 }
             });
-        }, { 
-            root: null, 
-            threshold: isDesktop ? 0.6 : 0.8, 
-            rootMargin: isDesktop ? "-10% 0px -10% 0px" : "0px" 
-        });
+        }
+    });
+}
 
-        textCards.forEach(card => scrollyObserver.observe(card));
+function startMkCarousel() {
+    if (mkCards.length > 0) {
+        mkInterval = setInterval(rotateMkCards, 4000); // Changes every 4 seconds
     }
-});
+}
+
+function stopMkCarousel() {
+    clearInterval(mkInterval);
+}
+
+// Start the carousel and pause on hover/touch
+const mkCarouselContainer = document.getElementById('mkTextCarousel');
+if (mkCarouselContainer) {
+    mkCarouselContainer.addEventListener('mouseenter', stopMkCarousel);
+    mkCarouselContainer.addEventListener('mouseleave', startMkCarousel);
+    mkCarouselContainer.addEventListener('touchstart', stopMkCarousel);
+    mkCarouselContainer.addEventListener('touchend', startMkCarousel);
+    startMkCarousel();
+}
 
 // =========================================================
 // 6. UTILITIES (Modals, CTA)
