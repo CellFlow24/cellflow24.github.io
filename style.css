@@ -123,13 +123,13 @@ html, body {
 .promo-price strong { color: #00b050; font-size: 1.35rem; display: block; margin-top: 2px; font-weight: 800; }
 
 /* =========================================================
-   4. MESS KHATA - PREMIUM SCROLL & SWIPE SHOWCASE
+   4. MESS KHATA - PERFECT PHONE & SHOWCASE
 ========================================================= */
 .mk-showcase-section { max-width: 1200px; margin: 0 auto 100px auto; padding: 0 20px; }
 
 .mk-container {
     display: flex;
-    align-items: flex-start; /* Crucial for desktop vertical sticky */
+    align-items: flex-start; /* CRITICAL FIX: Allows phone to stick! */
     gap: 50px;
     background: rgba(255,255,255,0.4);
     backdrop-filter: blur(10px);
@@ -137,49 +137,53 @@ html, body {
     padding: 50px 40px;
     border: 1px solid rgba(255,255,255,0.6);
     box-shadow: 0 20px 50px rgba(0,0,0,0.05);
-    position: relative;
 }
 
-/* --- Desktop: Sticky Phone Column --- */
+/* --- Desktop: Sticky Phone Mockup --- */
 .mk-phone-col { 
-    position: sticky; 
-    top: 12vh; 
-    width: 45%; 
+    position: sticky; /* MAKES PHONE STICK */
+    top: 15vh; 
+    height: max-content; /* CRITICAL FIX: Prevents stretching */
     display: flex; 
     flex-direction: column; 
     align-items: center; 
     gap: 25px; 
-    z-index: 10;
+    z-index: 20; 
 }
 
 .mk-phone-bezel {
-    width: 280px;
-    height: 580px;
+    width: 270px;
+    height: 560px;
     background: #000000;
     border-radius: 48px;
-    padding: 12px;
+    padding: 12px; 
     box-sizing: border-box;
     position: relative;
-    /* Premium Phone Glow */
-    box-shadow: 
-        inset 0 0 0 2px #4a5568, 
-        0 20px 50px rgba(0, 86, 179, 0.2),
-        0 0 80px rgba(0, 176, 80, 0.1); 
-    cursor: pointer;
-    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    box-shadow: inset 0 0 0 2px #4a5568, 0 25px 40px rgba(0,0,0,0.15);
 }
-.mk-phone-bezel:hover { transform: translateY(-5px) scale(1.02); }
 
 .mk-notch {
-    position: absolute; top: 22px; left: 50%; transform: translateX(-50%);
-    width: 85px; height: 24px; background: #000000; border-radius: 16px; z-index: 20;
+    position: absolute;
+    top: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 85px;
+    height: 24px;
+    background: #000000;
+    border-radius: 16px;
+    z-index: 20;
 }
 
 .mk-screen-container {
-    width: 100%; height: 100%; border-radius: 36px; overflow: hidden; position: relative; background: #ffffff;
+    width: 100%;
+    height: 100%;
+    border-radius: 36px;
+    overflow: hidden;
+    position: relative;
+    background: #a18cd1; /* Fixes white gaps at the bottom */
 }
 
-.mk-actions { display: flex; width: 100%; max-width: 320px; gap: 10px; margin-top: 10px; }
+.mk-actions { display: flex; width: 100%; gap: 10px; }
 .btn-secondary { flex: 1; padding: 14px 10px; font-size: 0.95rem; background-color: transparent; color: #0056b3; border: 2px solid #cbd5e0; border-radius: 12px; cursor: pointer; font-weight: 700; transition: all 0.3s ease; display: flex; align-items: center; justify-content: center; text-decoration: none; }
 .btn-secondary:hover { background-color: #0056b3; color: white; border-color: #0056b3; }
 .btn-purchase { flex: 1; background-color: transparent; color: #00b050; border: 2px solid #cbd5e0; border-radius: 12px; cursor: pointer; font-weight: 700; font-size: 0.95rem; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 8px 5px; transition: all 0.3s ease; }
@@ -187,89 +191,55 @@ html, body {
 .btn-price-tag { font-size: 0.85rem; background: rgba(0, 176, 80, 0.1); padding: 2px 10px; border-radius: 20px; color: #00b050; transition: all 0.3s ease; margin-top: 4px; }
 .btn-purchase:hover .btn-price-tag { background: rgba(255,255,255,0.25); color: white; }
 
-/* --- Desktop: Vertical Scrollytelling Track --- */
-.mk-cards-col { width: 55%; padding: 10vh 0 30vh 0; }
-.mk-swipe-track { display: flex; flex-direction: column; gap: 60vh; /* Massive gap for scroll fade effect */ }
+/* --- Desktop: Vertical Scrollytelling Cards --- */
+.mk-cards-col { flex: 1; padding: 5vh 0 15vh 0; }
+.mk-swipe-track { display: flex; flex-direction: column; gap: 50vh; }
 
 .mk-feature-card {
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(10px);
+    background: #ffffff;
     padding: 45px 40px;
     border-radius: 24px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
     border: 2px solid transparent;
-    transition: all 0.5s ease;
+    transition: all 0.4s ease;
     opacity: 0.3;
     transform: translateY(20px);
+    cursor: pointer;
 }
-.mk-feature-card.active-card { 
-    opacity: 1; transform: translateY(0); 
-    border-color: #0056b3; box-shadow: 0 20px 50px rgba(0, 86, 179, 0.15); background: #ffffff;
-}
-.mk-feature-card h2 { font-size: 2.3rem; margin-bottom: 15px; color: #1a202c; font-weight: 800; text-align: left; line-height: 1.2; }
+.mk-feature-card.active-card { opacity: 1; transform: translateY(0); border-color: #0056b3; box-shadow: 0 15px 40px rgba(0,86,179,0.1); }
+.mk-feature-card h2 { font-size: 2.2rem; margin-bottom: 15px; color: #1a202c; font-weight: 800; text-align: left; }
 .mk-feature-card p { font-size: 1.15rem; line-height: 1.6; color: #4a5568; margin: 0; }
 
-/* --- CRISP PURE CSS INTERNAL SCREENS --- */
-.css-replica-screen {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    background: linear-gradient(135deg, #f4f7fc 0%, #e2e8f0 100%); /* Clean Light Gray Background */
-    padding: 60px 15px 25px; box-sizing: border-box; display: flex; flex-direction: column; gap: 12px;
-    opacity: 0; transition: opacity 0.4s ease; pointer-events: none;
-}
+/* --- PURE CSS SCREENS --- */
+.css-replica-screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%); padding: 60px 15px 25px; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px; opacity: 0; transition: opacity 0.4s ease; pointer-events: none; }
 .css-replica-screen.active { opacity: 1; pointer-events: auto; }
+.replica-title { color: #2c3e50; font-size: 15px; font-weight: 900; margin: 0 0 15px 0; background: rgba(255,255,255,0.4); padding: 12px; border-radius: 14px; text-align: center; }
+.replica-nav { background: rgba(255,255,255,0.7); color: #2c3e50; font-size: 12px; font-weight: 800; padding: 14px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.9); box-shadow: 0 4px 10px rgba(0,0,0,0.03); }
+.replica-logout { background: #ff4757; color: white; font-size: 13px; font-weight: 800; padding: 14px; border-radius: 12px; margin-top: auto; text-align: center; box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4); }
+.chat-bubble { padding: 12px; border-radius: 14px; font-size: 11px; font-weight: bold; max-width: 80%; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+.chat-bubble.left { background: white; color: #333; align-self: flex-start; border-bottom-left-radius: 3px; }
+.chat-bubble.right { background: #ff6b81; color: white; align-self: flex-end; border-bottom-right-radius: 3px; }
+.chat-input-fake { background: rgba(255,255,255,0.8); color: #7f8fa6; padding: 14px; border-radius: 20px; font-size: 11px; margin-top: auto; font-weight: bold; }
+.fake-input { background: rgba(255,255,255,0.9); padding: 12px; border-radius: 10px; font-size: 12px; color: #333; font-weight: bold; border: 1px solid rgba(255,255,255,0.5); }
+.fake-split-box { background: rgba(255,255,255,0.5); padding: 12px; border-radius: 10px; font-size: 11px; font-weight: bold; color: #2c3e50; }
+.fake-checkbox { margin-top: 6px; color: #333; }
+.fake-btn { background: #ff6b81; color: white; padding: 14px; border-radius: 10px; font-size: 12px; font-weight: bold; text-align: center; margin-top: auto; }
+.admin-box { background: rgba(255,255,255,0.6); padding: 12px; border-radius: 12px; font-size: 12px; font-weight: bold; color: #333; display: flex; flex-direction: column; gap: 8px; }
+.fake-btn-small { background: #3498db; color: white; padding: 10px; border-radius: 8px; text-align: center; }
 
-/* Perfected High-Contrast UI */
-.replica-title { color: #1a202c; font-size: 16px; font-weight: 900; margin: 0 0 10px 0; background: white; padding: 12px; border-radius: 14px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
-.replica-nav { background: white; color: #2d3748; font-size: 12px; font-weight: 800; padding: 14px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
-.replica-logout { background: linear-gradient(135deg, #ff4757 0%, #ff6b81 100%); color: white; font-size: 13px; font-weight: 800; padding: 14px; border-radius: 12px; margin-top: auto; text-align: center; box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3); }
-
-.chat-bubble { padding: 12px 14px; border-radius: 16px; font-size: 11px; font-weight: 700; max-width: 85%; box-shadow: 0 2px 8px rgba(0,0,0,0.06); line-height: 1.4; }
-.chat-bubble.left { background: white; color: #2d3748; align-self: flex-start; border-bottom-left-radius: 4px; }
-.chat-bubble.right { background: #00b050; color: white; align-self: flex-end; border-bottom-right-radius: 4px; }
-.chat-input-fake { background: white; color: #a0aec0; padding: 14px 18px; border-radius: 20px; font-size: 11px; margin-top: auto; font-weight: 700; border: 1px solid #e2e8f0; }
-
-.fake-input { background: white; padding: 14px; border-radius: 12px; font-size: 12px; color: #4a5568; font-weight: 700; border: 1px solid #e2e8f0; }
-.fake-split-box { background: white; padding: 14px; border-radius: 12px; font-size: 11px; font-weight: 700; color: #2d3748; border: 1px solid #e2e8f0; }
-.fake-checkbox { margin-top: 8px; color: #4a5568; display: flex; align-items: center; gap: 6px; }
-.fake-btn { background: #0056b3; color: white; padding: 14px; border-radius: 12px; font-size: 12px; font-weight: 800; text-align: center; margin-top: auto; box-shadow: 0 4px 15px rgba(0, 86, 179, 0.2); }
-.admin-box { background: white; padding: 14px; border-radius: 14px; font-size: 12px; font-weight: 800; color: #1a202c; display: flex; flex-direction: column; gap: 10px; border: 1px solid #e2e8f0; }
-.fake-btn-small { background: #e2e8f0; color: #4a5568; padding: 10px; border-radius: 8px; text-align: center; font-weight: 700; }
 
 /* --- MOBILE SPECIFIC OVERRIDES --- */
 @media (max-width: 850px) {
+    /* Mobile Mess Khata Swipe Layout */
     .mk-container { flex-direction: column; padding: 30px 15px; border-radius: 30px; gap: 20px; align-items: center; }
-    
-    /* Phone locks to top */
-    .mk-phone-col { position: sticky; top: 85px; width: 100%; z-index: 20; padding-top: 10px; }
-    .mk-phone-bezel { width: 230px; height: 480px; box-shadow: 0 20px 50px rgba(0,0,0,0.25); } 
-    
-    /* Horizontal Swipe Track */
+    .mk-phone-col { position: sticky; top: 85px; width: 100%; z-index: 20; padding-top: 10px; height: auto; }
+    .mk-phone-bezel { width: 230px; height: 480px; } 
     .mk-cards-col { width: 100%; padding: 0; }
-    .mk-swipe-track { 
-        flex-direction: row; 
-        gap: 15px; 
-        overflow-x: auto; 
-        scroll-snap-type: x mandatory; 
-        padding-bottom: 20px; 
-        padding-top: 10px;
-    }
+    .mk-swipe-track { flex-direction: row; gap: 15px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 20px; padding-top: 10px; }
     .mk-swipe-track::-webkit-scrollbar { display: none; }
-    
-    .mk-feature-card { 
-        min-width: 85%; 
-        scroll-snap-align: center; 
-        margin: 0; 
-        opacity: 1; /* Keep fully visible on mobile */
-        transform: none;
-        border-color: rgba(226, 232, 240, 0.8);
-        box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-        padding: 30px 25px;
-    }
-    .mk-feature-card.active-card { border-color: #0056b3; }
+    .mk-feature-card { min-width: 85%; scroll-snap-align: center; margin: 0; opacity: 1; transform: none; padding: 30px 25px; }
     .mk-feature-card h2 { font-size: 1.7rem; }
-    .mk-actions { justify-content: center; }
-}
-
+   
 /* =========================================================
    5. STANDARD PRODUCT CARDS (BILLFLOW / MOKTEST)
 ========================================================= */
