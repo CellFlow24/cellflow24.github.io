@@ -139,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }, { 
             root: null, 
-            threshold: isDesktop ? 0.5 : 0.7, 
+            threshold: isDesktop ? 0.6 : 0.8, 
             rootMargin: isDesktop ? "-10% 0px -10% 0px" : "0px" 
         });
 
