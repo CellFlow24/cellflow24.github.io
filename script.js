@@ -109,24 +109,25 @@ if (promoCarouselContainer) {
 }
 
 // =========================================================
-// 5. MESS KHATA: SYNCED SCREENS (HORIZONTAL SWIPE SUPPORT)
+// 5. MESS KHATA: SYNCED SCREENS (VERTICAL & HORIZONTAL)
 // =========================================================
 document.addEventListener("DOMContentLoaded", () => {
     const textCards = document.querySelectorAll('.mk-feature-card');
     const cssScreens = document.querySelectorAll('.css-replica-screen');
 
     if (textCards.length > 0 && cssScreens.length > 0) {
+        
+        // Smart threshold: Triggers earlier on desktop, requires a fuller snap on mobile
+        const isDesktop = window.innerWidth > 850;
+
         const scrollyObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    // 1. Outline the active card in blue
                     textCards.forEach(card => card.classList.remove('active-card'));
                     entry.target.classList.add('active-card');
 
-                    // 2. Find the target screen ID
                     const targetScreenId = entry.target.getAttribute('data-screen');
 
-                    // 3. Fade in the correct CSS screen inside the phone
                     cssScreens.forEach(screen => {
                         if (screen.id === targetScreenId) {
                             screen.classList.add('active');
@@ -138,7 +139,8 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }, { 
             root: null, 
-            threshold: 0.6 // 60% of the card must be visible to trigger (perfect for mobile swiping)
+            threshold: isDesktop ? 0.5 : 0.7, 
+            rootMargin: isDesktop ? "-10% 0px -10% 0px" : "0px" 
         });
 
         textCards.forEach(card => scrollyObserver.observe(card));
