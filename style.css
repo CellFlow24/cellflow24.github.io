@@ -26,12 +26,37 @@ html, body {
 }
 .hero-left { position: relative; z-index: 10; width: 45%; padding-right: 20px; }
 
-/* The Zoom Container - JS will scale this up */
-.hero-logo-zoom-container {
-    display: inline-block;
-    margin-bottom: 25px;
+/* The Zoom Container & Restored Holo Cloud */
+.logo-wrapper { 
+    position: relative; 
+    display: inline-block; 
+    margin-bottom: 25px; 
     transform-origin: center center;
     will-change: transform, opacity;
+}
+
+.cloud-blob { 
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    width: 260px; 
+    height: 260px; 
+    background: radial-gradient(circle, rgba(0,86,179,0.2) 0%, rgba(0,176,80,0.15) 60%, rgba(255,255,255,0) 80%); 
+    border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; 
+    transform: translate(-50%, -50%); 
+    z-index: 0; 
+    animation: morphBlob 8s ease-in-out infinite alternate; 
+}
+
+@keyframes morphBlob { 
+    0% { 
+        border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; 
+        transform: translate(-50%, -50%) scale(1); 
+    } 
+    100% { 
+        border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; 
+        transform: translate(-50%, -50%) scale(1.15); 
+    } 
 }
 
 .logo { 
