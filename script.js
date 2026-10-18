@@ -645,37 +645,47 @@ function checkPujoPathSeason() {
 document.addEventListener('DOMContentLoaded', checkPujoPathSeason);
 
 // =========================================================
-// 8. BACK BUTTON INTERCEPTOR (LEAVE INTENT)
+// 8. BACK BUTTON INTERCEPTOR (BULLETPROOF LEAVE INTENT)
 // =========================================================
 let isTrapArmed = false;
+let letUserLeave = false;
 
-// Arm the history trap on the first user interaction
-document.body.addEventListener('click', () => {
-    if (!isTrapArmed) {
-        history.pushState({ cellflowApp: true }, '');
-        isTrapArmed = true;
-    }
-}, { once: true });
+// Arm the history trap on the FIRST tap or click anywhere on the site
+['click', 'touchstart'].forEach(eventType => {
+    document.body.addEventListener(eventType, () => {
+        if (!isTrapArmed) {
+            history.pushState({ cellflowApp: true }, '');
+            isTrapArmed = true;
+        }
+    }, { once: true, passive: true });
+});
 
 // Trigger the modal when the browser back button/swipe is detected
 window.addEventListener('popstate', (event) => {
+    // If they clicked "Yes, leave", allow the back action to happen normally
+    if (letUserLeave) return;
+    
+    // Instantly re-arm the trap so they can't double-swipe out
+    history.pushState({ cellflowApp: true }, '');
+    
+    // Show the modal
     document.getElementById('leaveModal').classList.add('active');
 });
 
 function handleStay() {
-    // Close the modal
+    // Hide the modal. The trap is already re-armed from the popstate event above!
     document.getElementById('leaveModal').classList.remove('active');
-    
-    // Push a new state to re-arm the back button trap
-    history.pushState({ cellflowApp: true }, '');
 }
 
 function handleLeave() {
+    // Open the gate so the next "back" action actually works
+    letUserLeave = true;
+    
     // Swap the content to the sad emoji
     document.getElementById('leaveModalContent').style.display = 'none';
     document.getElementById('leaveModalSad').classList.remove('hidden');
     
-    // Wait 1.2 seconds for the animation to play, then actually exit the site
+    // Wait 1.2 seconds for the animation to play, then trigger the real exit
     setTimeout(() => {
         history.back(); 
     }, 1200);
