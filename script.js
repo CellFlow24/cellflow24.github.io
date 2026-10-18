@@ -119,29 +119,38 @@ function setupShowcasePhone(carouselId, bezelId) {
     const cards = carouselContainer.querySelectorAll('.mk-feature-card');
     let classArray = ['mk-front', 'mk-middle', 'mk-back', 'mk-hidden'];
 
-    // --- Smooth Phone Tilt Animation ---
-    phoneBezel.style.transition = "transform 0.1s ease-out, box-shadow 0.3s ease";
-    phoneBezel.style.willChange = "transform"; 
+    // --- Smooth Phone Tilt Animation (DESKTOP ONLY) ---
+    // Only apply the heavy transition on Desktop
+    if (window.innerWidth > 850) {
+        phoneBezel.style.transition = "transform 0.1s ease-out, box-shadow 0.3s ease";
+        phoneBezel.style.willChange = "transform"; 
+    }
     
     let isTicking = false;
     window.addEventListener('scroll', () => {
         if (!isTicking) {
             window.requestAnimationFrame(() => {
-                const rect = phoneBezel.getBoundingClientRect();
-                if (rect.top < window.innerHeight && rect.bottom > 0) {
-                    const scrollProgress = (window.innerHeight - rect.top) / window.innerHeight;
-                    const intensity = window.innerWidth > 850 ? 8 : 6; 
-                    const tiltX = Math.cos(scrollProgress * Math.PI) * intensity; 
-                    const tiltY = Math.sin(scrollProgress * Math.PI) * -intensity;
-                    
-                    phoneBezel.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(1.02)`;
+                // ONLY calculate 3D tilt on Desktop to save mobile battery and fix lag
+                if (window.innerWidth > 850) {
+                    const rect = phoneBezel.getBoundingClientRect();
+                    if (rect.top < window.innerHeight && rect.bottom > 0) {
+                        const scrollProgress = (window.innerHeight - rect.top) / window.innerHeight;
+                        const intensity = 8; 
+                        const tiltX = Math.cos(scrollProgress * Math.PI) * intensity; 
+                        const tiltY = Math.sin(scrollProgress * Math.PI) * -intensity;
+                        
+                        phoneBezel.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(1.02)`;
+                    }
+                } else {
+                    // Mobile: perfectly flat, zero GPU math required = 100% smooth scroll
+                    phoneBezel.style.transform = `translateZ(0)`;
                 }
                 isTicking = false;
             });
             isTicking = true;
         }
     }, { passive: true });
-
+    
     // --- Core Rotation Logic ---
     function rotateCards() {
         if (cards.length === 0) return;
