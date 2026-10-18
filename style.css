@@ -350,3 +350,9 @@ footer { background: #1a202c; color: #a0aec0; padding: 60px 20px 20px; }
     0% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
     100% { transform: translate(-50%, -50%) scale(3.5); opacity: 0; }
 }
+/* Reverses layout so Phone is on the Right on Desktop */
+@media (min-width: 851px) {
+    .mk-container.mk-reverse {
+        flex-direction: row-reverse;
+    }
+}
