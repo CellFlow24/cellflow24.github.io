@@ -300,11 +300,23 @@ footer { background: #1a202c; color: #a0aec0; padding: 60px 20px 20px; }
     
     .mk-feature-card { position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 30px 25px; border-radius: 20px; box-sizing: border-box; }
     .mk-feature-card h2 { font-size: 1.7rem; }
-    .mk-feature-card { min-width: 85%; scroll-snap-align: center; margin: 0; opacity: 1; transform: none; padding: 30px 25px; border-color: rgba(226, 232, 240, 0.8); box-shadow: 0 10px 25px rgba(0,0,0,0.08); }
-    .mk-feature-card.active-card { border-color: #0056b3; }
-    .mk-feature-card h2 { font-size: 1.7rem; }
+    
     .mk-actions { justify-content: center; }
     
     .stats-container { flex-direction: column; }
     .footer-content { flex-direction: column; text-align: center; }
+}
+
+/* =========================================================
+   PERFORMANCE & 3D SMOOTHNESS OPTIMIZATIONS
+========================================================= */
+.mk-feature-card {
+    will-change: transform, opacity;
+    /* Removes heavy blur that destroys mobile frame rates during animations */
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+.mk-phone-bezel {
+    will-change: transform;
+    transform: translateZ(0); /* Hardware acceleration */
 }
