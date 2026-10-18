@@ -705,3 +705,54 @@ function handleLeave() {
 
     }, 1200);
 }
+
+// =========================================================
+// 9. ANIMATED NUMBER COUNTERS (STATS SECTION)
+// =========================================================
+const statsObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const target = entry.target;
+            const targetText = target.getAttribute('data-target');
+            const isPercentage = targetText.includes('%');
+            const isPlus = targetText.includes('+');
+            const endValue = parseInt(targetText.replace(/[^0-9]/g, ''));
+            
+            // If the target is exactly 0, just set it and exit
+            if (endValue === 0) {
+                target.innerText = targetText;
+                observer.unobserve(target);
+                return;
+            }
+
+            const duration = 2000; // 2 seconds
+            const frameRate = 1000 / 60;
+            const totalFrames = Math.round(duration / frameRate);
+            let currentFrame = 0;
+
+            const counterInterval = setInterval(() => {
+                currentFrame++;
+                const progress = currentFrame / totalFrames;
+                const easeProgress = progress * (2 - progress); // Smooth easing curve
+                let currentValue = Math.round(endValue * easeProgress);
+
+                let formattedValue = currentValue.toLocaleString();
+                if (isPlus) formattedValue += '+';
+                if (isPercentage) formattedValue += '%';
+
+                target.innerText = formattedValue;
+
+                if (currentFrame === totalFrames) {
+                    clearInterval(counterInterval);
+                    target.innerText = targetText; // Ensure exact final value
+                }
+            }, frameRate);
+            
+            observer.unobserve(target); // Only play animation once
+        }
+    });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('.stat-number').forEach(counter => {
+    statsObserver.observe(counter);
+});
