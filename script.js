@@ -109,53 +109,45 @@ if (promoCarouselContainer) {
 }
 
 // =========================================================
-// 5. MESS KHATA: 3D CAROUSEL, SWIPE, TILT & PERFORMANCE
+// 5. MESS KHATA: 3D CAROUSEL, TAP CONTROL, TILT & PERFORMANCE
 // =========================================================
 const mkCards = document.querySelectorAll('.mk-feature-card');
 const cssScreens = document.querySelectorAll('.css-replica-screen');
 const phoneBezel = document.querySelector('.mk-phone-bezel');
 let mkClassArray = ['mk-front', 'mk-middle', 'mk-back', 'mk-hidden'];
 
-// --- Phone Tilt Animation on Scroll (DESKTOP ONLY) ---
 // --- Smooth Phone Tilt Animation on Scroll (ALL DEVICES) ---
 if (phoneBezel) {
-    // CRITICAL FIX: Removed 'transform' from transition to prevent scroll lag/fighting
-    phoneBezel.style.transition = "box-shadow 0.3s ease";
-    phoneBezel.style.willChange = "transform"; // GPU Hardware Acceleration
+    // Added a very fast transform transition to smooth out the scroll calculations
+    phoneBezel.style.transition = "transform 0.1s ease-out, box-shadow 0.3s ease";
+    phoneBezel.style.willChange = "transform"; 
     
     let isTicking = false;
     window.addEventListener('scroll', () => {
         if (!isTicking) {
             window.requestAnimationFrame(() => {
                 const rect = phoneBezel.getBoundingClientRect();
-                // Check if phone is visible on screen
                 if (rect.top < window.innerHeight && rect.bottom > 0) {
                     const scrollProgress = (window.innerHeight - rect.top) / window.innerHeight;
-                    // Lighter tilt intensity for mobile (3) vs desktop (8)
-                    const intensity = window.innerWidth > 850 ? 8 : 3; 
+                    // Boosted mobile intensity to 6 so it is more noticeable
+                    const intensity = window.innerWidth > 850 ? 8 : 6; 
                     const tiltX = Math.cos(scrollProgress * Math.PI) * intensity; 
                     const tiltY = Math.sin(scrollProgress * Math.PI) * -intensity;
                     
-                    // Apply immediate transform without CSS delay
                     phoneBezel.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(1.02)`;
                 }
                 isTicking = false;
             });
             isTicking = true;
         }
-    }, { passive: true }); // Prevents scroll stuttering
+    }, { passive: true });
 }
 
-function rotateMkCards(direction = 'next') {
+function rotateMkCards() {
     if (mkCards.length === 0) return;
     
-    if (direction === 'next') {
-        const last = mkClassArray.pop();
-        mkClassArray.unshift(last);
-    } else {
-        const first = mkClassArray.shift();
-        mkClassArray.push(first);
-    }
+    const last = mkClassArray.pop();
+    mkClassArray.unshift(last);
     
     mkCards.forEach((card, index) => {
         card.className = 'mk-feature-card ' + mkClassArray[index];
@@ -175,35 +167,12 @@ function rotateMkCards(direction = 'next') {
 
 const mkCarouselContainer = document.getElementById('mkTextCarousel');
 if (mkCarouselContainer) {
-    // --- Desktop Click-to-Next Support ---
+    // Both Desktop and Mobile will use standard Tap/Click to cycle cards
     mkCards.forEach(card => {
         card.addEventListener('click', () => {
-            rotateMkCards('next'); // Let users click the cards to advance them
+            rotateMkCards();
         });
     });
-
-    // --- Touch Swipe Support for Mobile ---
-    let touchStartX = 0;
-    let touchEndX = 0;
-    
-    mkCarouselContainer.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-    }, {passive: true});
-    
-    mkCarouselContainer.addEventListener('touchend', (e) => {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
-    }, {passive: true});
-    
-    function handleSwipe() {
-        const swipeThreshold = 50;
-        if (touchStartX - touchEndX > swipeThreshold) {
-            rotateMkCards('next'); // Swiped Left -> Next Card
-        }
-        if (touchEndX - touchStartX > swipeThreshold) {
-            rotateMkCards('prev'); // Swiped Right -> Previous Card
-        }
-    }
 }
 
 // =========================================================
