@@ -305,6 +305,8 @@ footer { background: #1a202c; color: #a0aec0; padding: 60px 20px 20px; }
     
     .stats-container { flex-direction: column; }
     .footer-content { flex-direction: column; text-align: center; }
+   /* Fixes scrolling lag on mobile */
+    .mk-container { backdrop-filter: none; background: rgba(255,255,255,0.9); }
 }
 
 /* =========================================================
@@ -319,4 +321,32 @@ footer { background: #1a202c; color: #a0aec0; padding: 60px 20px 20px; }
 .mk-phone-bezel {
     will-change: transform;
     transform: translateZ(0); /* Hardware acceleration */
+}
+
+/* --- NEW: Tap Indicator Animation --- */
+.tap-indicator {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    width: 12px;
+    height: 12px;
+    background-color: #00b050; /* Cellflow Green */
+    border-radius: 50%;
+    z-index: 10;
+}
+.tap-indicator::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background-color: inherit;
+    border-radius: inherit;
+    animation: pulseRing 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+}
+@keyframes pulseRing {
+    0% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+    100% { transform: translate(-50%, -50%) scale(3.5); opacity: 0; }
 }
