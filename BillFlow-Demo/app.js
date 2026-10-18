@@ -33,14 +33,29 @@ function showLoader() { loadingOverlay.classList.remove('hidden'); }
 function hideLoader() { loadingOverlay.classList.add('hidden'); }
 function showScreen(screenEl) { document.querySelectorAll('.screen-container').forEach(s => s.classList.add('hidden')); screenEl.classList.remove('hidden'); }
 
-// --- MOCK API CALLS ---
+// --- MOCK LOGIN ---
 document.getElementById('loginForm').addEventListener('submit', (e) => {
     e.preventDefault();
+    
+    // Grab what the user typed
+    const userId = document.getElementById('userId').value.trim();
+    const password = document.getElementById('password').value.trim();
+
+    // Check if they left it empty
+    if (!userId || !password) {
+        showToast("In this dummy, you can put anything in User Name and Password!", "error");
+        return; // Stop the login process
+    }
+
+    // Set the display name to whatever they typed as the User ID
+    currentUserName = userId;
+
     showLoader();
     setTimeout(() => {
         hideLoader();
         document.getElementById('welcomeMessage').innerText = `Hello, ${currentUserName}!`;
         document.getElementById('topAppBar').classList.remove('hidden');
+        document.getElementById('menuUserName').innerText = `Logged in as: ${currentUserName}`;
         showScreen(dashboardScreen);
         loadDashboardStats(); loadItems(); loadBills();
     }, 800);
