@@ -109,7 +109,7 @@ if (promoCarouselContainer) {
 }
 
 // =========================================================
-// 5. SMART 3D CAROUSEL, TAP CONTROL & TILT (MULTIPLE PHONES)
+// 5. SMART 3D DESKTOP & NATIVE MOBILE SWIPE CAROUSEL
 // =========================================================
 function setupShowcasePhone(carouselId, bezelId) {
     const carouselContainer = document.getElementById(carouselId);
@@ -119,90 +119,89 @@ function setupShowcasePhone(carouselId, bezelId) {
     const cards = carouselContainer.querySelectorAll('.mk-feature-card');
     let classArray = ['mk-front', 'mk-middle', 'mk-back', 'mk-hidden'];
 
-    // --- Smooth Phone Tilt Animation (DESKTOP ONLY) ---
-    // Only apply the heavy transition on Desktop
-    if (window.innerWidth > 850) {
-        phoneBezel.style.transition = "transform 0.1s ease-out, box-shadow 0.3s ease";
-        phoneBezel.style.willChange = "transform"; 
-    }
+    // --- Smooth Phone Tilt Animation (RESTORED FOR ALL DEVICES) ---
+    phoneBezel.style.transition = "transform 0.1s ease-out, box-shadow 0.3s ease";
+    phoneBezel.style.willChange = "transform"; 
     
     let isTicking = false;
     window.addEventListener('scroll', () => {
         if (!isTicking) {
             window.requestAnimationFrame(() => {
-                // ONLY calculate 3D tilt on Desktop to save mobile battery and fix lag
-                if (window.innerWidth > 850) {
-                    const rect = phoneBezel.getBoundingClientRect();
-                    if (rect.top < window.innerHeight && rect.bottom > 0) {
-                        const scrollProgress = (window.innerHeight - rect.top) / window.innerHeight;
-                        const intensity = 8; 
-                        const tiltX = Math.cos(scrollProgress * Math.PI) * intensity; 
-                        const tiltY = Math.sin(scrollProgress * Math.PI) * -intensity;
-                        
-                        phoneBezel.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(1.02)`;
-                    }
-                } else {
-                    // Mobile: perfectly flat, zero GPU math required = 100% smooth scroll
-                    phoneBezel.style.transform = `translateZ(0)`;
+                const rect = phoneBezel.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    const scrollProgress = (window.innerHeight - rect.top) / window.innerHeight;
+                    // Desktop tilt intensity is 8, Mobile is 4
+                    const intensity = window.innerWidth > 850 ? 8 : 4; 
+                    const tiltX = Math.cos(scrollProgress * Math.PI) * intensity; 
+                    const tiltY = Math.sin(scrollProgress * Math.PI) * -intensity;
+                    
+                    phoneBezel.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(1.02)`;
                 }
                 isTicking = false;
             });
             isTicking = true;
         }
     }, { passive: true });
-    
-    // --- Core Rotation Logic ---
-    function rotateCards() {
-        if (cards.length === 0) return;
-        
+
+    // --- Screen Sync Helper ---
+    function syncScreen(targetCard) {
+        const targetScreenId = targetCard.getAttribute('data-screen');
+        const targetScreen = document.getElementById(targetScreenId);
+        if (targetScreen) {
+            const parentContainer = targetScreen.parentElement;
+            parentContainer.querySelectorAll('.css-replica-screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            targetScreen.classList.add('active');
+        }
+    }
+
+    // --- DESKTOP: 3D Stack Rotation ---
+    function rotateCardsDesktop() {
+        if (window.innerWidth <= 850 || cards.length === 0) return;
         const last = classArray.pop();
         classArray.unshift(last);
         
         cards.forEach((c, index) => {
             c.className = 'mk-feature-card ' + classArray[index];
-            
-            // Swap the screen inside THIS specific phone only
-            if (classArray[index] === 'mk-front') {
-                const targetScreenId = c.getAttribute('data-screen');
-                const targetScreen = document.getElementById(targetScreenId);
-                
-                if (targetScreen) {
-                    const parentContainer = targetScreen.parentElement;
-                    parentContainer.querySelectorAll('.css-replica-screen').forEach(screen => {
-                        screen.classList.remove('active');
-                    });
-                    targetScreen.classList.add('active');
-                }
-            }
+            if (classArray[index] === 'mk-front') syncScreen(c);
         });
     }
 
-    // --- 1. Tap to Rotate ---
-    cards.forEach(card => {
-        card.addEventListener('click', rotateCards);
-    });
+    // Desktop Click & Swipe Listeners
+    cards.forEach(card => card.addEventListener('click', rotateCardsDesktop));
 
-    // --- 2. Smart Mobile Swipe (Ignores Vertical Scrolling) ---
-    let touchStartX = 0;
-    let touchStartY = 0;
-
+    let touchStartX = 0; let touchStartY = 0;
     carouselContainer.addEventListener('touchstart', (e) => {
         touchStartX = e.changedTouches[0].screenX;
         touchStartY = e.changedTouches[0].screenY;
     }, {passive: true});
 
     carouselContainer.addEventListener('touchend', (e) => {
-        const touchEndX = e.changedTouches[0].screenX;
-        const touchEndY = e.changedTouches[0].screenY;
-        
-        const deltaX = Math.abs(touchEndX - touchStartX);
-        const deltaY = Math.abs(touchEndY - touchStartY);
-
-        // Only rotate if the user swiped horizontally, NOT if they were scrolling down
-        if (deltaX > 40 && deltaX > deltaY) {
-            rotateCards();
-        }
+        if (window.innerWidth <= 850) return; // Let native CSS handle mobile swipe!
+        const deltaX = Math.abs(e.changedTouches[0].screenX - touchStartX);
+        const deltaY = Math.abs(e.changedTouches[0].screenY - touchStartY);
+        if (deltaX > 40 && deltaX > deltaY) rotateCardsDesktop();
     }, {passive: true});
+
+    // --- MOBILE: Native Scroll Observer ---
+    // This "watches" the cards on mobile and changes the phone screen when a new card slides into view
+    const mobileObserver = new IntersectionObserver((entries) => {
+        if (window.innerWidth > 850) return; // Only run on mobile
+        
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                cards.forEach(c => c.classList.remove('mobile-active'));
+                entry.target.classList.add('mobile-active');
+                syncScreen(entry.target);
+            }
+        });
+    }, {
+        root: carouselContainer,
+        threshold: 0.6 // Triggers when 60% of the card is visible in the center
+    });
+
+    cards.forEach(card => mobileObserver.observe(card));
 }
 
 // --- 1. Fallback just in case the Mess Khata phone doesn't have an ID in the HTML ---
