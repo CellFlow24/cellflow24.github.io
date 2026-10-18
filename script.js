@@ -7,14 +7,22 @@ if (heroLogoWrapper) {
         let scrollY = window.scrollY;
         // Only calculate if near the top to save performance
         if (scrollY < 800) {
-            let scaleValue = 1 + (scrollY * 0.005); // Zooms the logo
-            let moveX = scrollY * 0.8; // Moves the logo to the RIGHT
             let opacityValue = 1 - (scrollY * 0.002); // Fades it out
-            
             if (opacityValue < 0) opacityValue = 0;
 
-            // Apply BOTH the movement to the right and the zoom scale
-            heroLogoWrapper.style.transform = `translateX(${moveX}px) scale(${scaleValue})`;
+            if (window.innerWidth > 850) {
+                // DESKTOP: Zoom in and move right
+                let scaleValue = 1 + (scrollY * 0.005); 
+                let moveX = scrollY * 0.8; 
+                heroLogoWrapper.style.transform = `translateX(${moveX}px) scale(${scaleValue})`;
+            } else {
+                // MOBILE: Scale down and move down
+                let scaleValue = 1 - (scrollY * 0.0015); 
+                if (scaleValue < 0.5) scaleValue = 0.5; // Stops it from getting too tiny
+                let moveY = scrollY * 0.4; // Moves down smoothly
+                heroLogoWrapper.style.transform = `translateY(${moveY}px) scale(${scaleValue})`;
+            }
+            
             heroLogoWrapper.style.opacity = opacityValue;
         }
     });
@@ -111,7 +119,8 @@ let mkClassArray = ['mk-front', 'mk-middle', 'mk-back', 'mk-hidden'];
 // --- Phone Tilt Animation on Scroll (DESKTOP ONLY) ---
 // --- Smooth Phone Tilt Animation on Scroll (ALL DEVICES) ---
 if (phoneBezel) {
-    phoneBezel.style.transition = "transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease";
+    // CRITICAL FIX: Removed 'transform' from transition to prevent scroll lag/fighting
+    phoneBezel.style.transition = "box-shadow 0.3s ease";
     phoneBezel.style.willChange = "transform"; // GPU Hardware Acceleration
     
     let isTicking = false;
@@ -122,10 +131,12 @@ if (phoneBezel) {
                 // Check if phone is visible on screen
                 if (rect.top < window.innerHeight && rect.bottom > 0) {
                     const scrollProgress = (window.innerHeight - rect.top) / window.innerHeight;
-                    // Lighter tilt intensity for mobile (4) vs desktop (8)
-                    const intensity = window.innerWidth > 850 ? 8 : 4; 
+                    // Lighter tilt intensity for mobile (3) vs desktop (8)
+                    const intensity = window.innerWidth > 850 ? 8 : 3; 
                     const tiltX = Math.cos(scrollProgress * Math.PI) * intensity; 
                     const tiltY = Math.sin(scrollProgress * Math.PI) * -intensity;
+                    
+                    // Apply immediate transform without CSS delay
                     phoneBezel.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(1.02)`;
                 }
                 isTicking = false;
