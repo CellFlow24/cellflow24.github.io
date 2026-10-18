@@ -685,8 +685,20 @@ function handleLeave() {
     document.getElementById('leaveModalContent').style.display = 'none';
     document.getElementById('leaveModalSad').classList.remove('hidden');
     
-    // Wait 1.2 seconds for the animation to play, then trigger the real exit
+    // Wait 1.2 seconds for the animation, then exit
     setTimeout(() => {
+        // Try to go back in browser history
         history.back(); 
+        
+        // Fallback: Collapse the modal instantly just in case history.back() fails 
+        // (which happens if they opened your site in a brand new tab)
+        document.getElementById('leaveModal').classList.remove('active');
+        
+        // Quietly reset the modal back to the question state in the background
+        setTimeout(() => {
+            document.getElementById('leaveModalContent').style.display = 'flex';
+            document.getElementById('leaveModalSad').classList.add('hidden');
+        }, 500);
+
     }, 1200);
 }
