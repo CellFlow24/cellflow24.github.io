@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0A192F">
+    <meta name="author" content="Dipun">
+    <title>BillFlow | Professional Billing</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- PWA Manifest will be added later -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192.png">
+</head>
+<body>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="hidden">
+        <!-- Replaced spinner div with your icon -->
+        <img src="icon-192.png" alt="Loading..." class="loader-icon">
+        <p>Processing...</p>
+    </div>
+
+    <!-- Custom Toast Notification -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- PWA Install Banner (Glassmorphism) -->
+    <div id="installBanner" class="install-banner install-hidden no-print">
+        <div class="install-text">
+            <strong style="color: var(--navy-blue); font-size: 1.05rem;">Install BillFlow</strong>
+            <span style="color: var(--text-light); font-size: 0.85rem;">Add to home screen for fast access</span>
+        </div>
+        <div class="install-actions">
+            <button id="installBtn" class="btn-primary" style="padding: 8px 16px; width: auto; font-size: 0.9rem;">Install</button>
+            <button id="closeInstallBtn" class="close-btn">&times;</button>
+        </div>
+    </div>
+
+    <!-- Floating Hamburger Menu -->
+    <div id="topAppBar" class="top-app-bar hidden no-print">
+        <div class="menu-icon" onclick="toggleMenu()">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </div>
+
+    <!-- Side Slide-out Menu -->
+    <div id="sideMenu" class="side-menu no-print">
+        <div class="menu-header">
+            <img src="logo.png" alt="BillFlow Logo" style="width: 120px;">
+            <p id="menuUserName" style="font-weight: bold; margin-top: 10px; color: var(--navy-blue);"></p>
+        </div>
+        <div class="menu-items">
+            <a onclick="switchTab('dashboardScreen'); toggleMenu()">Home / Dashboard</a>
+            <a onclick="switchTab('itemScreen'); toggleMenu()">Item Management</a>
+            <a onclick="switchTab('billingScreen'); toggleMenu()">Create New Invoice</a>
+            <a onclick="switchTab('dueScreen'); toggleMenu()">Due Bills</a>
+            <a onclick="switchTab('historyScreen'); toggleMenu()">Bill History</a>
+        </div>
+    </div>
+    <div id="menuOverlay" class="menu-overlay hidden no-print" onclick="toggleMenu()"></div>
+
+    <!-- Clear Due Pop-up Modal -->
+    <div id="clearDueModal" class="modal-overlay hidden no-print">
+        <div class="modal-box">
+            <h3 class="card-title">Clear Due Payment</h3>
+            <p style="margin-bottom: 15px; color: var(--text-light); font-size: 0.9rem;">Bill ID: <strong id="cdBillId" style="color: var(--navy-blue);"></strong></p>
+            
+            <div class="input-group">
+                <label>Amount Paying (₹)</label>
+                <input type="number" id="cdAmount" min="1" step="1">
+            </div>
+            
+            <div class="input-group" style="position: relative;">
+                <label>Payment Method</label>
+                <input type="text" id="cdMethod" class="custom-select" value="CASH" readonly style="cursor: pointer;">
+                <div id="cdMethodDropdown" class="dropdown-content hidden" style="top: auto; bottom: 100%; margin-bottom: 5px; box-shadow: 0px -8px 16px 0px rgba(0,0,0,0.1);">
+                    <div class="dropdown-item" onclick="selectCdMethod('CASH')">CASH</div>
+                    <div class="dropdown-item" onclick="selectCdMethod('UPI')">UPI</div>
+                    <div class="dropdown-item" onclick="selectCdMethod('BANK TRANSFER')">BANK TRANSFER</div>
+                </div>
+            </div>
+            
+            <div style="display: flex; gap: 10px; margin-top: 15px;">
+                <button class="btn-primary" style="background: #64748B;" onclick="closeClearDueModal()">Cancel</button>
+                <button class="btn-primary" onclick="submitClearDue()">Update Bill</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Screen -->
+    <div id="loginScreen" class="screen-container">
+        <div class="auth-box">
+            <!-- Replaced text title with your logo image -->
+            <img src="logo.png" alt="BillFlow Logo" class="brand-logo">
+            <p class="subtitle">Enter your credentials</p>
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="userId">User ID</label>
+                    <input type="text" id="userId" required autocomplete="off">
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="btn-primary">Log In</button>
+            </form>
+            <p id="loginError" class="error-text hidden"></p>
+        </div>
+    </div>
+    
+    <!-- Change Password Screen -->
+    <div id="changePasswordScreen" class="screen-container hidden">
+        <div class="auth-box">
+            <h2 class="section-title">Setup New Password</h2>
+            <p class="subtitle">For security, please change your default password.</p>
+            <form id="changePasswordForm">
+                <div class="input-group">
+                    <label for="newPassword">New Password</label>
+                    <input type="password" id="newPassword" required>
+                </div>
+                <div class="input-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" required>
+                </div>
+                <button type="submit" class="btn-primary">Update Password</button>
+            </form>
+            <p id="passwordError" class="error-text hidden"></p>
+        </div>
+    </div>
+
+    <!-- Dashboard Screen -->
+    <div id="dashboardScreen" class="screen-container hidden">
+        <div class="app-header">
+            <img src="logo.png" alt="BillFlow" class="header-logo">
+            <p id="welcomeMessage" class="subtitle"></p>
+        </div>
+        
+        <div class="dashboard-grid">
+            <div class="stat-card blue-card">
+                <p class="stat-label">Today's Amount</p>
+                <h3 class="stat-value">₹<span id="statTodayAmount">0.00</span></h3>
+            </div>
+            <div class="stat-card">
+                <p class="stat-label">Today's Bills</p>
+                <h3 class="stat-value" id="statTodayCount">0</h3>
+            </div>
+            <div class="stat-card green-card">
+                <p class="stat-label">Total Bills</p>
+                <h3 class="stat-value" id="statTotalCount">0</h3>
+            </div>
+            <div class="stat-card red-card">
+                <p class="stat-label">Today's Due</p>
+                <h3 class="stat-value">₹<span id="statTodayDue">0.00</span></h3>
+            </div>
+            <div class="stat-card red-card">
+                <p class="stat-label">Total Due</p>
+                <h3 class="stat-value">₹<span id="statTotalDue">0.00</span></h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- Item Management Screen -->
+    <div id="itemScreen" class="screen-container hidden">
+        <div class="app-header">
+            <h2 class="section-title">Item Management</h2>
+        </div>
+        
+        <!-- Add Item Box -->
+        <div class="card-box">
+            <h3 class="card-title">Add New Item</h3>
+            <form id="addItemForm">
+                <div class="input-group">
+                    <label>Item Name</label>
+                    <input type="text" id="itemName" required autocomplete="off">
+                </div>
+                <div class="input-grid">
+                    <div class="input-group">
+                        <label>Price (₹)</label>
+                        <input type="number" id="itemPrice" step="0.01" required>
+                    </div>
+                    <div class="input-group">
+                        <label>GST (%)</label>
+                        <input type="number" id="itemGst" value="0" min="0" max="100" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary">Save Item</button>
+            </form>
+        </div>
+
+        <!-- Search & List Box -->
+        <div class="card-box" style="margin-top: 20px;">
+            <input type="text" id="searchItem" class="search-bar" placeholder="Search items...">
+            <div id="itemListView" class="item-list">
+                <!-- Items will be injected here via JavaScript -->
+                <p style="text-align:center; color: #64748B; font-size: 0.9rem;">No items found.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Billing Screen -->
+    <div id="billingScreen" class="screen-container hidden">
+        <div class="app-header">
+            <h2 class="section-title">New Invoice</h2>
+        </div>
+
+        <form id="billingForm">
+            <!-- Part 1: Customer Details -->
+            <div class="card-box">
+                <h3 class="card-title">Customer Details</h3>
+                <div class="input-grid">
+                    <div class="input-group">
+                        <label>Bill ID</label>
+                        <input type="text" id="billId" readonly style="background: #F8FAFC; color: #64748B;">
+                    </div>
+                    <div class="input-group">
+                        <label>Date & Time</label>
+                        <input type="text" id="billDate" readonly style="background: #F8FAFC; color: #64748B;">
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Customer Name</label>
+                    <input type="text" id="customerName" required autocomplete="off">
+                </div>
+                <div class="input-grid">
+                    <div class="input-group">
+                        <label>Phone Number</label>
+                        <input type="tel" id="customerPhone" required autocomplete="off" maxlength="10" minlength="10" inputmode="numeric">
+                    </div>
+                    <div class="input-group">
+                        <label>Location</label>
+                        <input type="text" id="customerLocation" required autocomplete="off">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Part 2: Item Selection -->
+            <div class="card-box" style="margin-top: 15px;">
+                <h3 class="card-title">Add Items</h3>
+                <div class="input-group" style="position: relative;">
+                    <label>Search Inventory</label>
+                    <input type="text" id="billSearchItem" autocomplete="off" placeholder="Type item name...">
+                    <div id="billItemDropdown" class="dropdown-content hidden"></div>
+                </div>
+                
+                <!-- Current Bill Items Table -->
+                <div class="cart-container">
+                    <table class="cart-table">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Qty</th>
+                                <th>Total</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="cartBody">
+                            <tr>
+                                <td colspan="4" style="text-align: center; color: #64748B;">No items added yet.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Part 3: Calculation & Payment -->
+            <div class="card-box" style="margin-top: 15px;">
+                <h3 class="card-title">Payment Summary</h3>
+                
+                <div class="summary-row">
+                    <span>Sub Total:</span>
+                    <span id="summarySubTotal">₹0.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>Total GST:</span>
+                    <span id="summaryGst">₹0.00</span>
+                </div>
+                <div class="input-group" style="margin-top: 15px;">
+                    <label>Discount (₹)</label>
+                    <input type="number" id="billDiscount" value="0" min="0" step="1">
+                </div>
+                <div class="summary-row payable-row">
+                    <span>Payable Amount:</span>
+                    <span id="summaryPayable">₹0.00</span>
+                </div>
+                
+                <div class="input-grid" style="margin-top: 15px;">
+                    <div class="input-group">
+                        <label>Paid (₹)</label>
+                        <input type="number" id="billPaid" value="0" min="0" step="1" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Due (₹)</label>
+                        <input type="number" id="billDue" value="0" readonly style="background: #F8FAFC; color: var(--error-red); font-weight: bold;">
+                    </div>
+                </div>
+                <div class="input-group" style="position: relative;">
+                    <label>Payment Method</label>
+                    <!-- Readonly input prevents keyboard, acts as a button -->
+                    <input type="text" id="billMethod" class="custom-select" value="CASH" readonly style="cursor: pointer;">
+                    
+                    <!-- Custom CSS Dropdown (Opens upwards so it doesn't fall off the screen) -->
+                    <div id="paymentDropdown" class="dropdown-content hidden" style="top: auto; bottom: 100%; margin-bottom: 5px; box-shadow: 0px -8px 16px 0px rgba(0,0,0,0.1);">
+                        <div class="dropdown-item" onclick="selectPayment('CASH')">CASH</div>
+                        <div class="dropdown-item" onclick="selectPayment('UPI')">UPI</div>
+                        <div class="dropdown-item" onclick="selectPayment('BANK TRANSFER')">BANK TRANSFER</div>
+                        <div class="dropdown-item" onclick="selectPayment('CARD')">CARD</div>
+                    </div>
+                </div>
+                
+                <button type="button" id="saveBillBtn" class="btn-primary" style="margin-top: 10px;">Save & Generate Bill</button>
+            </div>
+        </form>
+    </div>
+    
+    <!-- Due Bills Screen -->
+    <div id="dueScreen" class="screen-container hidden">
+        <div class="app-header">
+            <h2 class="section-title">Due Bills</h2>
+        </div>
+        <div class="card-box">
+            <input type="text" id="dueSearchInput" class="search-bar" placeholder="Search due bills..." autocomplete="off">
+            
+            <!-- CUSTOM CSS DROPDOWN FOR DUE SEARCH -->
+            <div class="input-group" style="position: relative; margin-bottom: 15px;">
+                <input type="text" id="dueSearchTypeInput" class="custom-select" value="Search by Name" readonly style="cursor: pointer; padding: 8px 15px; font-size: 0.9rem;">
+                <input type="hidden" id="dueSearchType" value="name">
+                <div id="dueSearchDropdown" class="dropdown-content hidden" style="top: 100%; margin-top: 5px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);">
+                    <div class="dropdown-item" onclick="selectDueSearch('name', 'Search by Name')">Search by Name</div>
+                    <div class="dropdown-item" onclick="selectDueSearch('id', 'Search by Bill ID')">Search by Bill ID</div>
+                </div>
+            </div>
+
+            <div id="dueListView" class="item-list" style="max-height: 60vh;"></div>
+        </div>
+    </div>
+
+    <!-- History Screen -->
+    <div id="historyScreen" class="screen-container hidden">
+        <div class="app-header">
+            <h2 class="section-title">Bill History</h2>
+        </div>
+        <div class="card-box">
+            <input type="text" id="historySearchInput" class="search-bar" placeholder="Search all bills..." autocomplete="off">
+            
+            <!-- CUSTOM CSS DROPDOWN FOR HISTORY SEARCH -->
+            <div class="input-group" style="position: relative; margin-bottom: 15px;">
+                <input type="text" id="historySearchTypeInput" class="custom-select" value="Search by Name" readonly style="cursor: pointer; padding: 8px 15px; font-size: 0.9rem;">
+                <input type="hidden" id="historySearchType" value="name">
+                <div id="historySearchDropdown" class="dropdown-content hidden" style="top: 100%; margin-top: 5px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);">
+                    <div class="dropdown-item" onclick="selectHistorySearch('name', 'Search by Name')">Search by Name</div>
+                    <div class="dropdown-item" onclick="selectHistorySearch('id', 'Search by Bill ID')">Search by Bill ID</div>
+                </div>
+            </div>
+
+            <div id="historyListView" class="item-list" style="max-height: 60vh;"></div>
+        </div>
+    </div>
+
+    <!-- Invoice Print Preview Screen -->
+    <div id="printPreviewScreen" class="screen-container hidden" style="max-width: 100%; padding: 10px;">
+        <!-- NEW INNER WRAPPER START -->
+        <div class="print-inner-wrap" style="max-width: 800px; margin: 0 auto;">
+            
+            <div class="app-header no-print" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <button onclick="closePrintPreview()" class="btn-primary" style="width: auto; padding: 10px 20px; background: var(--text-light);">Back</button>
+                <button onclick="window.print()" class="btn-primary" style="width: auto; padding: 10px 30px;">Print / Save PDF</button>
+            </div>
+
+            <!-- The Actual Bill Layout -->
+            <div id="invoiceCanvas" class="invoice-wrapper">
+                <!-- Header -->
+                <div class="inv-header">
+                    <div class="inv-logo-box">
+                        <img src="comp-logo.png" alt="Company Logo" class="inv-logo">
+                    </div>
+                    <div class="inv-company-details">
+                        <h2 id="invCompanyName">Company Name</h2>
+                        <p id="invCompanyAddress">Address</p>
+                        <p>Visit us at: <span id="invCompanyWebsite"></span> &nbsp;|&nbsp; Email: <span id="invCompanyEmail"></span></p>
+                        <p>Phone: <span id="invCompanyPhone"></span></p>
+                    </div>
+                </div>
+
+                <!-- Customer & Bill Info -->
+                <div class="inv-info-grid">
+                    <div class="inv-info-col border-right border-bottom">
+                        <strong>NAME</strong> <span id="invCustomerName" style="margin-left: 20px;"></span>
+                    </div>
+                    <div class="inv-info-col border-bottom">
+                        <strong>BILL No.</strong> <span id="invBillId" style="margin-left: 10px;"></span><br>
+                        <strong>DATE</strong> <span id="invBillDate" style="margin-left: 10px;"></span><br>
+                        <strong>PHONE</strong> <span id="invCustomerPhone" style="margin-left: 10px;"></span>
+                    </div>
+                    <div class="inv-info-col border-right border-bottom">
+                        <strong>ADDRESS</strong> <span id="invCustomerLocation" style="margin-left: 20px;"></span>
+                    </div>
+                    <div class="inv-info-col border-bottom" style="background: #f8fafc;">
+                        <strong id="invDocType" style="display: block; text-align: center; border-bottom: 1px solid #000; padding-bottom: 2px;">INVOICE</strong>
+                        <div id="invGstBlock"><strong>GST NO</strong> <span id="invGstNumber" style="margin-left: 10px;"></span></div>
+                    </div>
+                </div>
+
+                <!-- Items Table -->
+                <table class="inv-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 5%;">No.</th>
+                            <th style="width: 40%;">Product Name</th>
+                            <th style="width: 15%;">Quantity</th>
+                            <th style="width: 15%;">Rate</th>
+                            <th style="width: 10%;">GST</th>
+                            <th style="width: 15%;">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="invItemsBody">
+                        <!-- Items injected here -->
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th colspan="5" style="text-align: right;">Total</th>
+                            <th id="invTotalAmount">0.00</th>
+                        </tr>
+                    </tfoot>
+                </table>
+                
+                <!-- Bottom Section Grid -->
+                <div class="inv-footer-grid">
+                    <!-- Bank Details -->
+                    <div class="inv-bank-box border-right">
+                        <strong>Our Banker:</strong><br><br>
+                        <span id="invBankName"></span><br>
+                        A/C Number - <span id="invAccountNumber"></span><br>
+                        IFSC Code - <span id="invIFSC"></span><br>
+                        UPI ID: <span id="invUPI"></span>
+                    </div>
+                    
+                    <!-- Status Stamp -->
+                    <div class="inv-stamp-box border-right">
+                        <div id="invStatusStamp" class="stamp">PAID</div>
+                    </div>
+                    
+                    <!-- Tax & Calculation -->
+                    <div class="inv-calc-box">
+                        <div id="invGstCalcBlock">
+                            <!-- Dynamic CGST/SGST or IGST injected here -->
+                        </div>
+                        <div class="calc-row"><span>Sub Total</span> <span id="invSubTotal"></span></div>
+                        <div class="calc-row"><span>Discount</span> <span id="invDiscount"></span></div>
+                        <div class="calc-row" style="border-top: 1px solid #000; border-bottom: 1px solid #000; font-weight: bold;">
+                            <span>TOTAL</span> <span id="invPayable"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Very Bottom Row -->
+                <div class="inv-bottom-row">
+                    <div class="border-right" style="width: 30%; padding: 5px;">
+                        <strong>Payment Method:</strong> <span id="invMethod"></span>
+                    </div>
+                    <div class="border-right" style="width: 33%; padding: 5px;">
+                        <strong>Due Amount:</strong> <span id="invDue" style="color: red;"></span>
+                    </div>
+                    <div style="width: 37%; padding: 5px; font-weight: bold; font-size: 0.9rem;" id="invAmountInWords">
+                        <!-- Number in words -->
+                    </div>
+                </div>
+                
+                <!-- Confidential Note -->
+                <div class="inv-note-row" id="invNoteContainer" style="display: flex; justify-content: space-between; padding: 15px 5px; font-weight: bold; font-size: 0.85rem;">
+                    <div id="invNoteText" style="color: var(--navy-blue); max-width: 60%;"></div>
+                    <div style="text-align: right; margin-top: 20px;">THANK YOU FOR CHOOSING US</div>
+                </div>
+            </div>
+            
+        <!-- NEW INNER WRAPPER END -->
+        </div>
+    </div>
+
+    
+
+    <script src="app.js"></script>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then((reg) => console.log('Service Worker registered', reg))
+                    .catch((err) => console.log('Service Worker not registered', err));
+            });
+        }
+    </script>
+    
+</body>
+</html>

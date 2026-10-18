@@ -1,0 +1,697 @@
+:root {
+    /* BillFlow Logo Colors */
+    --navy-blue: #0A192F;
+    --tech-blue: #0052FF;
+    --trust-green: #10B981;
+    --light-bg: #F4F7F6;
+    --white: #FFFFFF;
+    --text-dark: #1E293B;
+    --text-light: #64748B;
+    --error-red: #EF4444;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: var(--light-bg);
+    color: var(--text-dark);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Utilities */
+.hidden {
+    display: none !important;
+}
+
+/* Screen Management */
+.screen-container {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+}
+
+/* Auth Box */
+.auth-box {
+    background: var(--white);
+    padding: 40px 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    text-align: center;
+}
+
+.brand-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 5px;
+}
+
+.brand-blue { color: var(--tech-blue); }
+.brand-green { color: var(--trust-green); }
+
+.subtitle {
+    color: var(--text-light);
+    margin-bottom: 30px;
+    font-size: 0.95rem;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    color: var(--navy-blue);
+    margin-bottom: 10px;
+}
+
+/* Forms */
+.input-group {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--navy-blue);
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #CBD5E1;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--tech-blue);
+    box-shadow: 0 0 0 3px rgba(0, 82, 255, 0.1);
+}
+
+/* Buttons */
+.btn-primary {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, var(--tech-blue), var(--trust-green));
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-primary:active {
+    transform: scale(0.98);
+}
+
+.error-text {
+    color: var(--error-red);
+    margin-top: 15px;
+    font-size: 0.9rem;
+}
+
+/* Modern Loading Overlay */
+#loadingOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Modern Pulsing Logo Loader */
+.loader-icon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 15px;
+    /* This creates the smooth fade and scale effect */
+    animation: pulse-fade 1.5s infinite ease-in-out;
+}
+
+@keyframes pulse-fade {
+    0% { 
+        opacity: 0.3; 
+        transform: scale(0.85); 
+    }
+    50% { 
+        opacity: 1; 
+        transform: scale(1.05); 
+        filter: drop-shadow(0px 0px 8px rgba(0, 82, 255, 0.4)); /* Adds a subtle glow */
+    }
+    100% { 
+        opacity: 0.3; 
+        transform: scale(0.85); 
+    }
+}
+
+#loadingOverlay p {
+    color: var(--navy-blue);
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+/* Main Brand Logo */
+.brand-logo {
+    width: 100%;
+    max-width: 220px; /* Adjust this value if your logo looks too big or small */
+    height: auto;
+    margin-bottom: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* App Header (Dashboard & Inner Pages) */
+.app-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+.header-logo {
+    width: 140px;
+    height: auto;
+    margin-bottom: 5px;
+}
+
+/* Dashboard Grid */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    padding-bottom: 80px; /* Space for bottom nav */
+}
+/* Make the first card span full width to emphasize Today's Amount */
+.dashboard-grid .stat-card:first-child {
+    grid-column: 1 / -1; 
+}
+
+/* Stat & Content Cards */
+.stat-card, .card-box {
+    background: var(--white);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+    border-left: 4px solid var(--navy-blue);
+}
+.card-box {
+    border-left: none; /* Clean edges for forms */
+    padding-bottom: 80px; 
+}
+
+/* Colored Card Accents */
+.blue-card { border-left-color: var(--tech-blue); background: linear-gradient(to right, #ffffff, #f0f4ff); }
+.green-card { border-left-color: var(--trust-green); }
+.red-card { border-left-color: var(--error-red); }
+
+.stat-label {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+.stat-value {
+    font-size: 1.5rem;
+    color: var(--navy-blue);
+    font-weight: 800;
+}
+.blue-card .stat-value { color: var(--tech-blue); font-size: 2rem; }
+
+/* Item Form Grid & List */
+.card-title {
+    font-size: 1.1rem;
+    color: var(--navy-blue);
+    margin-bottom: 15px;
+}
+.input-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+.search-bar {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #CBD5E1;
+    border-radius: 8px;
+    font-size: 1rem;
+    margin-bottom: 15px;
+    background-color: var(--light-bg);
+}
+.item-list {
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+/* Bottom Navigation */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: var(--white);
+    display: flex;
+    justify-content: space-around;
+    padding: 12px 5px;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05);
+    z-index: 1000;
+}
+.nav-item {
+    background: none;
+    border: none;
+    color: var(--text-light);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+.nav-item.active {
+    color: var(--tech-blue);
+    background: rgba(0, 82, 255, 0.1);
+}
+
+/* Custom Toast Notifications */
+.toast-container {
+    position: fixed;
+    top: -100px; /* Hidden off-screen initially */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10000;
+    background: var(--navy-blue);
+    color: var(--white);
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    transition: top 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.4s ease;
+    opacity: 0;
+    pointer-events: none;
+    text-align: center;
+    min-width: 250px;
+}
+
+.toast-container.show {
+    top: 30px;
+    opacity: 1;
+}
+
+.toast-success {
+    border-bottom: 4px solid var(--trust-green);
+}
+
+.toast-error {
+    border-bottom: 4px solid var(--error-red);
+}
+
+/* Billing Screen Specifics */
+
+/* Dropdown Search */
+.dropdown-content {
+    position: absolute;
+    background-color: var(--white);
+    width: 100%;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+    z-index: 10;
+    border-radius: 8px;
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #CBD5E1;
+    margin-top: 2px;
+}
+.dropdown-item {
+    padding: 12px 15px;
+    cursor: pointer;
+    border-bottom: 1px solid #E2E8F0;
+    display: flex;
+    justify-content: space-between;
+}
+.dropdown-item:hover {
+    background-color: #F8FAFC;
+    color: var(--tech-blue);
+}
+
+/* Cart Table */
+.cart-container {
+    overflow-x: auto;
+    margin-top: 10px;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+}
+.cart-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.9rem;
+}
+.cart-table th {
+    background-color: var(--navy-blue);
+    color: var(--white);
+    padding: 10px;
+    font-weight: 600;
+}
+.cart-table td {
+    padding: 10px;
+    border-bottom: 1px solid #E2E8F0;
+}
+.delete-btn {
+    color: var(--error-red);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+/* Summary & Select Styling */
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    color: var(--text-dark);
+    font-weight: 600;
+}
+.payable-row {
+    font-size: 1.2rem;
+    color: var(--tech-blue);
+    border-top: 2px dashed #CBD5E1;
+    padding-top: 12px;
+    margin-top: 5px;
+}
+
+/* Custom Dropdown Arrow for Select */
+.custom-select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #CBD5E1;
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: var(--white);
+    color: var(--navy-blue);
+    font-weight: 600;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%230A192F%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px top 50%;
+    background-size: 12px auto;
+}
+
+/* --- INVOICE PRINT LAYOUT --- */
+.invoice-wrapper {
+    background: #fff;
+    padding: 30px;
+    color: #000;
+    font-size: 0.9rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.inv-header {
+    display: flex;
+    border-bottom: 2px solid #000;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    align-items: center;
+}
+
+.inv-logo-box { width: 180px; }
+
+.inv-logo {
+    max-width: 100%;
+    height: auto;
+    background-color: #ffffff; /* Prevents black background rendering on PDFs */
+}
+
+.inv-company-details {
+    flex-grow: 1;
+    text-align: right;
+    line-height: 1.4;
+}
+
+.inv-company-details h2 {
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.inv-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 2px solid #000;
+    margin-bottom: 15px;
+}
+
+.inv-info-col { padding: 8px 12px; }
+.border-right { border-right: 1px solid #000; }
+.border-bottom { border-bottom: 1px solid #000; }
+
+.inv-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+    border: 2px solid #000;
+}
+
+.inv-table th, .inv-table td {
+    border: 1px solid #000;
+    padding: 8px;
+    text-align: center;
+}
+.inv-table th { background-color: #f8fafc !important; -webkit-print-color-adjust: exact; }
+
+.inv-footer-grid {
+    display: grid;
+    grid-template-columns: 35% 30% 35%;
+    border: 2px solid #000;
+}
+
+.inv-bank-box, .inv-stamp-box, .inv-calc-box { padding: 10px; line-height: 1.5; }
+
+.inv-stamp-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.stamp {
+    font-size: 2.2rem;
+    font-weight: 800;
+    padding: 10px 20px;
+    border: 4px solid;
+    border-radius: 10px;
+    transform: rotate(-15deg);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+.stamp-paid { color: #10B981; border-color: #10B981; }
+.stamp-due { color: #EF4444; border-color: #EF4444; }
+
+.calc-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.inv-bottom-row {
+    display: flex;
+    border-left: 2px solid #000;
+    border-right: 2px solid #000;
+    border-bottom: 2px solid #000;
+    align-items: center;
+}
+
+/* --- PWA Install Banner (Glassmorphism) --- */
+.install-banner {
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 92%;
+    max-width: 420px;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    padding: 16px 20px;
+    z-index: 10000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: opacity 0.5s ease, bottom 0.5s ease;
+}
+
+.install-hidden {
+    opacity: 0;
+    bottom: -100px;
+    pointer-events: none;
+}
+
+.install-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.install-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: var(--text-light);
+    font-size: 1.8rem;
+    cursor: pointer;
+    line-height: 1;
+    padding-bottom: 2px;
+    transition: color 0.2s ease;
+}
+
+.close-btn:hover {
+    color: var(--error-red);
+}
+
+/* --- THE PRINT ENGINE --- */
+@media print {
+    @page {
+        size: auto;
+        margin: 5mm; /* Restores safe margins so top/bottom borders aren't cropped */
+    }
+    
+    body {
+        padding: 0;
+        background: #fff;
+    }
+
+    body * { visibility: hidden; } 
+    
+    #printPreviewScreen, #printPreviewScreen * { visibility: visible; } 
+    
+    #printPreviewScreen {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        max-width: none;
+    }
+
+    .no-print { display: none !important; } 
+    
+    .invoice-wrapper {
+        padding: 0;
+        box-shadow: none;
+        border: none;
+    }
+}
+
+/* --- Hamburger Menu & Top Bar --- */
+.top-app-bar {
+    position: fixed; 
+    top: 20px; 
+    left: 20px; /* Floats perfectly in the top left corner */
+    z-index: 900;
+}
+
+.menu-icon { 
+    width: 42px; 
+    height: 42px; 
+    cursor: pointer; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;
+    gap: 5px; 
+    background: var(--tech-blue); /* Uses your app's signature bright blue */
+    border-radius: 10px; 
+    box-shadow: 0 4px 12px rgba(0, 82, 255, 0.3); /* Adds a premium blue glow */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.menu-icon:active {
+    transform: scale(0.95);
+}
+
+.menu-icon .bar { 
+    width: 22px; 
+    height: 3px; 
+    background: var(--white); /* White lines contrast beautifully with the blue */
+    border-radius: 2px; 
+}
+
+/* Adjust screen spacing since the solid banner is gone */
+.screen-container { margin-top: 30px; padding-bottom: 20px; }
+
+/* Side Drawer */
+.side-menu {
+    position: fixed; top: 0; left: -280px; width: 260px; height: 100%;
+    background: var(--white); box-shadow: 2px 0 15px rgba(0,0,0,0.1);
+    z-index: 1000; transition: left 0.3s ease; display: flex; flex-direction: column;
+}
+.side-menu.open { left: 0; }
+.menu-header { padding: 30px 20px; background: #F8FAFC; border-bottom: 1px solid #E2E8F0; text-align: center; }
+.menu-items { padding: 10px 0; display: flex; flex-direction: column; }
+.menu-items a { padding: 15px 25px; color: var(--navy-blue); font-weight: 600; text-decoration: none; cursor: pointer; transition: background 0.2s; border-bottom: 1px solid #f1f5f9; }
+.menu-items a:hover { background: #f8fafc; color: var(--tech-blue); }
+.menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 950; }
+
+/* --- Modals --- */
+.modal-overlay { 
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+    background: rgba(0,0,0,0.6); z-index: 1100; display: flex; justify-content: center; align-items: center; 
+}
+.modal-box { 
+    background: var(--white); padding: 25px; border-radius: 12px; 
+    width: 90%; max-width: 400px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); 
+}
+
+/* --- DESKTOP RESPONSIVENESS --- */
+@media (min-width: 768px) {
+    /* Expand the main app container and center it */
+    .screen-container {
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    /* Keep the login box from stretching too wide */
+    .auth-box {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    /* Expand the dashboard grid to 4 columns instead of 2 */
+    .dashboard-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    /* Make the Today's Amount card span 2 columns so it still stands out */
+    .dashboard-grid .stat-card:first-child {
+        grid-column: span 2; 
+    }
+
+    /* Allow form inputs to sit nicely next to each other on big screens */
+    .input-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+}
