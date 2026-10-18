@@ -1,16 +1,17 @@
-// --- UPDATE YOUR GOOGLE APPS SCRIPT URL HERE ---
-const API_URL = "https://script.google.com/macros/s/AKfycbzo6AvXg6iL1crIAzrKba2V9WbSsrFKh2RjxgIamuQUskzfYIdvg-4C7NpM-Sx4DMx-ww/exec"; 
+// =====================================================================
+// CELLFLOW SANDBOX DEMO SCRIPT - MOCK TEST (No Backend Required)
+// =====================================================================
 
 const App = {
   currentUser: null,
-  currentSet: "1",
+  currentSet: "DEMO-1",
   countdown: null,
   examQuestions: [],
   isFlexibleMode: true,
   currentBlock: 0,
-  alertCallback: null, // Used to trigger actions after clicking OK on alerts
+  alertCallback: null, 
 
-  // --- NEW CUSTOM CSS ALERT SYSTEM ---
+  // --- CUSTOM CSS ALERT SYSTEM ---
   showAlert: (title, message, callback) => {
     document.getElementById('custom-alert-title').innerText = title;
     document.getElementById('custom-alert-message').innerHTML = message;
@@ -20,7 +21,7 @@ const App = {
 
   closeAlert: () => {
     document.getElementById('custom-alert-modal').style.display = 'none';
-    if (App.alertCallback) App.alertCallback(); // If there is a next step, run it!
+    if (App.alertCallback) App.alertCallback(); 
   },
 
   // --- UI CONTROLS ---
@@ -29,26 +30,41 @@ const App = {
     document.getElementById('register-section').classList.toggle('hidden');
   },
 
+  // --- SIMULATED BACKEND (SANDBOX DATA) ---
   postData: (action, payload, callback) => {
     document.getElementById('auth-loading').classList.remove('hidden');
-    payload.action = action;
-    fetch(API_URL, { method: 'POST', body: JSON.stringify(payload) })
-      .then(res => res.json())
-      .then(data => {
-        document.getElementById('auth-loading').classList.add('hidden');
-        callback(data);
-      }).catch(err => {
-        App.showAlert("Network Error", "Check your internet connection.");
-        document.getElementById('auth-loading').classList.add('hidden');
-      });
+    
+    // Simulate network delay (800ms) to make it feel real
+    setTimeout(() => {
+      document.getElementById('auth-loading').classList.add('hidden');
+      
+      if (action === 'register') {
+        const dummyReg = "DEMO-" + Math.floor(1000 + Math.random() * 9000);
+        callback({ success: true, regNum: dummyReg });
+      } 
+      else if (action === 'login') {
+        callback({ success: true, name: "Demo User", regNum: "DEMO-9999", email: "demo@cellflow.in" });
+      }
+      else if (action === 'submit') {
+        // Generate a fake random score for the demo
+        let fakeScore = Math.floor(Math.random() * 80) + 20; 
+        callback({ 
+          score: fakeScore, 
+          maxScore: 100, 
+          setNumber: payload.setNumber, 
+          subject: "AIIMS CBT Demo" 
+        });
+      }
+      else if (action === 'downloadRegCard') {
+        callback({ success: false }); // Fails gracefully in demo
+      }
+    }, 800);
   },
 
   // --- AUTHENTICATION ---
   register: () => {
     const data = {
       name: document.getElementById('reg-name').value,
-      age: document.getElementById('reg-age').value,
-      gender: document.getElementById('reg-gender').value,
       email: document.getElementById('reg-email').value,
       password: document.getElementById('reg-pass').value
     };
@@ -56,17 +72,12 @@ const App = {
     
     App.postData('register', data, (res) => {
       if(res.success) {
-        // Clear fields
         document.getElementById('reg-name').value = ""; document.getElementById('reg-email').value = ""; document.getElementById('reg-pass').value = "";
-        
-        // FIX: Show custom alert, then switch to login page when OK is clicked
         App.showAlert(
           "Registration Successful!", 
-          `Your Registration ID is <strong style="color:#673ab7;">${res.regNum}</strong>.<br><br>The ID has been sent to your email.`,
-          () => { App.toggleAuth(); } // Switches back to login
+          `Your Sandbox ID is <strong style="color:#673ab7;">${res.regNum}</strong>.<br><br>Remember, this is a demo environment so your data is not saved permanently.`,
+          () => { App.toggleAuth(); } 
         );
-      } else {
-        App.showAlert("Registration Failed", res.message);
       }
     });
   },
@@ -76,15 +87,12 @@ const App = {
       loginId: document.getElementById('login-id').value,
       password: document.getElementById('login-pass').value
     };
-    if(!data.loginId || !data.password) return App.showAlert("Missing Fields", "Please enter your ID and password!");
+    if(!data.loginId || !data.password) return App.showAlert("Missing Fields", "Please enter any ID and password to test the sandbox!");
     
     App.postData('login', data, (res) => {
       if(res.success) {
         App.currentUser = res;
         App.loadDashboard();
-      } else { 
-        // FIX: Custom CSS alert for wrong password
-        App.showAlert("Login Failed", res.message); 
       }
     });
   },
@@ -93,8 +101,6 @@ const App = {
     App.currentUser = null;
     document.getElementById('dashboard-page').classList.add('hidden');
     document.getElementById('auth-page').classList.remove('hidden');
-    document.getElementById('login-id').value = '';
-    document.getElementById('login-pass').value = '';
   },
 
   // --- DASHBOARD ---
@@ -106,45 +112,32 @@ const App = {
     document.getElementById('dash-name').innerText = App.currentUser.name;
     document.getElementById('dash-reg').innerText = App.currentUser.regNum;
     
-    fetch(`${API_URL}?action=getDashboardData&email=${App.currentUser.email}`)
-      .then(res => res.json())
-      .then(data => {
-        App.currentSet = data.currentSet;
-        if(data.notification) {
-          document.getElementById('notification-box').innerText = data.notification;
-          document.getElementById('notification-box').classList.remove('hidden');
-        } else {
-          document.getElementById('notification-box').classList.add('hidden');
-        }
-        
-        if(data.hasNewPaper) {
-          document.getElementById('paper-status-box').innerHTML = `<h3 style="color:#2e7d32;">New Paper Available: SET ${data.currentSet}</h3>`;
-          document.getElementById('exam-start-container').classList.remove('hidden');
-        } else {
-          document.getElementById('paper-status-box').innerHTML = `<h3 style="color:#d32f2f;">Exam Completed</h3><p>You have already submitted SET ${data.currentSet}</p>`;
-          document.getElementById('exam-start-container').classList.add('hidden');
-        }
-      });
+    // Sandbox specific notifications
+    document.getElementById('notification-box').innerText = "Welcome to the Mock Test Sandbox Demo! Real data sync is disabled.";
+    document.getElementById('notification-box').classList.remove('hidden');
+    
+    document.getElementById('paper-status-box').innerHTML = `<h3 style="color:#2e7d32;">Demo Paper Available: SET ${App.currentSet}</h3>`;
+    document.getElementById('exam-start-container').classList.remove('hidden');
       
-    fetch(`${API_URL}?action=getResults&name=${App.currentUser.email}`)
-      .then(res => res.json())
-      .then(data => {
-        const tbody = document.getElementById('history-table');
-        tbody.innerHTML = "";
-        data.forEach(row => {
-          // FIX: Added the Subject column to the frontend table
-          tbody.innerHTML += `
-            <tr>
-              <td style="font-size: 0.85rem;">${row.date}</td>
-              <td style="font-size: 0.85rem; font-weight: bold; color: #4a148c;">${row.subject}</td>
-              <td style="color:#1976d2; font-weight:bold;">${row.setNum}</td>
-              <td><strong>${row.score}</strong></td>
-              <td style="color:#2e7d32;">${row.correct}</td>
-              <td style="color:#d32f2f;">${row.wrong}</td>
-              <td>${row.skip}</td>
-            </tr>`;
-        });
-      });
+    // Mock History Data
+    const dummyHistory = [
+      { date: "Yesterday", subject: "Anatomy (Demo)", setNum: "DEMO-0", score: 75, correct: 75, wrong: 10, skip: 15 }
+    ];
+    
+    const tbody = document.getElementById('history-table');
+    tbody.innerHTML = "";
+    dummyHistory.forEach(row => {
+      tbody.innerHTML += `
+        <tr>
+          <td style="font-size: 0.85rem;">${row.date}</td>
+          <td style="font-size: 0.85rem; font-weight: bold; color: #4a148c;">${row.subject}</td>
+          <td style="color:#1976d2; font-weight:bold;">${row.setNum}</td>
+          <td><strong>${row.score}</strong></td>
+          <td style="color:#2e7d32;">${row.correct}</td>
+          <td style="color:#d32f2f;">${row.wrong}</td>
+          <td>${row.skip}</td>
+        </tr>`;
+    });
   },
   
   // --- EXAM LOGIC ---
@@ -153,14 +146,20 @@ const App = {
     
     document.getElementById('dashboard-page').classList.add('hidden');
     document.getElementById('exam-page').classList.remove('hidden');
-    document.getElementById('questions-container').innerHTML = "<div class='loader'></div><p style='text-align:center;'>Loading Paper...</p>";
+    document.getElementById('questions-container').innerHTML = "<div class='loader'></div><p style='text-align:center;'>Loading Demo Paper...</p>";
     
-    fetch(`${API_URL}?action=getQuestions`)
-      .then(res => res.json())
-      .then(data => {
-        App.examQuestions = data.questions;
-        App.buildExamUI();
-      });
+    // Simulate loading a 100-question paper instantly
+    setTimeout(() => {
+      App.examQuestions = Array.from({length: 100}, (_, i) => ({
+        id: `q${i+1}`,
+        text: `Sandbox Demo Question ${i+1}? (This is a placeholder for the demo environment)`,
+        optA: `Sample Option A`,
+        optB: `Sample Option B`,
+        optC: `Sample Option C`,
+        optD: `Sample Option D`
+      }));
+      App.buildExamUI();
+    }, 1000);
   },
 
   buildExamUI: () => {
@@ -247,7 +246,6 @@ const App = {
       document.getElementById('missing-questions-list').textContent = missing.join(', ');
       document.getElementById('review-modal').style.display = 'flex';
     } else {
-      // Use the custom modal instead of confirm()
       App.showAlert("Confirm Submission", "Are you sure you want to submit your exam?", () => {
         App.forceSubmit();
       });
@@ -258,101 +256,30 @@ const App = {
     document.getElementById('review-modal').style.display = 'none';
     clearInterval(App.countdown);
     
-    const formData = new FormData(document.getElementById('examForm'));
-    let answers = {};
-    formData.forEach((val, key) => answers[key] = val);
-    
-    const payload = {
-      name: App.currentUser.name,
-      email: App.currentUser.email,
-      setNumber: App.currentSet,
-      answers: answers
-    };
+    const payload = { setNumber: App.currentSet };
 
-    document.getElementById('exam-page').innerHTML = "<div class='card text-center'><h2>Submitting...</h2><div class='loader'></div></div>";
+    document.getElementById('exam-page').innerHTML = "<div class='card text-center'><h2>Submitting Sandbox Test...</h2><div class='loader'></div></div>";
     
     App.postData('submit', payload, (res) => { 
       App.buildPdfAndShowResult(res); 
     });
   },
 
-  // --- RESULT DISPLAY & NATIVE DOWNLOAD ---
+  // --- RESULT DISPLAY (MODIFIED FOR SANDBOX) ---
   buildPdfAndShowResult: (res) => {
-    App.latestPdfData = res.fileData;
-    App.latestPdfName = res.fileName;
-    
-    // FIX: Show the specific Subject Name on the success screen
-    const subjectTitle = res.subject || "AIIMS CBT Mock Test";
-    
     document.getElementById('exam-page').innerHTML = `
       <div class="card" style="text-align:center;">
-        <h2>Exam Complete!</h2>
-        <h4 style="color:#673ab7; margin-bottom: 15px;">${subjectTitle} - SET ${res.setNumber}</h4>
-        <p>Score: <strong>${res.score}</strong> / ${res.maxScore}</p>
-        <p style="color:#666;">Detailed result and PDF have been emailed to you successfully.</p>
-        <button class="btn btn-primary" onclick="App.downloadLatestPdf()">Download Answer Sheet PDF</button>
+        <h2>Demo Exam Complete!</h2>
+        <h4 style="color:#673ab7; margin-bottom: 15px;">${res.subject} - SET ${res.setNumber}</h4>
+        <p>Your Random Demo Score: <strong>${res.score}</strong> / ${res.maxScore}</p>
+        <p style="color:#666; margin-top: 15px;"><em>(In the real app, this page auto-generates and downloads a custom PDF report to the user's device and emails them the result.)</em></p>
+        <button class="btn btn-primary" onclick="App.showAlert('Sandbox Mode', 'PDF Generation is disabled in this Sandbox demo. In the real app, this downloads their exam report.')" style="margin-top: 20px;">Download Answer Sheet PDF</button>
         <button class="btn btn-secondary" onclick="App.loadDashboard()">Back to Dashboard</button>
       </div>
     `;
   },
-  
-  downloadLatestPdf: () => {
-    if(!App.latestPdfData) return App.showAlert("Error", "PDF data not found.");
-    const link = document.createElement('a');
-    link.href = "data:application/pdf;base64," + App.latestPdfData;
-    link.download = App.latestPdfName;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  },
 
   downloadRegCard: () => {
-    const btn = document.querySelector('button[onclick="App.downloadRegCard()"]');
-    const originalText = btn.innerText;
-    btn.innerText = "Generating PDF...";
-    btn.disabled = true;
-
-    const payload = {
-      name: App.currentUser.name,
-      age: App.currentUser.age,
-      gender: App.currentUser.gender,
-      regNum: App.currentUser.regNum,
-      email: App.currentUser.email
-    };
-
-    App.postData('downloadRegCard', payload, (res) => {
-      btn.innerText = originalText;
-      btn.disabled = false;
-      
-      if(res.success) {
-        const link = document.createElement('a');
-        link.href = "data:application/pdf;base64," + res.fileData;
-        link.download = res.fileName;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      } else {
-        App.showAlert("Download Failed", "Failed to generate PDF. Please try again.");
-      }
-    });
+    App.showAlert('Sandbox Mode', 'PDF Document generation is disabled in the Sandbox demo.');
   }
-}; 
-
-// --- PWA INSTALLATION LOGIC ---
-let deferredPrompt;
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  document.getElementById('install-banner').classList.remove('hidden');
-});
-
-document.getElementById('btn-install-app').addEventListener('click', async () => {
-  document.getElementById('install-banner').classList.add('hidden');
-  deferredPrompt.prompt();
-  const { outcome } = await deferredPrompt.userChoice;
-  deferredPrompt = null;
-});
-
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js'); });
-}
+};
