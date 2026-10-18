@@ -575,9 +575,10 @@ function setupShowcasePhone(carouselId, bezelId) {
     });
 }
 
-// Initialize both showcase sections independently
+// Initialize all three showcase sections independently
 setupShowcasePhone('mkTextCarousel', 'mk-phone-bezel'); // Mess Khata
 setupShowcasePhone('mtTextCarousel', 'mt-phone-bezel'); // Moktest
+setupShowcasePhone('bfTextCarousel', 'bf-phone-bezel'); // BillFlow
 
 // NOTE: Since the Mess Khata phone bezel didn't have an ID before, 
 // let's grab it via class if the ID isn't found for backward compatibility:
