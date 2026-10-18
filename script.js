@@ -653,70 +653,9 @@ function checkPujoPathSeason() {
 // Run the check as soon as the page loads
 document.addEventListener('DOMContentLoaded', checkPujoPathSeason);
 
-// =========================================================
-// 8. BACK BUTTON INTERCEPTOR (MOBILE ONLY LEAVE INTENT)
-// =========================================================
-let isTrapArmed = false;
-let letUserLeave = false;
-
-// Arm the history trap on the FIRST tap or click anywhere on the site
-['click', 'touchstart'].forEach(eventType => {
-    document.body.addEventListener(eventType, () => {
-        // ONLY arm the trap if the screen is mobile-sized (850px or less)
-        if (!isTrapArmed && window.innerWidth <= 850) {
-            history.pushState({ cellflowApp: true }, '');
-            isTrapArmed = true;
-        }
-    }, { once: true, passive: true });
-});
-
-// Trigger the modal when the browser back button/swipe is detected
-window.addEventListener('popstate', (event) => {
-    // If they are on a desktop screen, allow normal back navigation
-    if (window.innerWidth > 850) return;
-
-    // If they clicked "Yes, leave", allow the back action to happen normally
-    if (letUserLeave) return;
-    
-    // Instantly re-arm the trap so they can't double-swipe out
-    history.pushState({ cellflowApp: true }, '');
-    
-    // Show the modal
-    document.getElementById('leaveModal').classList.add('active');
-});
-
-function handleStay() {
-    // Hide the modal. The trap is already re-armed from the popstate event above!
-    document.getElementById('leaveModal').classList.remove('active');
-}
-
-function handleLeave() {
-    // Open the gate so the next "back" action actually works
-    letUserLeave = true;
-    
-    // Swap the content to the sad emoji
-    document.getElementById('leaveModalContent').style.display = 'none';
-    document.getElementById('leaveModalSad').classList.remove('hidden');
-    
-    // Wait 1.2 seconds for the animation, then exit
-    setTimeout(() => {
-        // Try to go back in browser history
-        history.back(); 
-        
-        // Fallback: Collapse the modal instantly just in case history.back() fails 
-        document.getElementById('leaveModal').classList.remove('active');
-        
-        // Quietly reset the modal back to the question state in the background
-        setTimeout(() => {
-            document.getElementById('leaveModalContent').style.display = 'flex';
-            document.getElementById('leaveModalSad').classList.add('hidden');
-        }, 500);
-
-    }, 1200);
-}
 
 // =========================================================
-// 9. ANIMATED NUMBER COUNTERS (STATS SECTION)
+// 8. ANIMATED NUMBER COUNTERS (STATS SECTION)
 // =========================================================
 const statsObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
