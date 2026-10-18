@@ -109,16 +109,17 @@ if (promoCarouselContainer) {
 }
 
 // =========================================================
-// 5. MESS KHATA: 3D CAROUSEL, TAP CONTROL, TILT & PERFORMANCE
+// 5. SMART 3D CAROUSEL, TAP CONTROL & TILT (MULTIPLE PHONES)
 // =========================================================
-const mkCards = document.querySelectorAll('.mk-feature-card');
-const cssScreens = document.querySelectorAll('.css-replica-screen');
-const phoneBezel = document.querySelector('.mk-phone-bezel');
-let mkClassArray = ['mk-front', 'mk-middle', 'mk-back', 'mk-hidden'];
+function setupShowcasePhone(carouselId, bezelId) {
+    const carouselContainer = document.getElementById(carouselId);
+    const phoneBezel = document.getElementById(bezelId);
+    if (!carouselContainer || !phoneBezel) return;
 
-// --- Smooth Phone Tilt Animation on Scroll (ALL DEVICES) ---
-if (phoneBezel) {
-    // Added a very fast transform transition to smooth out the scroll calculations
+    const cards = carouselContainer.querySelectorAll('.mk-feature-card');
+    let classArray = ['mk-front', 'mk-middle', 'mk-back', 'mk-hidden'];
+
+    // --- Smooth Phone Tilt Animation ---
     phoneBezel.style.transition = "transform 0.1s ease-out, box-shadow 0.3s ease";
     phoneBezel.style.willChange = "transform"; 
     
@@ -129,7 +130,6 @@ if (phoneBezel) {
                 const rect = phoneBezel.getBoundingClientRect();
                 if (rect.top < window.innerHeight && rect.bottom > 0) {
                     const scrollProgress = (window.innerHeight - rect.top) / window.innerHeight;
-                    // Boosted mobile intensity to 6 so it is more noticeable
                     const intensity = window.innerWidth > 850 ? 8 : 6; 
                     const tiltX = Math.cos(scrollProgress * Math.PI) * intensity; 
                     const tiltY = Math.sin(scrollProgress * Math.PI) * -intensity;
@@ -141,38 +141,70 @@ if (phoneBezel) {
             isTicking = true;
         }
     }, { passive: true });
-}
 
-function rotateMkCards() {
-    if (mkCards.length === 0) return;
-    
-    const last = mkClassArray.pop();
-    mkClassArray.unshift(last);
-    
-    mkCards.forEach((card, index) => {
-        card.className = 'mk-feature-card ' + mkClassArray[index];
+    // --- Core Rotation Logic ---
+    function rotateCards() {
+        if (cards.length === 0) return;
         
-        if (mkClassArray[index] === 'mk-front') {
-            const targetScreenId = card.getAttribute('data-screen');
-            cssScreens.forEach(screen => {
-                if (screen.id === targetScreenId) {
-                    screen.classList.add('active');
-                } else {
-                    screen.classList.remove('active');
+        const last = classArray.pop();
+        classArray.unshift(last);
+        
+        cards.forEach((c, index) => {
+            c.className = 'mk-feature-card ' + classArray[index];
+            
+            // Swap the screen inside THIS specific phone only
+            if (classArray[index] === 'mk-front') {
+                const targetScreenId = c.getAttribute('data-screen');
+                const targetScreen = document.getElementById(targetScreenId);
+                
+                if (targetScreen) {
+                    const parentContainer = targetScreen.parentElement;
+                    parentContainer.querySelectorAll('.css-replica-screen').forEach(screen => {
+                        screen.classList.remove('active');
+                    });
+                    targetScreen.classList.add('active');
                 }
-            });
-        }
+            }
+        });
+    }
+
+    // --- 1. Tap to Rotate ---
+    cards.forEach(card => {
+        card.addEventListener('click', rotateCards);
     });
+
+    // --- 2. Smart Mobile Swipe (Ignores Vertical Scrolling) ---
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    carouselContainer.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        touchStartY = e.changedTouches[0].screenY;
+    }, {passive: true});
+
+    carouselContainer.addEventListener('touchend', (e) => {
+        const touchEndX = e.changedTouches[0].screenX;
+        const touchEndY = e.changedTouches[0].screenY;
+        
+        const deltaX = Math.abs(touchEndX - touchStartX);
+        const deltaY = Math.abs(touchEndY - touchStartY);
+
+        // Only rotate if the user swiped horizontally, NOT if they were scrolling down
+        if (deltaX > 40 && deltaX > deltaY) {
+            rotateCards();
+        }
+    }, {passive: true});
 }
 
-const mkCarouselContainer = document.getElementById('mkTextCarousel');
-if (mkCarouselContainer) {
-    // Both Desktop and Mobile will use standard Tap/Click to cycle cards
-    mkCards.forEach(card => {
-        card.addEventListener('click', () => {
-            rotateMkCards();
-        });
-    });
+// Initialize all three showcase sections independently
+setupShowcasePhone('mkTextCarousel', 'mk-phone-bezel'); // Mess Khata
+setupShowcasePhone('mtTextCarousel', 'mt-phone-bezel'); // Moktest
+setupShowcasePhone('bfTextCarousel', 'bf-phone-bezel'); // BillFlow
+
+// Fallback just in case the Mess Khata phone doesn't have an ID
+if (!document.getElementById('mk-phone-bezel')) {
+    const mkBezel = document.querySelector('.mk-phone-bezel');
+    if (mkBezel) mkBezel.id = 'mk-phone-bezel';
 }
 
 // =========================================================
@@ -573,16 +605,4 @@ function setupShowcasePhone(carouselId, bezelId) {
             });
         });
     });
-}
-
-// Initialize all three showcase sections independently
-setupShowcasePhone('mkTextCarousel', 'mk-phone-bezel'); // Mess Khata
-setupShowcasePhone('mtTextCarousel', 'mt-phone-bezel'); // Moktest
-setupShowcasePhone('bfTextCarousel', 'bf-phone-bezel'); // BillFlow
-
-// NOTE: Since the Mess Khata phone bezel didn't have an ID before, 
-// let's grab it via class if the ID isn't found for backward compatibility:
-if (!document.getElementById('mk-phone-bezel')) {
-    const mkBezel = document.querySelector('.mk-phone-bezel');
-    if (mkBezel) mkBezel.id = 'mk-phone-bezel';
 }
