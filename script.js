@@ -643,3 +643,40 @@ function checkPujoPathSeason() {
 
 // Run the check as soon as the page loads
 document.addEventListener('DOMContentLoaded', checkPujoPathSeason);
+
+// =========================================================
+// 8. BACK BUTTON INTERCEPTOR (LEAVE INTENT)
+// =========================================================
+let isTrapArmed = false;
+
+// Arm the history trap on the first user interaction
+document.body.addEventListener('click', () => {
+    if (!isTrapArmed) {
+        history.pushState({ cellflowApp: true }, '');
+        isTrapArmed = true;
+    }
+}, { once: true });
+
+// Trigger the modal when the browser back button/swipe is detected
+window.addEventListener('popstate', (event) => {
+    document.getElementById('leaveModal').classList.add('active');
+});
+
+function handleStay() {
+    // Close the modal
+    document.getElementById('leaveModal').classList.remove('active');
+    
+    // Push a new state to re-arm the back button trap
+    history.pushState({ cellflowApp: true }, '');
+}
+
+function handleLeave() {
+    // Swap the content to the sad emoji
+    document.getElementById('leaveModalContent').style.display = 'none';
+    document.getElementById('leaveModalSad').classList.remove('hidden');
+    
+    // Wait 1.2 seconds for the animation to play, then actually exit the site
+    setTimeout(() => {
+        history.back(); 
+    }, 1200);
+}
