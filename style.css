@@ -446,8 +446,7 @@ form .btn-primary { width: 100%; }
    PERFORMANCE & 3D SMOOTHNESS OPTIMIZATIONS
 ========================================================= */
 .mk-feature-card {
-    will-change: transform, opacity;
-    /* Removes heavy blur that destroys mobile frame rates during animations */
+    will-change: auto !important; /* CRITICAL FIX: Frees up mobile RAM */
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
 }
