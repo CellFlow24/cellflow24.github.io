@@ -109,31 +109,29 @@ if (promoCarouselContainer) {
 }
 
 // =========================================================
-// 5. MESS KHATA: AUTO-CHANGING 3D CAROUSEL, SWIPE, & TILT
+// 5. MESS KHATA: 3D CAROUSEL, SWIPE, TILT & PERFORMANCE
 // =========================================================
 const mkCards = document.querySelectorAll('.mk-feature-card');
 const cssScreens = document.querySelectorAll('.css-replica-screen');
 const phoneBezel = document.querySelector('.mk-phone-bezel');
 let mkClassArray = ['mk-front', 'mk-middle', 'mk-back', 'mk-hidden'];
-let mkInterval;
 
-// --- Phone Tilt Animation on Scroll ---
+// --- Phone Tilt Animation on Scroll (DESKTOP ONLY) ---
 if (phoneBezel) {
-    // Add smooth transition to the bezel for the scroll tilting
     phoneBezel.style.transition = "transform 0.1s linear, box-shadow 0.3s ease";
     
     window.addEventListener('scroll', () => {
-        const rect = phoneBezel.getBoundingClientRect();
-        // Check if phone is visible on screen
-        if (rect.top < window.innerHeight && rect.bottom > 0) {
-            // Calculate scroll progress 
-            const scrollProgress = (window.innerHeight - rect.top) / window.innerHeight;
-            
-            // Creates a gentle floating tilt that shifts as you scroll past
-            const tiltX = Math.cos(scrollProgress * Math.PI) * 8; 
-            const tiltY = Math.sin(scrollProgress * Math.PI) * -8;
-            
-            phoneBezel.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(1.02)`;
+        // CRITICAL FIX: Only run this heavy math on Desktop to prevent mobile lag
+        if (window.innerWidth > 850) {
+            const rect = phoneBezel.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+                const scrollProgress = (window.innerHeight - rect.top) / window.innerHeight;
+                const tiltX = Math.cos(scrollProgress * Math.PI) * 8; 
+                const tiltY = Math.sin(scrollProgress * Math.PI) * -8;
+                phoneBezel.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(1.02)`;
+            }
+        } else {
+            phoneBezel.style.transform = 'none'; // Keep it flat and fast on mobile
         }
     });
 }
@@ -141,7 +139,6 @@ if (phoneBezel) {
 function rotateMkCards(direction = 'next') {
     if (mkCards.length === 0) return;
     
-    // Support forward and backward swiping
     if (direction === 'next') {
         const last = mkClassArray.pop();
         mkClassArray.unshift(last);
@@ -166,34 +163,26 @@ function rotateMkCards(direction = 'next') {
     });
 }
 
-function startMkCarousel() {
-    if (mkCards.length > 0) {
-        mkInterval = setInterval(() => rotateMkCards('next'), 4000);
-    }
-}
-
-function stopMkCarousel() {
-    clearInterval(mkInterval);
-}
-
 const mkCarouselContainer = document.getElementById('mkTextCarousel');
 if (mkCarouselContainer) {
-    mkCarouselContainer.addEventListener('mouseenter', stopMkCarousel);
-    mkCarouselContainer.addEventListener('mouseleave', startMkCarousel);
-    
+    // --- Desktop Click-to-Next Support ---
+    mkCards.forEach(card => {
+        card.addEventListener('click', () => {
+            rotateMkCards('next'); // Let users click the cards to advance them
+        });
+    });
+
     // --- Touch Swipe Support for Mobile ---
     let touchStartX = 0;
     let touchEndX = 0;
     
     mkCarouselContainer.addEventListener('touchstart', (e) => {
-        stopMkCarousel();
         touchStartX = e.changedTouches[0].screenX;
     }, {passive: true});
     
     mkCarouselContainer.addEventListener('touchend', (e) => {
         touchEndX = e.changedTouches[0].screenX;
         handleSwipe();
-        startMkCarousel();
     }, {passive: true});
     
     function handleSwipe() {
@@ -205,8 +194,6 @@ if (mkCarouselContainer) {
             rotateMkCards('prev'); // Swiped Right -> Previous Card
         }
     }
-    
-    startMkCarousel();
 }
 
 // =========================================================
