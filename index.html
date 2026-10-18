@@ -230,32 +230,111 @@
                     </button>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <!-- Moktest -->
-            <div class="project-card">
-                <div class="card-header">
-                    <h3>Moktest</h3>
-                    <p>Custom CBT Platform</p>
-                </div>
-                <div class="image-wrapper">
-                    <img src="Moktest/dasbord.png" alt="Moktest Dashboard">
-                    <div class="glass-specs">
-                        <ul>
-                            <li>🖼️ Image-Supported Questions</li>
-                            <li>⏱️ Live Exam Timer Controls</li>
-                            <li>📊 Automated PDF Scoring</li>
-                        </ul>
+    <!-- NEW HORIZONTAL SWIPE SHOWCASE: MOKTEST -->
+    <section class="mk-showcase-section" id="moktest-showcase">
+        <div class="mk-container">
+            
+            <!-- LEFT/TOP: The Flat Perfect Phone -->
+            <div class="mk-phone-col">
+                <div class="mk-phone-bezel" id="mt-phone-bezel" onclick="window.location.href='Moktest-Demo/index.html'">
+                    <div class="mk-notch"></div>
+                    <div class="mk-screen-container" style="background: #4a148c;"> <!-- Moktest Purple Background -->
+                        
+                        <!-- MT Screen 1: Dashboard -->
+                        <div class="css-replica-screen active" id="css-screen-mt-dash" style="background: #f5f7fb;">
+                            <h4 class="replica-title" style="background: #673ab7; color: white;">Moktest Portal</h4>
+                            <div style="text-align:center; margin: 5px 0; color: #333; font-size: 13px;"><b>Welcome, Dipun</b><br><small>Reg: DEMO-9999</small></div>
+                            <div class="replica-nav" style="background: #e8f5e9; color: #2e7d32; text-align:center; border: 2px solid #2e7d32; padding: 10px;">New Paper: SET 1</div>
+                            <div class="fake-btn" style="background: #2e7d32;">START EXAM</div>
+                            <div class="admin-box" style="margin-top: 15px;">
+                                <div style="font-size:11px; color:#673ab7;">Past Results</div>
+                                <div style="display:flex; justify-content:space-between; font-size:10px;"><span>AIIMS Mock (Set 1)</span><span style="color:#2e7d32; font-weight:bold;">75/100</span></div>
+                            </div>
+                        </div>
+    
+                        <!-- MT Screen 2: Exam Interface -->
+                        <div class="css-replica-screen" id="css-screen-mt-exam" style="background: #f5f7fb;">
+                            <div style="background: #4a148c; color: white; padding: 10px; text-align:center; border-radius: 8px; font-weight:bold; font-size: 13px; margin-bottom: 10px;">Time Left: 89:45</div>
+                            <div class="admin-box" style="border: 1px solid #ccc; background: white;">
+                                <div style="font-size: 12px; margin-bottom: 5px;">Q1. Sandbox Demo Question?</div>
+                                <div class="fake-checkbox" style="font-size: 11px;">○ Option A</div>
+                                <div class="fake-checkbox" style="font-size: 11px;">○ Option B</div>
+                                <div class="fake-checkbox" style="font-size: 11px; color:#673ab7;">◉ Option C</div>
+                                <div class="fake-checkbox" style="font-size: 11px;">○ Option D</div>
+                            </div>
+                            <div class="fake-btn" style="background: #673ab7; margin-top: auto;">Submit Exam</div>
+                        </div>
+    
+                        <!-- MT Screen 3: PDF Result -->
+                        <div class="css-replica-screen" id="css-screen-mt-result" style="background: #f5f7fb;">
+                            <h4 class="replica-title" style="background: white; color: #4a148c; border: 2px solid #4a148c;">Exam Complete!</h4>
+                            <div style="text-align:center; margin: 20px 0;">
+                                <div style="font-size: 28px; color: #2e7d32; font-weight: 900;">75 / 100</div>
+                                <div style="font-size: 12px; color: #666; margin-top: 5px;">AIIMS CBT Demo - SET 1</div>
+                            </div>
+                            <div class="fake-btn" style="background: #1976d2; font-size:12px; margin-top: auto;">Download PDF Report</div>
+                            <div class="fake-btn" style="background: #757575; font-size:12px; margin-top:10px;">Back to Dashboard</div>
+                        </div>
+    
+                        <!-- MT Screen 4: Admin Controls -->
+                        <div class="css-replica-screen" id="css-screen-mt-admin" style="background: #f5f7fb;">
+                             <h4 class="replica-title" style="background: #673ab7; color: white;">Exam Settings</h4>
+                             <div class="admin-box" style="margin-top: 15px; border: 1px solid #ccc; background: white;">
+                                 <div style="display:flex; justify-content:space-between; align-items:center;">
+                                     <span style="font-size:12px;">Flexible Mode</span>
+                                     <div style="width: 34px; height: 18px; background: #673ab7; border-radius: 10px; position:relative;"><div style="width:14px; height:14px; background:white; border-radius:50%; position:absolute; right:2px; top:2px;"></div></div>
+                                 </div>
+                                 <div style="font-size:10px; color:#666; margin-top:8px;">Toggle to show 100 questions together instead of strict 18-min blocks.</div>
+                             </div>
+                        </div>
+    
                     </div>
                 </div>
-                <!-- UPDATED BUTTONS BLOCK -->
-                <div class="card-buttons" style="display: flex; gap: 10px; margin-top: 15px;">
+                
+                <!-- Fixed Action Buttons -->
+                <div class="mk-actions">
                     <button class="btn-secondary" onclick="window.location.href='Moktest-Demo/index.html'">Explore Sandbox &rarr;</button>
                     <button class="btn-purchase" onclick="directPurchase('Mok Test APK', event)">
                         <span>Purchase 🛒</span>
-                        <span class="btn-price-tag" id="badge-Mok Test APK">₹--</span>
+                        <span class="btn-price-tag" id="badge-Mok Test APK">₹1499</span>
                     </button>
                 </div>
             </div>
+    
+            <!-- RIGHT: The 3D Auto-Changing Text Carousel -->
+            <div class="mk-cards-col">
+                <div class="mk-text-carousel" id="mtTextCarousel">
+                    
+                    <div class="mk-feature-card mk-front" data-screen="css-screen-mt-dash">
+                        <div class="tap-indicator"></div>
+                        <h2>Moktest Simulator.<br>Practice like a Pro.</h2>
+                        <p>Access your student dashboard, track past test results in real-time, and enter your simulated CBT exam environment with a single tap.</p>
+                    </div>
+                    
+                    <div class="mk-feature-card mk-middle" data-screen="css-screen-mt-exam">
+                        <div class="tap-indicator"></div>
+                        <h2>Live Exam Timer.<br>Strict & Flexible.</h2>
+                        <p>Experience a true CBT environment with auto-submitting 18-minute section blocks, or switch to flexible mode to view all 100 questions at once.</p>
+                    </div>
+                    
+                    <div class="mk-feature-card mk-back" data-screen="css-screen-mt-result">
+                        <div class="tap-indicator"></div>
+                        <h2>Instant PDF Scoring.<br>Zero wait time.</h2>
+                        <p>Get your score calculated instantly upon submission, complete with a detailed, branded PDF scorecard generated directly on your device.</p>
+                    </div>
+            
+                    <div class="mk-feature-card mk-hidden" data-screen="css-screen-mt-admin">
+                        <div class="tap-indicator"></div>
+                        <h2>Custom Banks.<br>Built for Institutes.</h2>
+                        <p>Easily upload your question banks via a simple Google Sheet. Manage candidates, configure negative marking, and track global performance effortlessly.</p>
+                    </div>
+            
+                </div>
+            </div>
+    
         </div>
     </section>
             
