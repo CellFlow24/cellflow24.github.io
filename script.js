@@ -1,11 +1,3 @@
-// Force browser to start at the top of the page on refresh
-if (history.scrollRestoration) {
-    history.scrollRestoration = 'manual';
-}
-window.onload = function() {
-    window.scrollTo(0, 0);
-};
-
 // =========================================================
 // 1. MOMENTO-STYLE HERO LOGO SCROLL-TO-ZOOM & MOVE
 // =========================================================
