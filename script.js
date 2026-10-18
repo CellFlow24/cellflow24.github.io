@@ -109,25 +109,50 @@ if (promoCarouselContainer) {
 }
 
 // =========================================================
-// 5. MESS KHATA: AUTO-CHANGING 3D CAROUSEL & SYNCED SCREENS
+// 5. MESS KHATA: AUTO-CHANGING 3D CAROUSEL, SWIPE, & TILT
 // =========================================================
 const mkCards = document.querySelectorAll('.mk-feature-card');
 const cssScreens = document.querySelectorAll('.css-replica-screen');
+const phoneBezel = document.querySelector('.mk-phone-bezel');
 let mkClassArray = ['mk-front', 'mk-middle', 'mk-back', 'mk-hidden'];
 let mkInterval;
 
-function rotateMkCards() {
+// --- Phone Tilt Animation on Scroll ---
+if (phoneBezel) {
+    // Add smooth transition to the bezel for the scroll tilting
+    phoneBezel.style.transition = "transform 0.1s linear, box-shadow 0.3s ease";
+    
+    window.addEventListener('scroll', () => {
+        const rect = phoneBezel.getBoundingClientRect();
+        // Check if phone is visible on screen
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+            // Calculate scroll progress 
+            const scrollProgress = (window.innerHeight - rect.top) / window.innerHeight;
+            
+            // Creates a gentle floating tilt that shifts as you scroll past
+            const tiltX = Math.cos(scrollProgress * Math.PI) * 8; 
+            const tiltY = Math.sin(scrollProgress * Math.PI) * -8;
+            
+            phoneBezel.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(1.02)`;
+        }
+    });
+}
+
+function rotateMkCards(direction = 'next') {
     if (mkCards.length === 0) return;
     
-    // Rotate the classes array
-    const last = mkClassArray.pop();
-    mkClassArray.unshift(last);
+    // Support forward and backward swiping
+    if (direction === 'next') {
+        const last = mkClassArray.pop();
+        mkClassArray.unshift(last);
+    } else {
+        const first = mkClassArray.shift();
+        mkClassArray.push(first);
+    }
     
-    // Apply classes to text cards and sync the phone screen
     mkCards.forEach((card, index) => {
         card.className = 'mk-feature-card ' + mkClassArray[index];
         
-        // If this card is now the front card, trigger the phone screen update
         if (mkClassArray[index] === 'mk-front') {
             const targetScreenId = card.getAttribute('data-screen');
             cssScreens.forEach(screen => {
@@ -143,7 +168,7 @@ function rotateMkCards() {
 
 function startMkCarousel() {
     if (mkCards.length > 0) {
-        mkInterval = setInterval(rotateMkCards, 4000); // Changes every 4 seconds
+        mkInterval = setInterval(() => rotateMkCards('next'), 4000);
     }
 }
 
@@ -151,13 +176,36 @@ function stopMkCarousel() {
     clearInterval(mkInterval);
 }
 
-// Start the carousel and pause on hover/touch
 const mkCarouselContainer = document.getElementById('mkTextCarousel');
 if (mkCarouselContainer) {
     mkCarouselContainer.addEventListener('mouseenter', stopMkCarousel);
     mkCarouselContainer.addEventListener('mouseleave', startMkCarousel);
-    mkCarouselContainer.addEventListener('touchstart', stopMkCarousel);
-    mkCarouselContainer.addEventListener('touchend', startMkCarousel);
+    
+    // --- Touch Swipe Support for Mobile ---
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    mkCarouselContainer.addEventListener('touchstart', (e) => {
+        stopMkCarousel();
+        touchStartX = e.changedTouches[0].screenX;
+    }, {passive: true});
+    
+    mkCarouselContainer.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+        startMkCarousel();
+    }, {passive: true});
+    
+    function handleSwipe() {
+        const swipeThreshold = 50;
+        if (touchStartX - touchEndX > swipeThreshold) {
+            rotateMkCards('next'); // Swiped Left -> Next Card
+        }
+        if (touchEndX - touchStartX > swipeThreshold) {
+            rotateMkCards('prev'); // Swiped Right -> Previous Card
+        }
+    }
+    
     startMkCarousel();
 }
 
@@ -497,3 +545,5 @@ window.addEventListener('DOMContentLoaded', (event) => {
         window.history.replaceState({}, document.title, window.location.pathname);
     }
 });
+
+
