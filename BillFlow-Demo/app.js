@@ -70,12 +70,6 @@ window.switchTab = function(screenId) {
         if (typeof calculateBill === 'function') calculateBill();
     }
     window.scrollTo(0, 0);
-    
-    // Auto-close the menu after clicking a link
-    const sideMenu = document.getElementById('sideMenu');
-    if (sideMenu && sideMenu.classList.contains('open')) {
-        window.toggleMenu();
-    }
 };
 
 // --- MOCK LOGIN ---
