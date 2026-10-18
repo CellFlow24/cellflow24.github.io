@@ -606,3 +606,40 @@ function setupShowcasePhone(carouselId, bezelId) {
         });
     });
 }
+
+// =========================================================
+// PUJOPATH SEASONAL CALENDAR ENGINE
+// =========================================================
+function checkPujoPathSeason() {
+    const today = new Date();
+    const year = today.getFullYear();
+    
+    // Exact dates for Mahalaya to Lakshmi Puja (YYYY-MM-DD format)
+    const pujoDates = {
+        2026: { start: '2026-10-09', end: '2026-10-25' },
+        2027: { start: '2027-09-29', end: '2027-10-15' },
+        2028: { start: '2028-09-18', end: '2028-10-04' },
+        2029: { start: '2029-10-07', end: '2029-10-23' },
+        2030: { start: '2030-09-27', end: '2030-10-12' }
+    };
+
+    const currentSeason = pujoDates[year];
+    
+    if (currentSeason) {
+        // Set the time to midnight for accurate day comparison
+        const startDate = new Date(currentSeason.start + 'T00:00:00');
+        const endDate = new Date(currentSeason.end + 'T23:59:59'); 
+
+        // If today falls within the active festival window, unhide the elements
+        if (today >= startDate && today <= endDate) {
+            const banner = document.getElementById('pujopath-banner');
+            const floatBtn = document.getElementById('pujopath-float');
+            
+            if (banner) banner.style.display = 'block';
+            if (floatBtn) floatBtn.style.display = 'flex'; // Uses flex to match your other float options
+        }
+    }
+}
+
+// Run the check as soon as the page loads
+document.addEventListener('DOMContentLoaded', checkPujoPathSeason);
