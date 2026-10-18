@@ -203,36 +203,146 @@
         </div>
     </section>
 
-    <!-- OTHER PRODUCTS (Modals removed until we rebuild them later) -->
-    <section class="projects-section reveal">
-        <div class="card-container">
-            <!-- Billflow -->
-            <div class="project-card">
-                <div class="card-header">
-                    <h3>Billflow</h3>
-                    <p>3-Tap Retail Billing</p>
-                </div>
-                <div class="image-wrapper">
-                    <img src="BillFlow/Dasbord Dextop.png" alt="Billflow Dashboard">
-                    <div class="glass-specs">
-                        <ul>
-                            <li>⚡ Real-time Cloud Sync</li>
-                            <li>📊 Automated Invoicing</li>
-                            <li>🔐 Secure Encrypted Login</li>
-                        </ul>
+
+    <!-- NEW HORIZONTAL SWIPE SHOWCASE: BILLFLOW (Phone on Right) -->
+    <section class="mk-showcase-section" id="billflow-showcase">
+        <div class="mk-container mk-reverse">
+            
+            <!-- RIGHT: The Flat Perfect Phone -->
+            <div class="mk-phone-col">
+                <div class="mk-phone-bezel" id="bf-phone-bezel" onclick="window.location.href='BillFlow-Demo/index.html'">
+                    <div class="mk-notch"></div>
+                    <div class="mk-screen-container" style="background: #0A192F;"> <!-- Billflow Navy Blue -->
+                        
+                        <!-- BF Screen 1: Dashboard -->
+                        <div class="css-replica-screen active" id="css-screen-bf-dash" style="background: #F4F7F6;">
+                            <h4 class="replica-title" style="background: #0052FF; color: white;">BillFlow Dash</h4>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px;">
+                                <div style="background: white; padding: 10px; border-radius: 8px; border-left: 3px solid #0052FF; grid-column: 1 / -1; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                                    <div style="font-size: 10px; color: #64748B;">Today's Amount</div>
+                                    <div style="font-size: 18px; color: #0052FF; font-weight: 900;">₹12,450</div>
+                                </div>
+                                <div style="background: white; padding: 10px; border-radius: 8px; border-left: 3px solid #10B981; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                                    <div style="font-size: 9px; color: #64748B;">Total Bills</div>
+                                    <div style="font-size: 14px; color: #0A192F; font-weight: bold;">156</div>
+                                </div>
+                                <div style="background: white; padding: 10px; border-radius: 8px; border-left: 3px solid #EF4444; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                                    <div style="font-size: 9px; color: #64748B;">Total Due</div>
+                                    <div style="font-size: 14px; color: #0A192F; font-weight: bold;">₹2,450</div>
+                                </div>
+                            </div>
+                            <div class="fake-btn" style="background: #0052FF; margin-top: auto;">CREATE INVOICE</div>
+                        </div>
+    
+                        <!-- BF Screen 2: Billing Cart -->
+                        <div class="css-replica-screen" id="css-screen-bf-cart" style="background: #F4F7F6;">
+                            <h4 class="replica-title" style="background: white; color: #0A192F; border: 1px solid #CBD5E1;">New Invoice</h4>
+                            <div class="admin-box" style="background: white; border: 1px solid #CBD5E1; padding: 10px;">
+                                <div style="font-size: 10px; color: #64748B; margin-bottom: 5px;">Customer: SK MD Asib</div>
+                                <div style="border-bottom: 1px dashed #CBD5E1; margin-bottom: 5px; padding-bottom: 5px;">
+                                    <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 4px;">
+                                        <strong>1x Premium Setup</strong><span style="color: #64748B;">₹5999</span>
+                                    </div>
+                                    <div style="display: flex; justify-content: space-between; font-size: 11px;">
+                                        <strong>2x Cloud Hosting</strong><span style="color: #64748B;">₹1998</span>
+                                    </div>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; font-size: 13px; color: #0052FF; font-weight: 900; margin-top: 8px;">
+                                    <span>Payable:</span><span>₹7,997</span>
+                                </div>
+                            </div>
+                            <div class="fake-btn" style="background: #10B981; margin-top: auto;">SAVE & GENERATE</div>
+                        </div>
+    
+                        <!-- BF Screen 3: Due Bills -->
+                        <div class="css-replica-screen" id="css-screen-bf-due" style="background: #F4F7F6;">
+                            <h4 class="replica-title" style="background: #0A192F; color: white;">Due Bills Tracker</h4>
+                            <div class="admin-box" style="background: white; border: 1px solid #E2E8F0; margin-top: 10px;">
+                                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 5px;">
+                                    <strong>Rahul Sharma</strong><span style="color: #64748B;">INV-0012</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <strong style="color: #EF4444; font-size: 12px;">Due: ₹1,500</strong>
+                                    <div style="background: #0052FF; color: white; padding: 5px 10px; border-radius: 6px; font-size: 9px; font-weight: bold;">Clear Due</div>
+                                </div>
+                            </div>
+                            <div class="admin-box" style="background: white; border: 1px solid #E2E8F0; margin-top: 8px;">
+                                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 5px;">
+                                    <strong>Agropoti Store</strong><span style="color: #64748B;">INV-0015</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <strong style="color: #EF4444; font-size: 12px;">Due: ₹450</strong>
+                                    <div style="background: #0052FF; color: white; padding: 5px 10px; border-radius: 6px; font-size: 9px; font-weight: bold;">Clear Due</div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <!-- BF Screen 4: Print Preview -->
+                        <div class="css-replica-screen" id="css-screen-bf-print" style="background: white;">
+                             <div style="border: 2px solid #0A192F; padding: 12px; height: 100%; display: flex; flex-direction: column; border-radius: 4px;">
+                                 <div style="display: flex; justify-content: space-between; border-bottom: 2px solid #000; padding-bottom: 8px; margin-bottom: 8px;">
+                                     <div style="width: 45px; height: 18px; background: #0A192F; border-radius: 2px;"></div>
+                                     <div style="text-align: right; font-size: 9px; font-weight: bold; color: #0A192F;">INVOICE<br>INV-0016</div>
+                                 </div>
+                                 <div style="font-size: 9px; margin-bottom: 12px; color: #1E293B;"><strong>Billed To:</strong><br>John Doe<br>Kolkata</div>
+                                 <div style="border: 1px solid #CBD5E1; height: 60px; margin-bottom: 12px; background: #F8FAFC;"></div>
+                                 <div style="display: flex; justify-content: space-between; border: 2px solid #0A192F; padding: 8px; margin-bottom: 5px; align-items: center;">
+                                     <div style="font-size: 16px; font-weight: 900; color: #10B981; transform: rotate(-15deg); border: 2px solid #10B981; padding: 2px 6px; border-radius: 4px;">PAID</div>
+                                     <div style="font-size: 10px; text-align: right;"><strong>TOTAL: ₹7,997</strong></div>
+                                 </div>
+                                 <div class="fake-btn" style="background: #0A192F; font-size: 11px; padding: 10px; margin-top: auto;">Download PDF</div>
+                             </div>
+                        </div>
+    
                     </div>
                 </div>
-                <div class="card-buttons">
-                    <button class="btn-secondary" onclick="alert('Demo coming soon!')">Explore <span>&#8594;</span></button>
+                
+                <!-- Fixed Action Buttons -->
+                <div class="mk-actions">
+                    <button class="btn-secondary" onclick="window.location.href='BillFlow-Demo/index.html'">Explore Sandbox &rarr;</button>
                     <button class="btn-purchase" onclick="directPurchase('Bill Flow', event)">
                         <span>Purchase 🛒</span>
-                        <span class="btn-price-tag" id="badge-Bill Flow">₹--</span>
+                        <span class="btn-price-tag" id="badge-Bill Flow">₹5999</span>
                     </button>
                 </div>
             </div>
+    
+            <!-- LEFT: The 3D Auto-Changing Text Carousel -->
+            <div class="mk-cards-col">
+                <div class="mk-text-carousel" id="bfTextCarousel">
+                    
+                    <div class="mk-feature-card mk-front" data-screen="css-screen-bf-dash">
+                        <div class="tap-indicator"></div>
+                        <h2>BillFlow Dash.<br>Total Visibility.</h2>
+                        <p>Track your daily revenue, total active bills, and pending dues from a beautiful, lightning-fast command center.</p>
+                    </div>
+                    
+                    <div class="mk-feature-card mk-middle" data-screen="css-screen-bf-cart">
+                        <div class="tap-indicator"></div>
+                        <h2>3-Tap Billing.<br>Zero friction.</h2>
+                        <p>Search your pre-saved inventory, apply custom GST and discounts, and generate a secure bill in seconds with our optimized POS flow.</p>
+                    </div>
+                    
+                    <div class="mk-feature-card mk-back" data-screen="css-screen-bf-due">
+                        <div class="tap-indicator"></div>
+                        <h2>Due Tracker.<br>Never lose a rupee.</h2>
+                        <p>Easily search for partially paid bills. With one tap, record balance payments and instantly update the invoice status to 'Cleared'.</p>
+                    </div>
+            
+                    <div class="mk-feature-card mk-hidden" data-screen="css-screen-bf-print">
+                        <div class="tap-indicator"></div>
+                        <h2>Pro Invoices.<br>Built to print.</h2>
+                        <p>Generate crisp, A4-ready PDF invoices complete with your brand logo, payment QR codes, and digital PAID/DUE stamps.</p>
+                    </div>
+            
+                </div>
+            </div>
+    
         </div>
     </section>
 
+
+    
     <!-- NEW HORIZONTAL SWIPE SHOWCASE: MOKTEST -->
     <section class="mk-showcase-section" id="moktest-showcase">
         <div class="mk-container">
