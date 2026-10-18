@@ -645,7 +645,7 @@ function checkPujoPathSeason() {
 document.addEventListener('DOMContentLoaded', checkPujoPathSeason);
 
 // =========================================================
-// 8. BACK BUTTON INTERCEPTOR (BULLETPROOF LEAVE INTENT)
+// 8. BACK BUTTON INTERCEPTOR (MOBILE ONLY LEAVE INTENT)
 // =========================================================
 let isTrapArmed = false;
 let letUserLeave = false;
@@ -653,7 +653,8 @@ let letUserLeave = false;
 // Arm the history trap on the FIRST tap or click anywhere on the site
 ['click', 'touchstart'].forEach(eventType => {
     document.body.addEventListener(eventType, () => {
-        if (!isTrapArmed) {
+        // ONLY arm the trap if the screen is mobile-sized (850px or less)
+        if (!isTrapArmed && window.innerWidth <= 850) {
             history.pushState({ cellflowApp: true }, '');
             isTrapArmed = true;
         }
@@ -662,6 +663,9 @@ let letUserLeave = false;
 
 // Trigger the modal when the browser back button/swipe is detected
 window.addEventListener('popstate', (event) => {
+    // If they are on a desktop screen, allow normal back navigation
+    if (window.innerWidth > 850) return;
+
     // If they clicked "Yes, leave", allow the back action to happen normally
     if (letUserLeave) return;
     
@@ -691,7 +695,6 @@ function handleLeave() {
         history.back(); 
         
         // Fallback: Collapse the modal instantly just in case history.back() fails 
-        // (which happens if they opened your site in a brand new tab)
         document.getElementById('leaveModal').classList.remove('active');
         
         // Quietly reset the modal back to the question state in the background
