@@ -166,6 +166,8 @@ html, body {
     padding: 45px 40px; border-radius: 24px; box-sizing: border-box;
     transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1); 
     display: flex; flex-direction: column; justify-content: center;
+    will-change: transform, opacity; /* PERFORMANCE FIX: Uses Hardware Acceleration */
+    cursor: pointer; /* Shows desktop users they can click */
 }
 
 /* FIXED 3D DEPTH: Shading backgrounds and heavy shadows to separate layers */
