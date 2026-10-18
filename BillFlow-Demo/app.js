@@ -32,25 +32,51 @@ function showScreen(screenEl) {
     screenEl.classList.remove('hidden'); 
 }
 
-// --- MENU LOGIC (This fixes the 3-dot button!) ---
+// --- MENU LOGIC (Bulletproof Fix) ---
 window.toggleMenu = function() {
-    document.getElementById('sideMenu').classList.toggle('open');
-    document.getElementById('menuOverlay').classList.toggle('hidden');
+    const sideMenu = document.getElementById('sideMenu');
+    const menuOverlay = document.getElementById('menuOverlay');
+    if (sideMenu) sideMenu.classList.toggle('open');
+    if (menuOverlay) menuOverlay.classList.toggle('hidden');
+};
+
+// Force attach the click listener directly to the 3-line button (overwrites any broken HTML)
+const menuIcon = document.querySelector('.menu-icon');
+if (menuIcon) {
+    menuIcon.onclick = window.toggleMenu; 
+}
+const menuOverlay = document.getElementById('menuOverlay');
+if (menuOverlay) {
+    menuOverlay.onclick = window.toggleMenu;
 }
 
 window.switchTab = function(screenId) {
     const screens = ['dashboardScreen', 'itemScreen', 'billingScreen', 'dueScreen', 'historyScreen', 'printPreviewScreen'];
-    screens.forEach(id => document.getElementById(id).classList.add('hidden'));
+    screens.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('hidden');
+    });
     
-    document.getElementById(screenId).classList.remove('hidden');
+    const targetScreen = document.getElementById(screenId);
+    if (targetScreen) targetScreen.classList.remove('hidden');
     
     if (screenId === 'billingScreen') {
-        document.getElementById('billId').value = 'INV-' + Date.now().toString().slice(-6); 
-        document.getElementById('billDate').value = new Date().toLocaleString('en-IN');
-        calculateBill();
+        const billIdField = document.getElementById('billId');
+        if (billIdField) billIdField.value = 'INV-' + Date.now().toString().slice(-6); 
+        
+        const dateField = document.getElementById('billDate');
+        if (dateField) dateField.value = new Date().toLocaleString('en-IN');
+        
+        if (typeof calculateBill === 'function') calculateBill();
     }
     window.scrollTo(0, 0);
-}
+    
+    // Auto-close the menu after clicking a link
+    const sideMenu = document.getElementById('sideMenu');
+    if (sideMenu && sideMenu.classList.contains('open')) {
+        window.toggleMenu();
+    }
+};
 
 // --- MOCK LOGIN ---
 document.getElementById('loginForm').addEventListener('submit', (e) => {
