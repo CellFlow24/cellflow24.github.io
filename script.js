@@ -196,16 +196,16 @@ function setupShowcasePhone(carouselId, bezelId) {
     }, {passive: true});
 }
 
-// Initialize all three showcase sections independently
-setupShowcasePhone('mkTextCarousel', 'mk-phone-bezel'); // Mess Khata
-setupShowcasePhone('mtTextCarousel', 'mt-phone-bezel'); // Moktest
-setupShowcasePhone('bfTextCarousel', 'bf-phone-bezel'); // BillFlow
-
-// Fallback just in case the Mess Khata phone doesn't have an ID
+// --- 1. Fallback just in case the Mess Khata phone doesn't have an ID in the HTML ---
 if (!document.getElementById('mk-phone-bezel')) {
     const mkBezel = document.querySelector('.mk-phone-bezel');
     if (mkBezel) mkBezel.id = 'mk-phone-bezel';
 }
+
+// --- 2. Initialize all three showcase sections independently ---
+setupShowcasePhone('mkTextCarousel', 'mk-phone-bezel'); // Mess Khata
+setupShowcasePhone('mtTextCarousel', 'mt-phone-bezel'); // Moktest
+setupShowcasePhone('bfTextCarousel', 'bf-phone-bezel'); // BillFlow
 
 // =========================================================
 // 6. UTILITIES (Modals, CTA)
