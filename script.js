@@ -109,23 +109,30 @@ const phoneBezel = document.querySelector('.mk-phone-bezel');
 let mkClassArray = ['mk-front', 'mk-middle', 'mk-back', 'mk-hidden'];
 
 // --- Phone Tilt Animation on Scroll (DESKTOP ONLY) ---
+// --- Smooth Phone Tilt Animation on Scroll (ALL DEVICES) ---
 if (phoneBezel) {
-    phoneBezel.style.transition = "transform 0.1s linear, box-shadow 0.3s ease";
+    phoneBezel.style.transition = "transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease";
+    phoneBezel.style.willChange = "transform"; // GPU Hardware Acceleration
     
+    let isTicking = false;
     window.addEventListener('scroll', () => {
-        // CRITICAL FIX: Only run this heavy math on Desktop to prevent mobile lag
-        if (window.innerWidth > 850) {
-            const rect = phoneBezel.getBoundingClientRect();
-            if (rect.top < window.innerHeight && rect.bottom > 0) {
-                const scrollProgress = (window.innerHeight - rect.top) / window.innerHeight;
-                const tiltX = Math.cos(scrollProgress * Math.PI) * 8; 
-                const tiltY = Math.sin(scrollProgress * Math.PI) * -8;
-                phoneBezel.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(1.02)`;
-            }
-        } else {
-            phoneBezel.style.transform = 'none'; // Keep it flat and fast on mobile
+        if (!isTicking) {
+            window.requestAnimationFrame(() => {
+                const rect = phoneBezel.getBoundingClientRect();
+                // Check if phone is visible on screen
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    const scrollProgress = (window.innerHeight - rect.top) / window.innerHeight;
+                    // Lighter tilt intensity for mobile (4) vs desktop (8)
+                    const intensity = window.innerWidth > 850 ? 8 : 4; 
+                    const tiltX = Math.cos(scrollProgress * Math.PI) * intensity; 
+                    const tiltY = Math.sin(scrollProgress * Math.PI) * -intensity;
+                    phoneBezel.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(1.02)`;
+                }
+                isTicking = false;
+            });
+            isTicking = true;
         }
-    });
+    }, { passive: true }); // Prevents scroll stuttering
 }
 
 function rotateMkCards(direction = 'next') {
