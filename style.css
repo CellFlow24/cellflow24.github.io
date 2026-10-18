@@ -440,6 +440,7 @@ form .btn-primary { width: 100%; }
 
    .premium-stats-section { border-radius: 0; padding: 50px 15px; margin-bottom: 60px; }
    .premium-stat-card { padding: 30px 15px; min-width: 100%; }
+}
 
 /* =========================================================
    PERFORMANCE & 3D SMOOTHNESS OPTIMIZATIONS
