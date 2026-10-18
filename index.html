@@ -577,5 +577,29 @@
     
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script src="script.js?v=7.0"></script>
+
+    <!-- LEAVE INTENT MODAL -->
+    <div id="leaveModal" class="leave-modal-overlay no-print">
+        <div class="leave-modal-box">
+            <!-- Question State -->
+            <div id="leaveModalContent">
+                <div class="leave-icon">🚀</div>
+                <h3>Leaving so soon?</h3>
+                <p>Are you sure you want to exit? You haven't explored all our premium custom business solutions yet!</p>
+                <div class="leave-actions">
+                    <button class="btn-stay" onclick="handleStay()">No, I'll stay</button>
+                    <button class="btn-leave" onclick="handleLeave()">Yes, I want to leave</button>
+                </div>
+            </div>
+            
+            <!-- Sad Emoji State -->
+            <div id="leaveModalSad" class="hidden">
+                <div class="sad-emoji">😢</div>
+                <h3 style="margin-top: 10px;">See you next time!</h3>
+            </div>
+        </div>
+    </div>
+
+    
 </body>
 </html>
