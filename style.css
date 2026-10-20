@@ -824,11 +824,13 @@ body {
         top: 50%;
         margin-top: 40px; /* Starting position for the fade-up */
         transform: translateY(-50%);
+        visibility: hidden;
     }
 
     .cf-text-slide.active {
         margin-top: 0; /* Slides up into the perfect center */
         transform: translateY(-50%);
+        visibility: visible;
     }
 
     .cf-text-slide h2 {
@@ -844,4 +846,106 @@ body {
         margin-top: 30px; /* Slightly larger gap on desktop */
         font-size: 17px;
     }
+}
+
+/* =========================================
+   6. FREE ZONE (CSS VIDEO COMPONENT)
+========================================= */
+
+/* Dark, immersive screen for the video */
+.cf-free-screen {
+    background: linear-gradient(135deg, #0F172A 0%, #1e1b4b 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Background watermark text */
+.cf-vid-text {
+    color: rgba(255,255,255,0.05);
+    font-size: 4rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    transform: rotate(-90deg);
+    position: absolute;
+    left: -60px;
+    white-space: nowrap;
+}
+
+/* Base class for moving video elements */
+.cf-vid-element {
+    position: absolute;
+    will-change: transform, opacity;
+}
+
+/* Chat Bubble Pop Animation */
+.cf-vid-chat {
+    background: #0B7ED6;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 20px;
+    border-bottom-left-radius: 4px;
+    font-weight: bold;
+    font-size: 15px;
+    top: 60%;
+    right: 15%;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    animation: chatPop 4s infinite cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Game Controller Bounce Animation */
+.cf-vid-game {
+    font-size: 55px;
+    top: 20%;
+    left: 20%;
+    filter: drop-shadow(0 10px 10px rgba(0,0,0,0.3));
+    animation: gameBounce 3s infinite alternate cubic-bezier(0.5, 0, 0.5, 1);
+}
+
+/* PujoPath Flower Float Animation */
+.cf-vid-flower {
+    font-size: 45px;
+    bottom: 15%;
+    left: 25%;
+    filter: drop-shadow(0 10px 10px rgba(0,0,0,0.3));
+    animation: flowerFloat 6s infinite ease-in-out;
+}
+
+/* Keyframes for the CSS Video */
+@keyframes chatPop {
+    0%, 20% { opacity: 0; transform: translateY(20px) scale(0.8); }
+    30%, 80% { opacity: 1; transform: translateY(0) scale(1); }
+    90%, 100% { opacity: 0; transform: translateY(-20px) scale(0.8); }
+}
+
+@keyframes gameBounce {
+    0% { transform: translate(0, 0) rotate(-15deg); }
+    100% { transform: translate(80px, 50px) rotate(15deg); }
+}
+
+@keyframes flowerFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+    50% { transform: translateY(-40px) rotate(180deg) scale(1.2); }
+}
+
+/* Custom Styling for the Free Button */
+.cf-free-btn {
+    background: #F8FAFC;
+    color: var(--cf-navy);
+    border: 2px solid var(--cf-border);
+    box-shadow: none;
+}
+
+.cf-free-btn:hover {
+    background: #ffffff;
+    border-color: var(--cf-teal);
+    box-shadow: 0 10px 25px rgba(0, 200, 150, 0.15);
+}
+
+.cf-free-pill {
+    background: var(--cf-teal);
+    color: white;
 }
