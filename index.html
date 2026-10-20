@@ -196,7 +196,9 @@
             <div class="cf-giant-phone" onclick="window.location.href='MessKhata-Demo/index.html'">
                 <div class="cf-phone-notch"></div>
                 <div class="cf-phone-screen" style="background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);">
-                    <div class="cf-css-ui">
+                    
+                    <!-- MK Slide 1: Home -->
+                    <div class="cf-css-ui cf-slide active">
                         <h4 class="ui-title">Welcome, Dipun</h4>
                         <div class="ui-btn">💸 EXPENSE</div>
                         <div class="ui-btn">🧹 COOKING & CLEANING</div>
@@ -204,11 +206,42 @@
                         <div class="ui-btn">📊 EXPENSE REVIEW</div>
                         <div class="ui-btn-red" style="margin-top: auto;">🚪 Logout</div>
                     </div>
+                    
+                    <!-- MK Slide 2: Expense -->
+                    <div class="cf-css-ui cf-slide">
+                        <h4 class="ui-title">💸 Add Expense</h4>
+                        <div class="ui-card" style="padding: 15px;">
+                            <div style="font-size: 14px; color: #64748B; font-weight: bold;">Dinner</div>
+                            <div style="font-size: 26px; font-weight: 900; color: #00b050; margin-top: 5px;">₹ 450</div>
+                        </div>
+                        <div class="ui-btn-red" style="margin-top: auto;">SAVE EXPENSE</div>
+                    </div>
+
+                    <!-- MK Slide 3: Chat -->
+                    <div class="cf-css-ui cf-slide">
+                        <h4 class="ui-title">💬 Live Chat</h4>
+                        <div class="ui-card" style="width: 75%; align-self: flex-start; border-radius: 4px 16px 16px 16px;">Are you adding the grocery bill?</div>
+                        <div class="ui-card" style="width: 75%; align-self: flex-end; background: #ff6b81; color: white; border-radius: 16px 4px 16px 16px;">Yes, doing it right now! 💸</div>
+                        <div class="ui-card" style="width: 75%; align-self: flex-start; border-radius: 4px 16px 16px 16px;">Perfect, thanks.</div>
+                        <div style="background: rgba(255,255,255,0.8); padding: 12px; border-radius: 20px; font-size: 12px; margin-top: auto; font-weight: bold; color: #7f8fa6;">Type a message...</div>
+                    </div>
+
                 </div>
             </div>
-            <div class="cf-app-text">
-                <h2>MESS KHATA.<br>MANAGE LIKE A PRO.</h2>
-                <p>Split bills instantly, log chores, and track expenses without the headache of a physical ledger. Real-time cloud sync.</p>
+            
+            <div class="cf-app-text-wrapper">
+                <div class="cf-text-slide active">
+                    <h2>MESS KHATA.<br>MANAGE LIKE A PRO.</h2>
+                    <p>Split bills instantly, log chores, and track expenses without the headache of a physical ledger.</p>
+                </div>
+                <div class="cf-text-slide">
+                    <h2>LIVE EXPENSE.<br>ZERO CONFUSION.</h2>
+                    <p>Log daily expenses, select who pays for what, and let our algorithm calculate the exact balances instantly.</p>
+                </div>
+                <div class="cf-text-slide">
+                    <h2>LIVE CHAT.<br>STAY IN THE LOOP.</h2>
+                    <p>Communicate seamlessly with your roommates or PG manager through the built-in interactive chat system.</p>
+                </div>
             </div>
         </div>
 
@@ -217,7 +250,9 @@
             <div class="cf-giant-phone" onclick="window.location.href='BillFlow-Demo/index.html'">
                 <div class="cf-phone-notch"></div>
                 <div class="cf-phone-screen" style="background: #0A192F;">
-                    <div class="cf-css-ui" style="background: #F4F7F6; padding: 50px 15px 20px;">
+                    
+                    <!-- BF Slide 1: Dash -->
+                    <div class="cf-css-ui cf-slide active" style="background: #F4F7F6; padding-top: 50px;">
                         <h4 class="ui-title" style="background: #0052FF; color: white;">BillFlow Dash</h4>
                         <div class="ui-card" style="border-left: 3px solid #0052FF;">
                             <span class="ui-label">Today's Amount</span>
@@ -235,11 +270,50 @@
                         </div>
                         <div class="ui-btn" style="background: #0052FF; color: white; margin-top: auto;">CREATE INVOICE</div>
                     </div>
+
+                    <!-- BF Slide 2: Billing -->
+                    <div class="cf-css-ui cf-slide" style="background: #F4F7F6; padding-top: 50px;">
+                        <h4 class="ui-title" style="background: white; color: #0A192F; border: 1px solid #CBD5E1;">New Invoice</h4>
+                        <div class="ui-card">
+                            <div style="font-size: 11px; color: #64748B; margin-bottom: 8px;">Customer: SK MD Asib</div>
+                            <div style="border-bottom: 1px dashed #CBD5E1; padding-bottom: 8px; margin-bottom: 8px; font-size: 12px; font-weight: bold;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 4px;"><span>Premium Setup</span><span>₹5999</span></div>
+                                <div style="display: flex; justify-content: space-between;"><span>Cloud Hosting</span><span>₹1998</span></div>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; font-size: 14px; color: #0052FF; font-weight: 900;"><span>Payable:</span><span>₹7,997</span></div>
+                        </div>
+                        <div class="ui-btn" style="background: #10B981; color: white; margin-top: auto;">SAVE & GENERATE</div>
+                    </div>
+
+                    <!-- BF Slide 3: Due Tracking -->
+                    <div class="cf-css-ui cf-slide" style="background: #F4F7F6; padding-top: 50px;">
+                        <h4 class="ui-title" style="background: #0A192F; color: white;">Due Bills Tracker</h4>
+                        <div class="ui-card">
+                            <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 5px;"><strong>Rahul Sharma</strong><span style="color: #64748B;">INV-0012</span></div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;"><strong style="color: #EF4444; font-size: 14px;">Due: ₹1,500</strong><div style="background: #0052FF; color: white; padding: 6px 12px; border-radius: 6px; font-size: 10px; font-weight: bold;">Clear Due</div></div>
+                        </div>
+                        <div class="ui-card">
+                            <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 5px;"><strong>Agropoti Store</strong><span style="color: #64748B;">INV-0015</span></div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;"><strong style="color: #EF4444; font-size: 14px;">Due: ₹450</strong><div style="background: #0052FF; color: white; padding: 6px 12px; border-radius: 6px; font-size: 10px; font-weight: bold;">Clear Due</div></div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-            <div class="cf-app-text">
-                <h2>BILL FLOW.<br>TOTAL VISIBILITY.</h2>
-                <p>Track daily revenue, active bills, and pending dues from a beautiful, lightning-fast command center.</p>
+
+            <div class="cf-app-text-wrapper">
+                <div class="cf-text-slide active">
+                    <h2>BILL FLOW.<br>TOTAL VISIBILITY.</h2>
+                    <p>Track daily revenue, active bills, and pending dues from a beautiful, lightning-fast command center.</p>
+                </div>
+                <div class="cf-text-slide">
+                    <h2>3-TAP BILLING.<br>ZERO FRICTION.</h2>
+                    <p>Search your pre-saved inventory, apply custom GST, and generate a secure bill in seconds with our optimized POS flow.</p>
+                </div>
+                <div class="cf-text-slide">
+                    <h2>DUE TRACKER.<br>NEVER LOSE A RUPEE.</h2>
+                    <p>Easily search for partially paid bills. With one tap, record balance payments and clear invoices instantly.</p>
+                </div>
             </div>
         </div>
 
@@ -248,24 +322,57 @@
             <div class="cf-giant-phone" onclick="window.location.href='Moktest-Demo/index.html'">
                 <div class="cf-phone-notch"></div>
                 <div class="cf-phone-screen" style="background: #f5f7fb;">
-                    <div class="cf-css-ui">
+                    
+                    <!-- MT Slide 1: Dash -->
+                    <div class="cf-css-ui cf-slide active">
                         <h4 class="ui-title" style="background: #673ab7; color: white;">Moktest Portal</h4>
                         <div style="text-align:center; margin: 5px 0; color: #333; font-size: 13px;"><b>Welcome, Dipun</b></div>
                         <div class="ui-btn" style="background: #e8f5e9; color: #2e7d32; border: 2px solid #2e7d32;">New Paper: SET 1</div>
                         <div class="ui-btn" style="background: #2e7d32; color: white;">START EXAM</div>
                         <div class="ui-card" style="margin-top: 15px;">
                             <div style="font-size:11px; color:#673ab7; font-weight:bold; margin-bottom:5px;">Past Results</div>
-                            <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:bold;">
-                                <span>AIIMS Mock (Set 1)</span>
-                                <span style="color:#2e7d32;">75/100</span>
-                            </div>
+                            <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:bold;"><span>AIIMS Mock (Set 1)</span><span style="color:#2e7d32;">75/100</span></div>
                         </div>
                     </div>
+
+                    <!-- MT Slide 2: Exam -->
+                    <div class="cf-css-ui cf-slide">
+                        <div style="background: #4a148c; color: white; padding: 12px; text-align: center; border-radius: 8px; font-weight: bold; font-size: 15px; margin-bottom: 10px;">Time Left: 89:45</div>
+                        <div class="ui-card" style="font-weight: bold; font-size: 13px;">
+                            <p style="margin: 0 0 10px 0; color: #333;">Q1. Sandbox Demo Question?</p>
+                            <p style="margin: 6px 0; color: #64748B;">○ Option A</p>
+                            <p style="margin: 6px 0; color: #64748B;">○ Option B</p>
+                            <p style="margin: 6px 0; color: #673ab7;">◉ Option C</p>
+                        </div>
+                        <div class="ui-btn" style="background: #673ab7; color: white; margin-top: auto;">Submit Exam</div>
+                    </div>
+
+                    <!-- MT Slide 3: Result -->
+                    <div class="cf-css-ui cf-slide">
+                        <h4 class="ui-title" style="background: white; color: #4a148c; border: 2px solid #4a148c;">Exam Complete!</h4>
+                        <div style="text-align: center; margin: 30px 0;">
+                            <div style="font-size: 38px; color: #2e7d32; font-weight: 900;">75 <span style="font-size: 20px; color: #ccc;">/ 100</span></div>
+                            <div style="font-size: 12px; color: #666; margin-top: 5px; font-weight: bold;">AIIMS CBT Demo - SET 1</div>
+                        </div>
+                        <div class="ui-btn" style="background: #1976d2; color: white; margin-top: auto;">Download PDF Report</div>
+                    </div>
+
                 </div>
             </div>
-            <div class="cf-app-text">
-                <h2>MOKTEST.<br>PRACTICE LIKE A PRO.</h2>
-                <p>Access your dashboard, track results, and enter simulated CBT exams with a single tap.</p>
+
+            <div class="cf-app-text-wrapper">
+                <div class="cf-text-slide active">
+                    <h2>MOKTEST.<br>PRACTICE LIKE A PRO.</h2>
+                    <p>Access your dashboard, track results, and enter simulated CBT exams with a single tap.</p>
+                </div>
+                <div class="cf-text-slide">
+                    <h2>LIVE EXAM TIMER.<br>STRICT & FLEXIBLE.</h2>
+                    <p>Experience a true CBT environment with auto-submitting blocks, or switch to flexible mode to view all questions at once.</p>
+                </div>
+                <div class="cf-text-slide">
+                    <h2>INSTANT PDF SCORING.<br>ZERO WAIT TIME.</h2>
+                    <p>Get your score calculated instantly upon submission, complete with a detailed, branded PDF scorecard.</p>
+                </div>
             </div>
         </div>
 
