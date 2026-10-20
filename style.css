@@ -586,3 +586,52 @@ body {
 @media (min-width: 851px) {
     .cf-mobile-showcase { display: none; }
 }
+
+/* Update the gap to give more scrolling space between phones */
+.cf-mobile-showcase {
+    gap: 150px; /* Increased from 80px */
+}
+
+/* =========================================
+   UI & TEXT SLIDE LOGIC
+========================================= */
+.cf-css-ui.cf-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transform: translateX(30px);
+    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    pointer-events: none;
+}
+
+.cf-css-ui.cf-slide.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+}
+
+.cf-app-text-wrapper {
+    position: relative;
+    width: 85%;
+    max-width: 400px;
+    height: 180px; /* Fixed height so the page doesn't jump */
+}
+
+.cf-text-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    pointer-events: none;
+    text-align: left;
+}
+
+.cf-text-slide.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
