@@ -75,4 +75,37 @@ document.addEventListener('DOMContentLoaded', () => {
             ticking = true;
         }
     }, { passive: true });
+    // =========================================
+    // 3. MOBILE SHOWCASE REVEAL LOGIC
+    // =========================================
+    const revealBlocks = document.querySelectorAll('.reveal-block');
+    const stickyBtn = document.getElementById('sticky-action-btn');
+    const mobileShowcase = document.querySelector('.cf-mobile-showcase');
+
+    // Intersection Observer to fade in blocks as you scroll
+    const blockObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('in-view');
+            }
+        });
+    }, { threshold: 0.15 }); // Triggers when 15% of the block is visible
+
+    revealBlocks.forEach(block => blockObserver.observe(block));
+
+    // Show/Hide sticky button based on scrolling past the showcase
+    if (mobileShowcase && stickyBtn) {
+        window.addEventListener('scroll', () => {
+            const showcaseTop = mobileShowcase.offsetTop;
+            const scrollY = window.scrollY;
+            const windowHeight = window.innerHeight;
+
+            // If user has scrolled into the mobile showcase area
+            if (scrollY + windowHeight > showcaseTop + 200) {
+                stickyBtn.classList.add('visible');
+            } else {
+                stickyBtn.classList.remove('visible');
+            }
+        }, { passive: true });
+    }
 });
