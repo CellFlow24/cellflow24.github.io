@@ -35,21 +35,22 @@ document.addEventListener('DOMContentLoaded', () => {
                     const sectionHeight = ecosystemSection.offsetHeight;
                     const windowHeight = window.innerHeight;
 
-                    // Only run calculations if the section is actually visible on screen
                     if (scrollY + windowHeight > sectionTop && scrollY < sectionTop + sectionHeight) {
                         
-                        // Calculate how far the user has scrolled INTO the section
                         const scrollProgress = (scrollY + windowHeight - sectionTop) / (windowHeight + sectionHeight);
                         
-                        // A. Central Logo Moves "Straight and Back" (Z-Axis Scaling)
-                        // Starts at 0.7 scale and smoothly grows to 1.25 as you scroll down
+                        // A. Central Logo Zooms In and Fades Out
                         if (coreLogo) {
-                            const scale = 0.7 + (scrollProgress * 0.55); 
+                            // Scale from 1 up to 3.5
+                            const scale = 1 + (scrollProgress * 2.5); 
+                            // Fade from 1 down to 0 (multiplied by 1.5 so it fades out completely before the very bottom)
+                            const opacity = 1 - (scrollProgress * 1.5); 
+                            
                             coreLogo.style.transform = `scale(${scale})`;
+                            coreLogo.style.opacity = Math.max(0, opacity);
                         }
 
-                        // B. Outer Apps Float at independent vertical speeds
-                        // The offset ensures they cross the center gracefully
+                        // B. Outer Apps and Decor Float
                         const pixelOffset = (scrollY + windowHeight - sectionTop) - (windowHeight / 2);
                         
                         floaters.forEach(item => {
