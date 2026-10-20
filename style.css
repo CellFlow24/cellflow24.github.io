@@ -243,7 +243,7 @@ body {
 .cf-ecosystem {
     position: relative;
     width: 100%;
-    min-height: 130vh; /* Extended height for a longer scroll animation */
+    min-height: 130vh; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -252,25 +252,36 @@ body {
     padding: 100px 0;
 }
 
-/* Central Logo */
+/* Central Logo & Glow */
 .cf-core-wrapper {
     position: relative;
-    width: 250px;
-    height: 250px;
+    width: 320px; /* Made larger and more visible */
+    height: 320px;
     z-index: 5;
-    will-change: transform;
-    /* Sets the default scale so it transitions smoothly */
-    transform: scale(0.8); 
+    will-change: transform, opacity;
+    transform-origin: center center;
+}
+
+.cf-core-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150%;
+    height: 150%;
+    background: radial-gradient(circle, rgba(11, 126, 214, 0.15) 0%, rgba(0, 200, 150, 0.08) 40%, rgba(255,255,255,0) 70%);
+    border-radius: 50%;
+    z-index: -1;
 }
 
 .cf-core-wrapper img {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    filter: drop-shadow(0 25px 40px rgba(11, 126, 214, 0.25));
+    filter: drop-shadow(0 25px 40px rgba(11, 126, 214, 0.3));
 }
 
-/* Floating App Containers */
+/* Floating App Containers (Bigger & Glossy) */
 .cf-float-item {
     position: absolute;
     display: flex;
@@ -282,44 +293,64 @@ body {
 }
 
 .cf-float-item img {
-    width: 85px;
-    height: 85px;
-    border-radius: 22px;
-    background: #ffffff;
-    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
-    padding: 12px;
+    width: 110px; /* Increased size for desktop */
+    height: 110px;
+    border-radius: 28px;
+    /* Glossy Effect */
+    background: linear-gradient(135deg, #ffffff 0%, #f4f7fa 100%);
+    box-shadow: 
+        0 15px 35px rgba(15, 23, 42, 0.12), /* Outer soft shadow */
+        inset 0 2px 4px rgba(255, 255, 255, 1), /* Top gloss edge */
+        inset 0 -2px 6px rgba(0, 0, 0, 0.03); /* Bottom depth */
+    padding: 15px;
     object-fit: contain;
+    border: 1px solid rgba(255, 255, 255, 0.9);
 }
 
 /* Floating UI Badges */
-.cf-float-badge, .cf-chat-bubble {
+.cf-float-badge, .cf-chat-bubble, .cf-icon-bubble {
     background: #ffffff;
     color: var(--cf-navy);
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 700;
-    padding: 8px 18px;
-    border-radius: 20px;
-    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+    padding: 10px 20px;
+    border-radius: 24px;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
     border: 1px solid var(--cf-border);
     white-space: nowrap;
+}
+
+.cf-icon-bubble {
+    font-size: 24px;
+    width: 55px;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border-radius: 50%;
 }
 
 .cf-green { background: var(--cf-neon); border-color: var(--cf-neon); }
 .cf-purple { background: #E0E7FF; color: #3730A3; border-color: #C7D2FE; }
 .cf-chat-bubble { border-bottom-left-radius: 4px; } 
 
+.cf-decor {
+    pointer-events: none;
+    z-index: 1;
+}
+
 /* Organic Scattered Placement */
-.cf-float-mk { top: 12%; left: 12%; }
+.cf-float-mk { top: 8%; left: 10%; }
 .cf-float-bf { top: 65%; left: 8%; }
-.cf-float-mt { top: 18%; right: 12%; }
+.cf-float-mt { top: 12%; right: 10%; }
 .cf-float-dp { top: 62%; right: 8%; }
 
 @media (max-width: 850px) {
-    .cf-core-wrapper { width: 180px; height: 180px; }
-    .cf-float-item img { width: 65px; height: 65px; }
-    /* Push them closer to the edges on mobile so the center is clear */
-    .cf-float-mk { top: 10%; left: 5%; }
+    .cf-core-wrapper { width: 220px; height: 220px; }
+    .cf-float-item img { width: 80px; height: 80px; border-radius: 22px; padding: 10px; }
+    .cf-float-mk { top: 5%; left: 2%; }
     .cf-float-bf { top: 70%; left: 2%; }
-    .cf-float-mt { top: 12%; right: 5%; }
+    .cf-float-mt { top: 8%; right: 2%; }
     .cf-float-dp { top: 72%; right: 2%; }
 }
