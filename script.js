@@ -19,21 +19,47 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // =========================================
-    // 2. ADVANCED PARALLAX ECOSYSTEM LOGIC
+    // SETUP VARIABLES FOR SCROLLING
     // =========================================
+    // Ecosystem Elements
     const ecosystemSection = document.querySelector('.cf-ecosystem');
     const coreLogo = document.getElementById('cf-core-logo');
     const floaters = document.querySelectorAll('.cf-float-item');
+    
+    // Mobile Showcase Elements
+    const revealBlocks = document.querySelectorAll('.reveal-block');
+    const stickyBtn = document.getElementById('sticky-action-btn');
+    const mobileShowcase = document.querySelector('.cf-mobile-showcase');
+    const phones = document.querySelectorAll('.cf-giant-phone');
+
+    // Intersection Observer to fade in blocks as you scroll
+    const blockObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('in-view');
+            }
+        });
+    }, { threshold: 0.15 });
+
+    revealBlocks.forEach(block => blockObserver.observe(block));
+
+    // =========================================
+    // UNIFIED SCROLL ENGINE (PERFORMANCE OPTIMIZED)
+    // =========================================
     let ticking = false;
 
     window.addEventListener('scroll', () => {
         if (!ticking) {
             window.requestAnimationFrame(() => {
+                const scrollY = window.scrollY;
+                const windowHeight = window.innerHeight;
+
+                // -----------------------------------------
+                // 2. ADVANCED PARALLAX ECOSYSTEM LOGIC
+                // -----------------------------------------
                 if (ecosystemSection) {
-                    const scrollY = window.scrollY;
                     const sectionTop = ecosystemSection.offsetTop;
                     const sectionHeight = ecosystemSection.offsetHeight;
-                    const windowHeight = window.innerHeight;
 
                     // Only calculate if the section is currently in the viewport
                     if (scrollY + windowHeight > sectionTop && scrollY < sectionTop + sectionHeight) {
@@ -70,37 +96,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         });
                     }
                 }
-                ticking = false;
-            });
-            ticking = true;
-        }
-    }, { passive: true });
 
-    
-    // =========================================
-    // 3. MOBILE SHOWCASE REVEAL & TILT LOGIC
-    // =========================================
-    const revealBlocks = document.querySelectorAll('.reveal-block');
-    const stickyBtn = document.getElementById('sticky-action-btn');
-    const mobileShowcase = document.querySelector('.cf-mobile-showcase');
-    const phones = document.querySelectorAll('.cf-giant-phone');
-
-    const blockObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('in-view');
-            }
-        });
-    }, { threshold: 0.15 });
-
-    revealBlocks.forEach(block => blockObserver.observe(block));
-
-    window.addEventListener('scroll', () => {
-        if (!ticking) {
-            window.requestAnimationFrame(() => {
-                const scrollY = window.scrollY;
-                const windowHeight = window.innerHeight;
-
+                // -----------------------------------------
+                // 3. MOBILE SHOWCASE REVEAL & TILT LOGIC
+                // -----------------------------------------
+                
                 // Sticky Button Logic
                 if (mobileShowcase && stickyBtn) {
                     const showcaseTop = mobileShowcase.offsetTop;
@@ -111,18 +111,26 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
 
-                // Phone Left-to-Right Tilt Animation
+                // Phone Left-to-Right Tilt Animation (The Sweeping Arc)
                 phones.forEach(phone => {
                     const rect = phone.getBoundingClientRect();
-                    // Only animate if the phone is vertically visible on the screen
+                    
+                    // Animate while the phone is anywhere within the viewport
                     if (rect.top < windowHeight && rect.bottom > 0) {
-                        const scrollProgress = (windowHeight - rect.top) / windowHeight;
+                        // Calculates progress from 0 (just entering bottom) to 1 (leaving top)
+                        const scrollProgress = (windowHeight - rect.top) / (windowHeight + rect.height);
                         
-                        // Calculates a gentle swaying motion based on scroll depth
-                        const tiltZ = Math.sin(scrollProgress * Math.PI) * 3; // Rotates slightly like a steering wheel
-                        const tiltY = Math.cos(scrollProgress * Math.PI) * 12; // Tilts slightly left/right in 3D space
+                        // Sweeps from -10 degrees to +10 degrees as you scroll
+                        const tiltZ = (scrollProgress - 0.5) * 20; 
                         
-                        phone.style.transform = `perspective(1000px) rotateY(${tiltY}deg) rotateZ(${tiltZ}deg)`;
+                        // Adds 3D depth (turns slightly left to right)
+                        const tiltY = (scrollProgress - 0.5) * -15; 
+                        
+                        // Adds a slight horizontal curve to match your red arrow
+                        const moveX = Math.sin(scrollProgress * Math.PI) * 15; 
+
+                        // Apply the combined sweeping animation
+                        phone.style.transform = `perspective(1200px) translateX(${moveX}px) rotateY(${tiltY}deg) rotateZ(${tiltZ}deg)`;
                     }
                 });
 
