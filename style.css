@@ -1,1 +1,168 @@
-.
+/* style.css */
+
+:root {
+    /* CellFlow Brand Colors from your design kit */
+    --cf-blue: #0B7ED6;
+    --cf-teal: #00C896;
+    --cf-navy: #0F172A;
+    --cf-light: #F8FAFC;
+    --cf-border: #E2E8F0;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background-color: var(--cf-light);
+    /* Space to prevent content from hiding behind the fixed nav */
+    padding-top: 100px; 
+}
+
+/* Centers the nav and fixes it to the top */
+.cf-nav-wrapper {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 650px;
+    z-index: 1000;
+}
+
+/* The main pill container */
+.cf-nav-container {
+    background: #ffffff;
+    border: 1px solid var(--cf-border);
+    border-radius: 40px; /* Creates the perfect pill shape */
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05);
+    overflow: hidden;
+    /* Hardware acceleration for smooth expansion */
+    transition: border-radius 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
+                box-shadow 0.4s ease;
+    will-change: border-radius, box-shadow;
+}
+
+/* When open, it softens into a rounded rectangle */
+.cf-nav-container.open {
+    border-radius: 28px;
+    box-shadow: 0 12px 40px rgba(15, 23, 42, 0.1);
+}
+
+.cf-nav-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 8px 8px 30px;
+}
+
+/* Typography matching your brand sheet */
+.cf-logo {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--cf-navy);
+    letter-spacing: -0.5px;
+}
+
+/* The Teal toggle button */
+.cf-nav-toggle {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background-color: var(--cf-teal);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Spring physics for the rotation */
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.cf-nav-container.open .cf-nav-toggle {
+    transform: rotate(45deg); /* Rotates the + into an X */
+}
+
+/* Pure CSS Plus Icon */
+.cf-icon-plus {
+    position: relative;
+    width: 16px;
+    height: 16px;
+}
+
+.cf-icon-plus::before,
+.cf-icon-plus::after {
+    content: '';
+    position: absolute;
+    background-color: var(--cf-navy);
+    border-radius: 2px;
+}
+
+.cf-icon-plus::before {
+    top: 50%; left: 0; right: 0; height: 2px; transform: translateY(-50%);
+}
+
+.cf-icon-plus::after {
+    left: 50%; top: 0; bottom: 0; width: 2px; transform: translateX(-50%);
+}
+
+/* The expandable content */
+.cf-nav-menu {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    padding: 0 30px;
+    max-height: 0;
+    opacity: 0;
+    visibility: hidden;
+    /* Smooth height and fade transitions */
+    transition: max-height 0.5s cubic-bezier(0.25, 1, 0.5, 1), 
+                opacity 0.3s ease, 
+                padding 0.5s ease;
+}
+
+.cf-nav-container.open .cf-nav-menu {
+    max-height: 400px;
+    opacity: 1;
+    visibility: visible;
+    padding: 10px 30px 35px 30px;
+}
+
+/* Menu Typography */
+.cf-menu-col {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.cf-menu-col a {
+    text-decoration: none;
+    color: var(--cf-navy);
+    font-weight: 700;
+    font-size: 15px;
+    transition: color 0.2s;
+}
+
+.cf-menu-col a:hover {
+    color: var(--cf-blue);
+}
+
+.cf-menu-label {
+    font-size: 14px;
+    color: #94A3B8;
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+
+.cf-sub-link {
+    font-weight: 500 !important;
+    color: #64748B !important;
+}
+
+.cf-sub-link:hover {
+    color: var(--cf-blue) !important;
+}
+
+.cf-socials {
+    display: flex;
+    gap: 15px;
+    margin-top: 5px;
+}
