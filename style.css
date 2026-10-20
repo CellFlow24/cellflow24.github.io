@@ -197,23 +197,35 @@ body {
     animation: fadeUp 0.8s ease forwards 0.4s;
 }
 
-/* Floating Logo */
-.cf-hero-logo-wrapper {
+/* Decorative Icon Bubbles */
+.cf-icon-bubble {
+    background: #ffffff;
+    font-size: 20px;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+    border: 1px solid var(--cf-border);
+}
+
+/* Ensure decor doesn't block clicks */
+.cf-decor {
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Adjust Central Logo initial state for the new zoom fade */
+.cf-core-wrapper {
     position: relative;
     width: 250px;
     height: 250px;
-    margin-top: 20px;
+    z-index: 5;
+    will-change: transform, opacity;
+    transform-origin: center center;
 }
-
-.cf-floating-logo {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    filter: drop-shadow(0 20px 30px rgba(11, 126, 214, 0.2));
-    /* The Zappy 3D float animation */
-    animation: floatLogo 6s ease-in-out infinite;
-}
-
 /* Animations */
 @keyframes popIn {
     0% { opacity: 0; transform: scale(0.8) translateY(10px); }
@@ -223,11 +235,6 @@ body {
 @keyframes fadeUp {
     0% { opacity: 0; transform: translateY(20px); }
     100% { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes floatLogo {
-    0%, 100% { transform: translateY(0) rotate(0deg); }
-    50% { transform: translateY(-20px) rotate(2deg); }
 }
 
 /* =========================================
