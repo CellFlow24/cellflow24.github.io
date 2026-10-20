@@ -471,11 +471,11 @@ body {
     transform: translateY(0);
 }
 
-/* Giant Phone Mockup */
+/* Giant Phone Mockup (Slimmer, Modern Ratio) */
 .cf-giant-phone {
-    width: 85%;
-    max-width: 400px;
-    height: 550px;
+    width: 75%;
+    max-width: 320px; /* Slimmed down from 400px */
+    height: 650px; /* Taller screen ratio */
     background: #000000;
     border-radius: 45px;
     padding: 12px;
@@ -484,13 +484,12 @@ body {
     box-shadow: inset 0 0 0 2px #4a5568, 0 30px 60px rgba(15, 23, 42, 0.2);
     cursor: pointer;
     margin-bottom: 30px;
-    /* Subtle float effect */
-    transform: translateY(0);
-    transition: transform 0.3s ease;
+    will-change: transform;
+    /* Transformation is now handled by JS for the scroll-tilt */
 }
 
 .cf-giant-phone:active {
-    transform: scale(0.98);
+    transform: scale(0.96) !important; /* Click feedback */
 }
 
 .cf-phone-notch {
@@ -517,11 +516,11 @@ body {
 .cf-css-ui {
     width: 100%;
     height: 100%;
-    padding: 65px 15px 20px;
+    padding: 60px 15px 20px; /* Adjusted padding for taller screen */
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
 }
 
 .ui-title {
