@@ -582,9 +582,62 @@ body {
     font-weight: 500;
 }
 
-/* Hide on Desktop for now (until Phase 2) */
+/* =========================================
+   5. DESKTOP APP SHOWCASE (PHASE 2)
+========================================= */
 @media (min-width: 851px) {
-    .cf-mobile-showcase { display: none; }
+    .cf-mobile-showcase {
+        padding: 100px 0 200px;
+        gap: 250px; /* Massive breathing room between apps for a premium feel */
+    }
+
+    .cf-app-block {
+        flex-direction: row; /* Puts phone and text side-by-side */
+        justify-content: center;
+        align-items: center;
+        max-width: 1100px;
+        margin: 0 auto;
+        gap: 100px;
+    }
+
+    /* Creates a Zig-Zag layout (Phone Left, then Phone Right) */
+    .cf-app-block:nth-child(even) {
+        flex-direction: row-reverse;
+    }
+
+    .cf-giant-phone {
+        margin-bottom: 0;
+        width: 340px; /* Slightly larger on desktop */
+        height: 680px;
+        flex-shrink: 0;
+    }
+
+    .cf-app-text-wrapper {
+        height: 300px; /* Ample height for text */
+        width: 500px;
+        max-width: 500px;
+    }
+
+    /* Centers the text vertically next to the phone */
+    .cf-text-slide {
+        top: 50%;
+        margin-top: 40px; /* Starting position for the fade-up */
+        transform: translateY(-50%);
+    }
+
+    .cf-text-slide.active {
+        margin-top: 0; /* Slides up into the perfect center */
+        transform: translateY(-50%);
+    }
+
+    .cf-text-slide h2 {
+        font-size: 3.5rem; /* Larger headings for desktop */
+        margin-bottom: 20px;
+    }
+
+    .cf-text-slide p {
+        font-size: 1.25rem; /* Larger paragraph text */
+    }
 }
 
 /* Update the gap to give more scrolling space between phones */
