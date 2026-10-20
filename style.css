@@ -141,21 +141,44 @@ body {
     animation: popIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
-/* Giant Animated Motto */
-.cf-hero-motto {
-    font-size: clamp(3rem, 8vw, 6rem); /* Scales dynamically */
+/* Zappy-Style Text Slider Container */
+.cf-motto-container {
+    position: relative;
+    /* Dynamically sizes height based on font size to prevent overlapping */
+    height: calc(clamp(3rem, 8vw, 6rem) * 2.2); 
+    width: 100%;
+    margin-bottom: 20px;
+    overflow: hidden; /* Keeps the text invisible until it slides into the box */
+}
+
+/* The Sliding Text Layers */
+.cf-motto-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    font-size: clamp(3rem, 8vw, 6rem);
     font-weight: 900;
     color: var(--cf-navy);
     line-height: 1.1;
-    margin: 0 0 50px 0;
     letter-spacing: -2px;
+    
+    /* Starts hidden and pushed down */
+    opacity: 0;
+    transform: translateY(100%); 
+    animation: zappyCycle 9s infinite cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.motto-line {
-    display: block;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeUp 0.8s ease forwards;
+/* Staggering the timing so they play sequentially (3 seconds each) */
+.cf-motto-slide:nth-child(1) { animation-delay: 0s; }
+.cf-motto-slide:nth-child(2) { animation-delay: 3s; }
+.cf-motto-slide:nth-child(3) { animation-delay: 6s; }
+
+/* The Snappy Keyframe Animation */
+@keyframes zappyCycle {
+    0%, 5% { opacity: 0; transform: translateY(100%); } /* Quick slide in */
+    10%, 28% { opacity: 1; transform: translateY(0); } /* Hold in place */
+    33%, 100% { opacity: 0; transform: translateY(-100%); } /* Quick slide out up */
 }
 
 /* Delay the second line for the Zappy-style text effect */
