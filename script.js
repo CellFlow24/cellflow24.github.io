@@ -37,14 +37,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     if (scrollY + windowHeight > sectionTop && scrollY < sectionTop + sectionHeight) {
                         
-                        const scrollProgress = (scrollY + windowHeight - sectionTop) / (windowHeight + sectionHeight);
+                        // Calculate progress (0 at top of section, 1 at bottom)
+                        const scrollProgress = Math.max(0, (scrollY - sectionTop + (windowHeight / 2)) / sectionHeight);
                         
-                        // A. Central Logo Zooms In and Fades Out
+                        // A. Central Logo Zooms In and Fades Out as you scroll down
                         if (coreLogo) {
-                            // Scale from 1 up to 3.5
+                            // Starts at scale 1, zooms up to 3.5
                             const scale = 1 + (scrollProgress * 2.5); 
-                            // Fade from 1 down to 0 (multiplied by 1.5 so it fades out completely before the very bottom)
-                            const opacity = 1 - (scrollProgress * 1.5); 
+                            // Starts at opacity 1, fades to 0 faster
+                            const opacity = 1 - (scrollProgress * 1.8); 
                             
                             coreLogo.style.transform = `scale(${scale})`;
                             coreLogo.style.opacity = Math.max(0, opacity);
