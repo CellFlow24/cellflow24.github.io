@@ -638,6 +638,64 @@ body {
     .cf-text-slide p {
         font-size: 1.25rem; /* Larger paragraph text */
     }
+
+    /* Inside your existing @media (min-width: 851px) */
+    .cf-app-content {
+        align-items: flex-start; /* Left aligns the text and button */
+        max-width: 500px;
+    }
+
+    .cf-premium-btn {
+        margin-top: 30px; /* Slightly larger gap on desktop */
+        font-size: 17px;
+    }
+}
+
+/* =========================================
+   PREMIUM PRICING BUTTONS
+========================================= */
+.cf-app-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centered on mobile */
+    width: 85%;
+    max-width: 400px;
+}
+
+.cf-app-text-wrapper {
+    width: 100%;
+}
+
+.cf-premium-btn {
+    margin-top: 15px; /* Spaces it cleanly away from the text */
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: var(--cf-navy);
+    color: #ffffff;
+    border: none;
+    padding: 8px 24px 8px 8px; /* Extra padding on the right for balance */
+    border-radius: 40px;
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+}
+
+.cf-premium-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 35px rgba(15, 23, 42, 0.25);
+}
+
+.cf-price-pill {
+    background: var(--cf-neon);
+    color: var(--cf-navy);
+    padding: 10px 18px;
+    border-radius: 30px;
+    font-weight: 900;
+    font-size: 15px;
+    letter-spacing: -0.5px;
 }
 
 /* Update the gap to give more scrolling space between phones */
