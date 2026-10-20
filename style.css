@@ -852,8 +852,10 @@ body {
    6. FREE ZONE (CSS VIDEO COMPONENT)
 ========================================= */
 
+/* 1. Update the background to CellFlow Brand Colors */
 .cf-free-screen {
-    background: linear-gradient(135deg, #0F172A 0%, #1e1b4b 100%);
+    /* Uses your brand Navy and Blue for a seamless gradient */
+    background: linear-gradient(135deg, var(--cf-navy) 0%, var(--cf-blue) 120%);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -861,13 +863,27 @@ body {
     overflow: hidden;
 }
 
-/* Base class for moving video elements */
-.cf-vid-element {
+/* 2. Fix the Logo Watermark */
+.cf-vid-logo-bg {
     position: absolute;
-    will-change: transform, opacity;
-    z-index: 2;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150px; /* Slightly adjusted for better framing */
+    height: auto;
+    /* Removed the invert filter so the actual logo colors show */
+    opacity: 0.25; /* Subtle transparency so it acts as a watermark */
+    z-index: 1;
+    border-radius: 25px; /* Matches the curve of your app icon */
+    mix-blend-mode: overlay; /* Blends the logo beautifully into the blue background */
 }
 
+/* Ensure the desktop size is also updated */
+@media (min-width: 851px) {
+    .cf-vid-logo-bg {
+        width: 200px;
+    }
+}
 /* --- PREMIUM ANIMATION STYLES --- */
 
 /* Chat Bubble 1 */
