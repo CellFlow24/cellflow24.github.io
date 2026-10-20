@@ -77,7 +77,9 @@ body {
     position: relative;
     width: 14px;
     height: 14px;
+    pointer-events: none; /* Add this line */
 }
+
 .cf-icon-plus::before, .cf-icon-plus::after {
     content: '';
     position: absolute;
