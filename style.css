@@ -865,59 +865,63 @@ body {
 
 /* --- PREMIUM ANIMATION STYLES --- */
 
-/* Chat Bubble 1 */
+/* Chat Bubble 1 (White) - Moved to Bottom Right */
 .cf-vid-chat1 {
     background: #ffffff;
     color: var(--cf-navy);
     padding: 12px 22px;
     border-radius: 20px;
-    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px; /* Flipped tail */
     font-weight: 800;
     font-size: 16px;
-    top: 20%;
-    left: 25%;
+    top: auto;
+    bottom: 15%;
+    left: auto;
+    right: 15%; /* Safely inside the right edge */
     box-shadow: 0 10px 20px rgba(0,0,0,0.3);
     animation: chatPop1 6s infinite ease-in-out;
 }
 
-/* Chat Bubble 2 */
+/* Chat Bubble 2 (Blue) - Moved to Top Left */
 .cf-vid-chat2 {
     background: #0B7ED6;
     color: white;
     padding: 12px 22px;
     border-radius: 20px;
-    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px; /* Flipped tail */
     font-weight: 800;
     font-size: 16px;
-    top: 50%;
-    right: 15%;
+    top: 20%;
+    left: 25%; /* Safely away from the notch */
+    right: auto;
     box-shadow: 0 10px 20px rgba(0,0,0,0.3);
     animation: chatPop2 6s infinite ease-in-out;
 }
 
-/* Game Controller */
+/* Game Controller - Moved to Bottom Left */
 .cf-vid-game {
-    font-size: 65px; /* Larger, premium feel */
-    bottom: 10%;
-    left: 40%;
+    font-size: 65px; 
+    bottom: 15%;
+    left: 20%; /* Safely above your white lines */
     filter: drop-shadow(0 10px 15px rgba(0,0,0,0.4));
     animation: gamePlay 4s infinite linear;
 }
 
-/* Space Invader */
+/* Space Invader - Chases across the bottom */
 .cf-vid-ghost {
     font-size: 55px;
     bottom: 15%;
-    right: -20%; /* Starts off-screen */
+    right: -20%; 
     filter: drop-shadow(0 10px 15px rgba(0,0,0,0.4));
     animation: ghostChase 4s infinite linear;
 }
 
-/* PujoPath Flower */
+/* PujoPath Flower - Safely inside Top Right */
 .cf-vid-flower {
     font-size: 50px;
     top: 15%;
-    right: 35%;
+    right: 15%; /* Pulled away from the edge so it won't cut off */
+    left: auto;
     filter: drop-shadow(0 10px 10px rgba(0,0,0,0.3));
     animation: flowerFloat 6s infinite ease-in-out;
 }
@@ -946,8 +950,8 @@ body {
 @keyframes ghostChase {
     0% { transform: translateX(50px) scale(0.8); opacity: 0; }
     10% { opacity: 1; }
-    50% { transform: translateX(-200px) scale(1.1); opacity: 1; }
-    60%, 100% { transform: translateX(-250px) scale(0.8); opacity: 0; }
+    50% { transform: translateX(-300px) scale(1.1); opacity: 1; } /* Extended distance */
+    60%, 100% { transform: translateX(-350px) scale(0.8); opacity: 0; }
 }
 
 @keyframes flowerFloat {
