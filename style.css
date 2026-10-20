@@ -229,3 +229,85 @@ body {
     0%, 100% { transform: translateY(0) rotate(0deg); }
     50% { transform: translateY(-20px) rotate(2deg); }
 }
+
+/* =========================================
+   3. ECOSYSTEM PARALLAX SECTION
+========================================= */
+.cf-ecosystem {
+    position: relative;
+    width: 100%;
+    height: 120vh; /* Gives ample room for scrolling */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    margin-top: 40px;
+}
+
+/* Central Logo */
+.cf-core-wrapper {
+    position: relative;
+    width: 280px;
+    height: 280px;
+    z-index: 5;
+    will-change: transform;
+}
+
+.cf-core-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 25px 40px rgba(11, 126, 214, 0.25));
+}
+
+/* Floating App Containers */
+.cf-float-item {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    z-index: 2;
+    will-change: transform;
+}
+
+.cf-float-item img {
+    width: 80px;
+    height: 80px;
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+    padding: 10px;
+    object-fit: contain;
+}
+
+/* Floating UI Badges (Zappy Style) */
+.cf-float-badge, .cf-chat-bubble {
+    background: #ffffff;
+    color: var(--cf-navy);
+    font-size: 13px;
+    font-weight: 700;
+    padding: 8px 16px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+    border: 1px solid var(--cf-border);
+}
+
+.cf-green { background: var(--cf-neon); border-color: var(--cf-neon); }
+.cf-purple { background: #E0E7FF; color: #3730A3; border-color: #C7D2FE; }
+.cf-chat-bubble { border-bottom-left-radius: 4px; } /* Chat tail effect */
+
+/* Initial Placement around the center */
+.cf-float-mk { top: 15%; left: 15%; }
+.cf-float-bf { top: 60%; left: 10%; }
+.cf-float-mt { top: 20%; right: 15%; }
+.cf-float-dp { top: 65%; right: 12%; }
+
+@media (max-width: 850px) {
+    .cf-core-wrapper { width: 200px; height: 200px; }
+    .cf-float-item img { width: 60px; height: 60px; }
+    .cf-float-mk { left: 5%; }
+    .cf-float-bf { left: 2%; top: 70%; }
+    .cf-float-mt { right: 5%; }
+    .cf-float-dp { right: 2%; top: 75%; }
+}
