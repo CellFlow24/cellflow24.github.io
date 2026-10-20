@@ -262,16 +262,41 @@ body {
     transform-origin: center center;
 }
 
+/* Upgraded Central Logo Glow (Holo Pulse) */
 .cf-core-glow {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 150%;
-    height: 150%;
-    background: radial-gradient(circle, rgba(11, 126, 214, 0.15) 0%, rgba(0, 200, 150, 0.08) 40%, rgba(255,255,255,0) 70%);
+    width: 180%;
+    height: 180%;
+    /* Rich, vibrant gradient matching your brand */
+    background: radial-gradient(circle, rgba(11, 126, 214, 0.35) 0%, rgba(0, 200, 150, 0.15) 40%, transparent 70%);
     border-radius: 50%;
     z-index: -1;
+    animation: pulseHolo 4s ease-in-out infinite alternate;
+}
+
+@keyframes pulseHolo {
+    0% { transform: translate(-50%, -50%) scale(0.95); opacity: 0.8; }
+    100% { transform: translate(-50%, -50%) scale(1.05); opacity: 1; }
+}
+
+* Safe Desktop Positions for Decorations */
+.cf-decor-1 { top: 25%; left: 30%; } /* Clean Code */
+.cf-decor-2 { top: 50%; right: 28%; } /* 99+ */
+.cf-decor-3 { top: 75%; left: 30%; } /* 🚀 Rocket */
+.cf-decor-4 { top: 15%; right: 30%; } /* 💡 Lightbulb */
+
+/* Mobile Media Query Updates */
+@media (max-width: 850px) {
+    /* (Keep your existing mobile sizes for float items here) */
+    
+    /* Pull decorations much closer to the center on phones */
+    .cf-decor-1 { top: 22%; left: 15%; }
+    .cf-decor-2 { top: 48%; right: 15%; }
+    .cf-decor-3 { top: 80%; left: 20%; }
+    .cf-decor-4 { top: 15%; right: 20%; }
 }
 
 .cf-core-wrapper img {
