@@ -863,27 +863,27 @@ body {
     overflow: hidden;
 }
 
-/* 2. Fix the Logo Watermark */
+/* Fixed Logo Watermark: Centered and visible */
 .cf-vid-logo-bg {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 150px; /* Slightly adjusted for better framing */
+    width: 150px;
     height: auto;
-    /* Removed the invert filter so the actual logo colors show */
-    opacity: 0.25; /* Subtle transparency so it acts as a watermark */
+    opacity: 0.35; /* Perfect visibility without overpowering the text */
     z-index: 1;
-    border-radius: 25px; /* Matches the curve of your app icon */
-    mix-blend-mode: overlay; /* Blends the logo beautifully into the blue background */
+    border-radius: 25px; /* Softens the edges of the solid background */
+    filter: none; /* Forces the browser to show your actual colors */
 }
 
 /* Ensure the desktop size is also updated */
 @media (min-width: 851px) {
     .cf-vid-logo-bg {
-        width: 200px;
+        width: 220px;
     }
 }
+
 /* --- PREMIUM ANIMATION STYLES --- */
 
 /* Chat Bubble 1 */
