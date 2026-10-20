@@ -282,23 +282,6 @@ body {
     100% { transform: translate(-50%, -50%) scale(1.05); opacity: 1; }
 }
 
-* Safe Desktop Positions for Decorations */
-.cf-decor-1 { top: 25%; left: 30%; } /* Clean Code */
-.cf-decor-2 { top: 50%; right: 28%; } /* 99+ */
-.cf-decor-3 { top: 75%; left: 30%; } /* 🚀 Rocket */
-.cf-decor-4 { top: 15%; right: 30%; } /* 💡 Lightbulb */
-
-/* Mobile Media Query Updates */
-@media (max-width: 850px) {
-    /* (Keep your existing mobile sizes for float items here) */
-    
-    /* Pull decorations much closer to the center on phones */
-    .cf-decor-1 { top: 22%; left: 15%; }
-    .cf-decor-2 { top: 48%; right: 15%; }
-    .cf-decor-3 { top: 80%; left: 20%; }
-    .cf-decor-4 { top: 15%; right: 20%; }
-}
-
 .cf-core-wrapper img {
     width: 100%;
     height: 100%;
@@ -365,17 +348,69 @@ body {
     z-index: 1;
 }
 
-/* Organic Scattered Placement */
+/* =========================================
+   GENTLE ROTATION ANIMATIONS (EMOJIS)
+========================================= */
+@keyframes spinClockwise {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes spinCounterClockwise {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(-360deg); }
+}
+
+.cf-spin-cw { animation: spinClockwise 20s linear infinite; }
+.cf-spin-ccw { animation: spinCounterClockwise 25s linear infinite; }
+
+.cf-small-bubble {
+    width: 35px !important;
+    height: 35px !important;
+    font-size: 16px !important;
+}
+
+/* =========================================
+   DESKTOP PLACEMENT (APPS & DECOR)
+========================================= */
+/* Main Apps */
 .cf-float-mk { top: 8%; left: 10%; }
 .cf-float-bf { top: 65%; left: 8%; }
 .cf-float-mt { top: 12%; right: 10%; }
 .cf-float-dp { top: 62%; right: 8%; }
 
+/* Extra Decor */
+.cf-decor-1 { top: 25%; left: 30%; } /* ✨ Clean Code */
+.cf-decor-2 { top: 50%; right: 28%; } /* ❤️ 99+ */
+.cf-decor-3 { top: 75%; left: 30%; } /* 🚀 Rocket */
+.cf-decor-4 { top: 15%; right: 30%; } /* 💡 Lightbulb */
+.cf-decor-5 { top: 38%; left: 22%; } /* 🎮 Game */
+.cf-decor-6 { top: 28%; right: 22%; } /* 📝 Exam */
+.cf-decor-7 { top: 82%; left: 45%; } /* 💸 Bill */
+.cf-decor-8 { top: 45%; right: 18%; } /* 💬 Chat */
+.cf-decor-9 { top: 85%; right: 25%; } /* 🎯 Target */
+
+/* =========================================
+   MOBILE MEDIA QUERY UPDATES
+========================================= */
 @media (max-width: 850px) {
     .cf-core-wrapper { width: 220px; height: 220px; }
     .cf-float-item img { width: 80px; height: 80px; border-radius: 22px; padding: 10px; }
+    
+    /* Main Apps (Mobile) */
     .cf-float-mk { top: 5%; left: 2%; }
     .cf-float-bf { top: 70%; left: 2%; }
     .cf-float-mt { top: 8%; right: 2%; }
     .cf-float-dp { top: 72%; right: 2%; }
+    
+    /* Pull decorations much closer to the center on phones to keep them in frame */
+    .cf-decor-1 { top: 22%; left: 15%; }
+    .cf-decor-2 { top: 48%; right: 15%; }
+    .cf-decor-3 { top: 80%; left: 20%; }
+    .cf-decor-4 { top: 15%; right: 20%; }
+    .cf-decor-5 { top: 35%; left: 10%; }
+    .cf-decor-6 { top: 25%; right: 12%; }
+    .cf-decor-7 { top: 88%; left: 40%; }
+    .cf-decor-8 { top: 42%; right: 8%; }
+    .cf-decor-9 { top: 82%; right: 18%; }
 }
