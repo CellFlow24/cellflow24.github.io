@@ -949,3 +949,44 @@ body {
     background: var(--cf-teal);
     color: white;
 }
+
+/* =========================================
+   7. HORIZONTAL PHONE (LANDSCAPE)
+========================================= */
+/* Mobile Landscape Size */
+.cf-horizontal-phone {
+    width: 90% !important;
+    max-width: 450px !important;
+    height: 230px !important; 
+}
+
+/* Moves the notch to the left side */
+.cf-horizontal-phone .cf-notch-landscape {
+    top: 50%;
+    left: -2px;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 90px;
+    border-radius: 0 16px 16px 0;
+}
+
+/* The Subtle Logo Watermark */
+.cf-vid-logo-bg {
+    position: absolute;
+    width: 140px;
+    height: auto;
+    opacity: 0.15; /* Keeps it subtle in the background */
+    filter: brightness(0) invert(1); /* Turns your colored logo pure white */
+    z-index: 0;
+}
+
+/* Desktop Landscape Size */
+@media (min-width: 851px) {
+    .cf-horizontal-phone {
+        width: 550px !important; 
+        height: 280px !important;
+    }
+    .cf-vid-logo-bg {
+        width: 180px;
+    }
+}
