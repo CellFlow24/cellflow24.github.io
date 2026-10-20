@@ -7,8 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const navToggle = document.getElementById('nav-toggle');
 
     navToggle.addEventListener('click', (e) => {
-        e.preventDefault(); // Prevents default button behavior
-        e.stopPropagation(); // Stops the document click listener from instantly closing it
+        e.preventDefault(); 
+        e.stopPropagation(); 
         navContainer.classList.toggle('open');
     });
 
@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // =========================================
-    // SETUP VARIABLES FOR SCROLLING
+    // SETUP VARIABLES FOR SCROLLING & CAROUSELS
     // =========================================
     // Ecosystem Elements
     const ecosystemSection = document.querySelector('.cf-ecosystem');
@@ -32,19 +32,72 @@ document.addEventListener('DOMContentLoaded', () => {
     const mobileShowcase = document.querySelector('.cf-mobile-showcase');
     const phones = document.querySelectorAll('.cf-giant-phone');
 
-    // Intersection Observer to fade in blocks as you scroll
+    // =========================================
+    // 2. MOBILE SHOWCASE REVEAL & CAROUSEL OBSERVER
+    // =========================================
+    
+    // This observer triggers the fade-in AND starts the automatic text/UI slider
     const blockObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
+            const block = entry.target;
+            
             if (entry.isIntersecting) {
-                entry.target.classList.add('in-view');
+                // Fade in the block
+                block.classList.add('in-view');
+                
+                // Start the UI/Text carousel if it's not already running
+                if (!block.dataset.isRunning) {
+                    startAppCarousel(block);
+                }
+            } else {
+                // Pause the carousel to save performance when out of view
+                stopAppCarousel(block);
             }
         });
     }, { threshold: 0.15 });
 
     revealBlocks.forEach(block => blockObserver.observe(block));
 
+    // Carousel Engine Functions
+    function startAppCarousel(block) {
+        const uiSlides = block.querySelectorAll('.cf-css-ui.cf-slide');
+        const textSlides = block.querySelectorAll('.cf-text-slide');
+        
+        // If there's only 1 slide, do nothing
+        if (uiSlides.length <= 1) return; 
+        
+        block.dataset.isRunning = "true";
+        let currentIndex = Array.from(uiSlides).findIndex(slide => slide.classList.contains('active'));
+        if (currentIndex === -1) currentIndex = 0;
+
+        const intervalId = setInterval(() => {
+            // Remove active class from current elements
+            uiSlides[currentIndex].classList.remove('active');
+            textSlides[currentIndex].classList.remove('active');
+
+            // Move to next index (loop back to 0 if at end)
+            currentIndex = (currentIndex + 1) % uiSlides.length;
+
+            // Add active class to new elements
+            uiSlides[currentIndex].classList.add('active');
+            textSlides[currentIndex].classList.add('active');
+            
+        }, 3500); // Cycles every 3.5 seconds
+
+        // Save interval ID to clear it later
+        block.dataset.intervalId = intervalId; 
+    }
+
+    function stopAppCarousel(block) {
+        if (block.dataset.intervalId) {
+            clearInterval(block.dataset.intervalId);
+            block.dataset.isRunning = "";
+        }
+    }
+
+
     // =========================================
-    // UNIFIED SCROLL ENGINE (PERFORMANCE OPTIMIZED)
+    // 3. UNIFIED SCROLL ENGINE (PARALLAX & TILT)
     // =========================================
     let ticking = false;
 
@@ -55,40 +108,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 const windowHeight = window.innerHeight;
 
                 // -----------------------------------------
-                // 2. ADVANCED PARALLAX ECOSYSTEM LOGIC
+                // A. ADVANCED PARALLAX ECOSYSTEM LOGIC
                 // -----------------------------------------
                 if (ecosystemSection) {
                     const sectionTop = ecosystemSection.offsetTop;
                     const sectionHeight = ecosystemSection.offsetHeight;
 
-                    // Only calculate if the section is currently in the viewport
                     if (scrollY + windowHeight > sectionTop && scrollY < sectionTop + sectionHeight) {
                         
-                        // Calculate exact centers
                         const sectionCenter = sectionTop + (sectionHeight / 2);
                         const viewportCenter = scrollY + (windowHeight / 2);
-                        
-                        // How far is the section center from the screen center? (0 = dead center)
                         const distanceFromCenter = Math.abs(viewportCenter - sectionCenter);
-                        
-                        // Normalize it so 0 is center, and 1 is at the edges of the screen
                         const normalizedDistance = Math.min(1, distanceFromCenter / (windowHeight * 0.6));
                         
-                        // A. Central Logo Math (Peak at center, Fade/Zoom on edges)
+                        // Central Logo Math (Peak at center, Fade/Zoom on edges)
                         if (coreLogo) {
-                            // Scale: 1 at center, zooms up to 2.5 at edges
                             const scale = 1 + (normalizedDistance * 1.5); 
-                            
-                            // Opacity: 1 at center, fades to 0 as it leaves
                             const opacity = 1 - (normalizedDistance * 1.5); 
-                            
                             coreLogo.style.transform = `scale(${scale})`;
                             coreLogo.style.opacity = Math.max(0, opacity);
                         }
 
-                        // B. Outer Apps and Decor Float (Standard Parallax)
+                        // Outer Apps and Decor Float
                         const pixelOffset = (scrollY + windowHeight - sectionTop) - (windowHeight / 2);
-                        
                         floaters.forEach(item => {
                             const speed = parseFloat(item.getAttribute('data-speed'));
                             const yPos = pixelOffset * speed;
@@ -98,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 // -----------------------------------------
-                // 3. MOBILE SHOWCASE REVEAL & TILT LOGIC
+                // B. MOBILE SHOWCASE TILT & STICKY BUTTON
                 // -----------------------------------------
                 
                 // Sticky Button Logic
@@ -115,21 +157,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 phones.forEach(phone => {
                     const rect = phone.getBoundingClientRect();
                     
-                    // Animate while the phone is anywhere within the viewport
                     if (rect.top < windowHeight && rect.bottom > 0) {
-                        // Calculates progress from 0 (just entering bottom) to 1 (leaving top)
                         const scrollProgress = (windowHeight - rect.top) / (windowHeight + rect.height);
                         
-                        // Sweeps from -10 degrees to +10 degrees as you scroll
                         const tiltZ = (scrollProgress - 0.5) * 20; 
-                        
-                        // Adds 3D depth (turns slightly left to right)
                         const tiltY = (scrollProgress - 0.5) * -15; 
-                        
-                        // Adds a slight horizontal curve to match your red arrow
                         const moveX = Math.sin(scrollProgress * Math.PI) * 15; 
 
-                        // Apply the combined sweeping animation
                         phone.style.transform = `perspective(1200px) translateX(${moveX}px) rotateY(${tiltY}deg) rotateZ(${tiltZ}deg)`;
                     }
                 });
