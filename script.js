@@ -75,37 +75,60 @@ document.addEventListener('DOMContentLoaded', () => {
             ticking = true;
         }
     }, { passive: true });
+
+    
     // =========================================
-    // 3. MOBILE SHOWCASE REVEAL LOGIC
+    // 3. MOBILE SHOWCASE REVEAL & TILT LOGIC
     // =========================================
     const revealBlocks = document.querySelectorAll('.reveal-block');
     const stickyBtn = document.getElementById('sticky-action-btn');
     const mobileShowcase = document.querySelector('.cf-mobile-showcase');
+    const phones = document.querySelectorAll('.cf-giant-phone');
 
-    // Intersection Observer to fade in blocks as you scroll
     const blockObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('in-view');
             }
         });
-    }, { threshold: 0.15 }); // Triggers when 15% of the block is visible
+    }, { threshold: 0.15 });
 
     revealBlocks.forEach(block => blockObserver.observe(block));
 
-    // Show/Hide sticky button based on scrolling past the showcase
-    if (mobileShowcase && stickyBtn) {
-        window.addEventListener('scroll', () => {
-            const showcaseTop = mobileShowcase.offsetTop;
-            const scrollY = window.scrollY;
-            const windowHeight = window.innerHeight;
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                const scrollY = window.scrollY;
+                const windowHeight = window.innerHeight;
 
-            // If user has scrolled into the mobile showcase area
-            if (scrollY + windowHeight > showcaseTop + 200) {
-                stickyBtn.classList.add('visible');
-            } else {
-                stickyBtn.classList.remove('visible');
-            }
-        }, { passive: true });
-    }
+                // Sticky Button Logic
+                if (mobileShowcase && stickyBtn) {
+                    const showcaseTop = mobileShowcase.offsetTop;
+                    if (scrollY + windowHeight > showcaseTop + 200) {
+                        stickyBtn.classList.add('visible');
+                    } else {
+                        stickyBtn.classList.remove('visible');
+                    }
+                }
+
+                // Phone Left-to-Right Tilt Animation
+                phones.forEach(phone => {
+                    const rect = phone.getBoundingClientRect();
+                    // Only animate if the phone is vertically visible on the screen
+                    if (rect.top < windowHeight && rect.bottom > 0) {
+                        const scrollProgress = (windowHeight - rect.top) / windowHeight;
+                        
+                        // Calculates a gentle swaying motion based on scroll depth
+                        const tiltZ = Math.sin(scrollProgress * Math.PI) * 3; // Rotates slightly like a steering wheel
+                        const tiltY = Math.cos(scrollProgress * Math.PI) * 12; // Tilts slightly left/right in 3D space
+                        
+                        phone.style.transform = `perspective(1000px) rotateY(${tiltY}deg) rotateZ(${tiltZ}deg)`;
+                    }
+                });
+
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }, { passive: true });
 });
