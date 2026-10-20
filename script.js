@@ -35,23 +35,32 @@ document.addEventListener('DOMContentLoaded', () => {
                     const sectionHeight = ecosystemSection.offsetHeight;
                     const windowHeight = window.innerHeight;
 
+                    // Only calculate if the section is currently in the viewport
                     if (scrollY + windowHeight > sectionTop && scrollY < sectionTop + sectionHeight) {
                         
-                        // Calculate progress (0 at top of section, 1 at bottom)
-                        const scrollProgress = Math.max(0, (scrollY - sectionTop + (windowHeight / 2)) / sectionHeight);
+                        // Calculate exact centers
+                        const sectionCenter = sectionTop + (sectionHeight / 2);
+                        const viewportCenter = scrollY + (windowHeight / 2);
                         
-                        // A. Central Logo Zooms In and Fades Out as you scroll down
+                        // How far is the section center from the screen center? (0 = dead center)
+                        const distanceFromCenter = Math.abs(viewportCenter - sectionCenter);
+                        
+                        // Normalize it so 0 is center, and 1 is at the edges of the screen
+                        const normalizedDistance = Math.min(1, distanceFromCenter / (windowHeight * 0.6));
+                        
+                        // A. Central Logo Math (Peak at center, Fade/Zoom on edges)
                         if (coreLogo) {
-                            // Starts at scale 1, zooms up to 3.5
-                            const scale = 1 + (scrollProgress * 2.5); 
-                            // Starts at opacity 1, fades to 0 faster
-                            const opacity = 1 - (scrollProgress * 1.8); 
+                            // Scale: 1 at center, zooms up to 2.5 at edges
+                            const scale = 1 + (normalizedDistance * 1.5); 
+                            
+                            // Opacity: 1 at center, fades to 0 as it leaves
+                            const opacity = 1 - (normalizedDistance * 1.5); 
                             
                             coreLogo.style.transform = `scale(${scale})`;
                             coreLogo.style.opacity = Math.max(0, opacity);
                         }
 
-                        // B. Outer Apps and Decor Float
+                        // B. Outer Apps and Decor Float (Standard Parallax)
                         const pixelOffset = (scrollY + windowHeight - sectionTop) - (windowHeight / 2);
                         
                         floaters.forEach(item => {
