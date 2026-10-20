@@ -612,18 +612,7 @@ body {
         flex-shrink: 0;
     }
 
-    .cf-app-text-wrapper {
-        height: 300px; /* Ample height for text */
-        width: 500px;
-        max-width: 500px;
-    }
-
-    /* Centers the text vertically next to the phone */
-    .cf-text-slide {
-        top: 50%;
-        margin-top: 40px; /* Starting position for the fade-up */
-        transform: translateY(-50%);
-    }
+    
 
     .cf-text-slide.active {
         margin-top: 0; /* Slides up into the perfect center */
@@ -722,10 +711,18 @@ body {
     pointer-events: auto;
 }
 
-.cf-app-text-wrapper {
-    position: relative;
+/* New Wrapper to group Text and Button */
+.cf-app-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centered on mobile */
     width: 85%;
     max-width: 400px;
+}
+
+.cf-app-text-wrapper {
+    position: relative;
+    width: 100%;
     height: 180px; /* Fixed height so the page doesn't jump */
 }
 
@@ -745,4 +742,106 @@ body {
     opacity: 1;
     transform: translateY(0);
     pointer-events: auto;
+}
+
+/* =========================================
+   PREMIUM PRICING BUTTONS
+========================================= */
+.cf-premium-btn {
+    margin-top: 15px; /* Spaces it cleanly away from the text */
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: var(--cf-navy);
+    color: #ffffff;
+    border: none;
+    padding: 8px 24px 8px 8px; /* Extra padding on the right for balance */
+    border-radius: 40px;
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+    align-self: flex-start; /* Aligns left with text on mobile */
+}
+
+.cf-premium-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 35px rgba(15, 23, 42, 0.25);
+}
+
+.cf-price-pill {
+    background: var(--cf-neon);
+    color: var(--cf-navy);
+    padding: 10px 18px;
+    border-radius: 30px;
+    font-weight: 900;
+    font-size: 15px;
+    letter-spacing: -0.5px;
+}
+
+/* =========================================
+   DESKTOP APP SHOWCASE (PHASE 2)
+========================================= */
+@media (min-width: 851px) {
+    .cf-mobile-showcase {
+        padding: 100px 0 200px;
+        gap: 250px; /* Massive breathing room between apps for a premium feel */
+    }
+
+    .cf-app-block {
+        flex-direction: row; /* Puts phone and text side-by-side */
+        justify-content: center;
+        align-items: center;
+        max-width: 1100px;
+        margin: 0 auto;
+        gap: 100px;
+    }
+
+    /* Creates a Zig-Zag layout (Phone Left, then Phone Right) */
+    .cf-app-block:nth-child(even) {
+        flex-direction: row-reverse;
+    }
+
+    .cf-giant-phone {
+        margin-bottom: 0;
+        width: 340px; /* Slightly larger on desktop */
+        height: 680px;
+        flex-shrink: 0;
+    }
+
+    .cf-app-content {
+        align-items: flex-start; /* Left aligns the text and button */
+        max-width: 500px;
+    }
+
+    .cf-app-text-wrapper {
+        height: 300px; /* Ample height for text on desktop */
+    }
+
+    /* Centers the text vertically next to the phone */
+    .cf-text-slide {
+        top: 50%;
+        margin-top: 40px; /* Starting position for the fade-up */
+        transform: translateY(-50%);
+    }
+
+    .cf-text-slide.active {
+        margin-top: 0; /* Slides up into the perfect center */
+        transform: translateY(-50%);
+    }
+
+    .cf-text-slide h2 {
+        font-size: 3.5rem; /* Larger headings for desktop */
+        margin-bottom: 20px;
+    }
+
+    .cf-text-slide p {
+        font-size: 1.25rem; /* Larger paragraph text */
+    }
+
+    .cf-premium-btn {
+        margin-top: 30px; /* Slightly larger gap on desktop */
+        font-size: 17px;
+    }
 }
