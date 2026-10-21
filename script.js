@@ -1,4 +1,40 @@
 document.addEventListener('DOMContentLoaded', () => {
+
+    // =========================================
+    // PAGE TRANSITION ENGINE
+    // =========================================
+    // 1. Fade the page in when it loads
+    document.body.classList.add('cf-page-fade-in');
+
+    // 2. Listen for clicks on our special transition links
+    document.querySelectorAll('.cf-page-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+            const targetUrl = link.getAttribute('href');
+            
+            // Get current page name (e.g., 'index.html' or 'about.html')
+            let currentPath = window.location.pathname.split('/').pop();
+            if (!currentPath) currentPath = 'index.html'; // Fallback for root
+            
+            const targetPath = targetUrl.split('#')[0]; // Gets the 'about.html' part
+
+            // If we are navigating to a DIFFERENT page -> Fade out first
+            if (targetPath && targetPath !== currentPath) {
+                e.preventDefault(); // Stop instant jump
+                
+                // Trigger exit animation
+                document.body.classList.remove('cf-page-fade-in');
+                document.body.classList.add('cf-page-fade-out');
+                
+                // Wait for the CSS animation to finish (400ms), then change page
+                setTimeout(() => {
+                    window.location.href = targetUrl;
+                }, 400); 
+            } else {
+                // If we are already on about.html and clicking #contact -> Just close menu & scroll
+                document.getElementById('nav-container').classList.remove('open');
+            }
+        });
+    });
     
     // =========================================
     // 1. NAVIGATION LOGIC
