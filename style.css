@@ -237,17 +237,18 @@ a.cf-menu-label:hover { color: var(--cf-blue); }
     padding: 60px 20px 20px;
 }
 
-/* Promo Badge */
+/* Promo Badge (CellFlow Branded) */
 .cf-promo-badge {
-    background-color: var(--cf-neon);
-    color: var(--cf-navy);
+    background: linear-gradient(135deg, var(--cf-navy) 0%, var(--cf-blue) 100%);
+    color: #ffffff;
     font-weight: 800;
     font-size: 14px;
     padding: 10px 24px;
     border-radius: 30px;
     display: inline-block;
     margin-bottom: 40px;
-    box-shadow: 0 4px 15px rgba(163, 255, 0, 0.4);
+    box-shadow: 0 8px 20px rgba(11, 126, 214, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     animation: popIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
