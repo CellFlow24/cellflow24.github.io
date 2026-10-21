@@ -1329,3 +1329,107 @@ a.cf-menu-label:hover {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+/* =========================================
+   PREMIUM STUDIO TEASER
+========================================= */
+.cf-studio-teaser {
+    position: relative;
+    width: 85%;
+    max-width: 800px;
+    margin: 50px auto 100px; /* Perfect spacing between Moktest and the Free Zone */
+    padding: 60px 30px;
+    border-radius: 30px;
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+    border: 1px solid var(--cf-border);
+    box-shadow: 0 15px 40px rgba(15, 23, 42, 0.04);
+    text-align: center;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    /* Inherits your JS scroll reveal automatically */
+    opacity: 0;
+    transform: translateY(60px);
+    transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.cf-studio-teaser.in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* The gentle breathing background glow */
+.cf-teaser-glow {
+    position: absolute;
+    top: -50%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150%;
+    height: 100%;
+    background: radial-gradient(ellipse at center, rgba(11, 126, 214, 0.08) 0%, rgba(255,255,255,0) 70%);
+    z-index: 0;
+    pointer-events: none;
+    animation: pulseTeaser 4s ease-in-out infinite alternate;
+}
+
+@keyframes pulseTeaser {
+    0% { transform: translateX(-50%) scale(1); opacity: 0.5; }
+    100% { transform: translateX(-50%) scale(1.1); opacity: 1; }
+}
+
+.cf-teaser-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cf-teaser-content h3 {
+    font-size: clamp(2rem, 5vw, 2.5rem);
+    font-weight: 900;
+    color: var(--cf-navy);
+    margin: 0 0 15px 0;
+    letter-spacing: -1px;
+}
+
+.cf-teaser-content p {
+    font-size: 1.15rem;
+    color: #64748B;
+    max-width: 500px;
+    margin: 0 0 35px 0;
+    line-height: 1.6;
+    font-weight: 500;
+}
+
+/* Premium Gradient Button */
+.cf-teaser-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(135deg, var(--cf-navy) 0%, var(--cf-blue) 100%);
+    color: #ffffff;
+    padding: 16px 36px;
+    border-radius: 40px;
+    font-size: 16px;
+    font-weight: 800;
+    text-decoration: none;
+    box-shadow: 0 10px 25px rgba(11, 126, 214, 0.3);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.cf-teaser-btn svg {
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Hover effects */
+.cf-teaser-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 35px rgba(11, 126, 214, 0.4);
+}
+
+.cf-teaser-btn:hover svg {
+    transform: translateX(6px); /* Arrow shoots forward smoothly */
+}
