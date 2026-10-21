@@ -187,28 +187,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 // =========================================
                 const waterMenu = document.getElementById('cf-water-menu');
                 
-                if (mobileShowcase && waterMenu) {
+                // Sticky Button Logic (Water Menu)
+                if (mobileShowcase && stickyBtn) {
                     const showcaseTop = mobileShowcase.offsetTop;
                     
                     if (scrollY + windowHeight > showcaseTop + 200) {
                         // 1. Enter the section: Morph to Pill if not already triggered
-                        if (!waterMenu.dataset.triggered) {
-                            waterMenu.dataset.triggered = "true";
-                            waterMenu.classList.add('state-pill');
+                        if (!stickyBtn.dataset.triggered) {
+                            stickyBtn.dataset.triggered = "true";
+                            stickyBtn.classList.add('state-pill');
                             
-                            // 2. Wait 3.5 seconds, then morph into bubble and slide right
+                            // 2. Wait just 1.2 seconds, then morph into bubble and slide right
                             setTimeout(() => {
-                                if (waterMenu.classList.contains('state-pill')) {
-                                    waterMenu.classList.remove('state-pill');
-                                    waterMenu.classList.add('state-bubble');
+                                if (stickyBtn.classList.contains('state-pill')) {
+                                    stickyBtn.classList.remove('state-pill');
+                                    stickyBtn.classList.add('state-bubble');
                                 }
-                            }, 3500);
+                            }, 1200); // ⚡ QUICKER TIMEOUT
                         }
                     } else {
                         // Reset completely if user scrolls back above the showcase
-                        if (!waterMenu.classList.contains('menu-open')) {
-                            waterMenu.classList.remove('state-pill', 'state-bubble');
-                            waterMenu.dataset.triggered = ""; // Allows the animation to happen again
+                        if (!stickyBtn.classList.contains('menu-open')) {
+                            stickyBtn.classList.remove('state-pill', 'state-bubble');
+                            stickyBtn.dataset.triggered = ""; 
                         }
                     }
                 }
