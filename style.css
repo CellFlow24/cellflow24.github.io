@@ -597,10 +597,11 @@ a.cf-menu-label:hover { color: var(--cf-blue); }
     height: 52px;
 }
 
+/* State 2: Morphing from Pill to Bubble (Made Larger for Mobile) */
 .state-bubble .cf-water-btn {
     border-radius: 50%;
-    width: 60px;
-    height: 60px;
+    width: 75px;  /* Increased from 60px */
+    height: 75px; /* Increased from 60px */
     padding: 0;
     /* Activates the liquid shape shifting */
     animation: waterMorph 4s ease-in-out infinite alternate;
@@ -629,8 +630,9 @@ a.cf-menu-label:hover { color: var(--cf-blue); }
     white-space: nowrap;
 }
 
+/* The Emoji Icon inside the bubble */
 .cf-water-icon {
-    font-size: 26px;
+    font-size: 32px; /* Increased from 26px */
     display: none;
     transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
@@ -695,6 +697,28 @@ a.cf-menu-label:hover { color: var(--cf-blue); }
 
 .wa-opt:hover { background: #25D366; color: white; border-color: #25D366; }
 .email-opt:hover { background: #ea4335; color: white; border-color: #ea4335; }
+
+/* =========================================
+   DESKTOP SCALING FOR WATER MENU
+========================================= */
+@media (min-width: 851px) {
+    /* Make the bubble even larger on Desktop */
+    .state-bubble .cf-water-btn {
+        width: 85px;
+        height: 85px;
+    }
+    
+    /* Make the emoji bigger on Desktop */
+    .cf-water-icon {
+        font-size: 38px;
+    }
+    
+    /* Push the menu slightly further from the edge on large screens */
+    .cf-water-menu-container.state-bubble {
+        right: 40px;
+        bottom: 40px;
+    }
+}
 
 /* The Shape Shifting Animation */
 @keyframes waterMorph {
