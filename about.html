@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>About CellFlow | The Journey</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    
+    <!-- Link BOTH stylesheets -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="about.css">
+</head>
+<body class="about-body">
+
+    <!-- 1. NAVIGATION (Exact copy from your main page) -->
+    <div class="cf-nav-wrapper">
+        <nav class="cf-nav-container" id="nav-container">
+            <div class="cf-nav-top">
+                <div class="cf-logo">
+                    <span style="color: var(--cf-navy);">Cell</span><span style="color: var(--cf-blue);">Flow</span>
+                </div>
+                <button class="cf-nav-toggle" id="nav-toggle" aria-label="Toggle Menu">
+                    <span class="cf-icon-plus"></span>
+                </button>
+            </div>
+            
+            <div class="cf-nav-menu" id="nav-menu">
+                <div class="cf-menu-col">
+                    <a href="index.html">Home</a>
+                    <a href="#">Custom Build</a>
+                    <a href="#">Pricing</a>
+                </div>
+                <div class="cf-menu-col">
+                    <div class="cf-menu-label">Download</div>
+                    <a href="MessKhata-Demo/index.html" class="cf-sub-link">Mess Khata</a>
+                    <a href="BillFlow-Demo/index.html" class="cf-sub-link">Bill Flow</a>
+                </div>
+                <div class="cf-menu-col">
+                    <div class="cf-menu-label">Company</div>
+                    <a href="#contact" class="cf-sub-link">Contact</a>
+                    <div class="cf-socials">
+                        <a href="#" class="cf-sub-link">Ig</a>
+                        <a href="#" class="cf-sub-link">Fb</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <!-- 2. HERO INTRO -->
+    <header class="about-hero">
+        <div class="glow-bg"></div>
+        <h1 class="about-title">Built with Passion.</h1>
+        <p class="about-subtitle">From simple spreadsheet formulas to full-scale Progressive Web Apps.</p>
+    </header>
+
+    <!-- 3. THE ANIMATED STORY TIMELINE -->
+    <section class="story-timeline">
+        <div class="timeline-line"></div>
+
+        <div class="timeline-item left reveal-timeline">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="timeline-year">Phase 1</div>
+                <h3>The Spreadsheet Era</h3>
+                <p>It started as a personal challenge to automate mundane tasks. Building complex logic inside Excel and Google Sheets laid the foundation for understanding deep database management and automation workflows.</p>
+            </div>
+        </div>
+
+        <div class="timeline-item right reveal-timeline">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="timeline-year">Phase 2</div>
+                <h3>Breaking the Grid</h3>
+                <p>Spreadsheets weren't enough. The passion evolved into writing Google Apps Script, connecting backends to sleek HTML, CSS, and JavaScript frontends to create seamless user experiences without heavy servers.</p>
+            </div>
+        </div>
+
+        <div class="timeline-item left reveal-timeline">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="timeline-year">Phase 3</div>
+                <h3>The PWA Revolution</h3>
+                <p>CellFlow was born. Developing robust Progressive Web Apps like Bill Flow and Mess Khata, turning complex code into minimal, premium tools that small businesses can rely on every single day.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. FOUNDATIONS & ACHIEVEMENTS -->
+    <section class="achievements-section">
+        <h2 class="section-heading reveal-timeline">Trusted Foundations</h2>
+        <div class="partners-grid">
+            
+            <div class="partner-card reveal-timeline">
+                <img src="feedback/dokal.png" alt="Subbrata Dokal" class="partner-img">
+                <div class="partner-info">
+                    <h4>Subbrata Dokal</h4>
+                    <span class="partner-role">Founder, Agropoti</span>
+                    <p>"Cellflow transformed how we operate. They built a custom, comprehensive business tracking application perfectly tailored to our daily workflow."</p>
+                </div>
+            </div>
+
+            <div class="partner-card reveal-timeline">
+                <img src="feedback/asib.png" alt="SK MD Asib" class="partner-img">
+                <div class="partner-info">
+                    <h4>SK MD Asib</h4>
+                    <span class="partner-role">PG Owner & Manager</span>
+                    <p>"Mess Khata completely eliminated the headache of manual ledger management. Tracking payments and expenses is now incredibly fast."</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 5. CONTACT FOOTER -->
+    <section id="contact" class="contact-footer reveal-timeline">
+        <h2>Let's Build Something Great.</h2>
+        <p>Whether you need a custom system or just want to talk code.</p>
+        <div class="contact-links">
+            <a href="mailto:cellflow24@gmail.com" class="contact-btn email-btn">✉️ cellflow24@gmail.com</a>
+            <a href="https://wa.me/917501230257" target="_blank" class="contact-btn wa-btn">💬 +91 7501230257</a>
+        </div>
+    </section>
+
+    <!-- TIMELINE & NAV JAVASCRIPT -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Navigation Logic
+            const navContainer = document.getElementById('nav-container');
+            const navToggle = document.getElementById('nav-toggle');
+
+            navToggle.addEventListener('click', (e) => {
+                e.preventDefault(); 
+                e.stopPropagation(); 
+                navContainer.classList.toggle('open');
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!navContainer.contains(e.target) && navContainer.classList.contains('open')) {
+                    navContainer.classList.remove('open');
+                }
+            });
+
+            // Scroll Animation Logic for Timeline
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.2 });
+
+            document.querySelectorAll('.reveal-timeline').forEach(item => {
+                observer.observe(item);
+            });
+        });
+    </script>
+</body>
+</html>
