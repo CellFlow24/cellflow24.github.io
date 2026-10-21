@@ -539,30 +539,167 @@ a.cf-menu-label:hover { color: var(--cf-blue); }
     overflow-x: hidden;
 }
 
-/* Sticky Action Button (Zappy Style Bottom Pill) */
-.cf-sticky-action-btn {
+/* =========================================
+   WATER DROP FLOATING MENU
+========================================= */
+.cf-water-menu-container {
     position: fixed;
-    bottom: -80px; /* Hidden initially */
-    left: 50%;
-    transform: translateX(-50%);
-    background: #ffffff;
-    color: var(--cf-navy);
-    font-size: 15px;
-    font-weight: 800;
-    padding: 14px 28px;
-    border-radius: 40px;
-    text-decoration: none;
-    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.15);
-    border: 1px solid var(--cf-border);
+    /* Hidden below screen initially */
+    bottom: -150px; 
+    /* Set up for smooth centering animation */
+    right: 50%;
+    transform: translateX(50%);
+    z-index: 1000;
     display: flex;
-    align-items: center;
-    gap: 8px;
-    z-index: 100;
-    transition: bottom 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    flex-direction: column;
+    align-items: flex-end; /* Keeps menu aligned to the right when opened */
+    transition: bottom 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                right 0.8s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.cf-sticky-action-btn.visible {
-    bottom: 30px; /* Slides up into view */
+/* STATE 1: Centered Pill */
+.cf-water-menu-container.state-pill {
+    bottom: 30px;
+    right: 50%;
+    transform: translateX(50%);
+}
+
+/* STATE 2: Bottom Right Bubble (Thumb zone) */
+.cf-water-menu-container.state-bubble {
+    bottom: 30px;
+    right: 25px; /* Safely off the right edge */
+    transform: translateX(0); /* Removes the 50% centering */
+}
+
+/* The Button Base (Glassmorphism) */
+.cf-water-btn {
+    position: relative;
+    background: rgba(255, 255, 255, 0.15); /* Highly transparent */
+    backdrop-filter: blur(12px); /* Blurred glass effect */
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 10px 30px rgba(11, 126, 214, 0.15), inset 0 0 15px rgba(255,255,255,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    outline: none;
+}
+
+/* Morphing from Pill to Bubble */
+.state-pill .cf-water-btn {
+    border-radius: 40px;
+    padding: 14px 28px;
+    width: 200px;
+    height: 52px;
+}
+
+.state-bubble .cf-water-btn {
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    padding: 0;
+    /* Activates the liquid shape shifting */
+    animation: waterMorph 4s ease-in-out infinite alternate;
+}
+
+/* Inner Fluid Effect */
+.cf-water-fluid {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(135deg, rgba(11, 126, 214, 0.2) 0%, rgba(0, 200, 150, 0.2) 100%);
+    z-index: 1;
+    opacity: 0.6;
+}
+
+/* Dynamic text and icon swapping */
+.cf-water-text, .cf-water-icon {
+    position: relative;
+    z-index: 2;
+    transition: opacity 0.3s ease;
+}
+
+.cf-water-text {
+    color: var(--cf-navy);
+    font-weight: 800;
+    font-size: 15px;
+    white-space: nowrap;
+}
+
+.cf-water-icon {
+    font-size: 26px;
+    display: none;
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.state-pill .cf-water-text { display: block; opacity: 1; }
+.state-pill .cf-water-icon { display: none; }
+
+.state-bubble .cf-water-text { display: none; }
+.state-bubble .cf-water-icon { display: block; }
+
+/* Menu Options Container */
+.cf-water-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 15px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px) scale(0.9);
+    transform-origin: bottom right;
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* When the menu is clicked open */
+.cf-water-menu-container.menu-open .cf-water-options {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+.cf-water-menu-container.menu-open .cf-water-btn {
+    border-radius: 50%; /* Force perfect circle when open */
+    animation: none; /* Pause fluid movement */
+    background: rgba(255, 255, 255, 0.6); /* Slightly more solid */
+}
+
+.cf-water-menu-container.menu-open .cf-water-icon {
+    transform: rotate(180deg) scale(1.1); /* Spin to an 'X' or distinct state */
+}
+
+/* Individual Links */
+.cf-water-opt {
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    color: var(--cf-navy);
+    padding: 12px 22px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    border: 1px solid rgba(255,255,255,0.7);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.cf-water-opt:hover {
+    transform: translateX(-5px);
+    background: #ffffff;
+}
+
+.wa-opt:hover { background: #25D366; color: white; border-color: #25D366; }
+.email-opt:hover { background: #ea4335; color: white; border-color: #ea4335; }
+
+/* The Shape Shifting Animation */
+@keyframes waterMorph {
+    0% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
+    100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
 }
 
 /* Individual App Block */
