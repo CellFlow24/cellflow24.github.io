@@ -3,14 +3,26 @@ document.addEventListener('DOMContentLoaded', () => {
     // =========================================
     // PAGE TRANSITION ENGINE
     // =========================================
-    // 1. Fade the page in when it loads
+    
+    // 1. Fade the page in when it initially loads
     document.body.classList.add('cf-page-fade-in');
 
-    // BUG FIX: Remove the animation class after it finishes (500ms) 
-    // so it doesn't break the "position: fixed" navigation bar!
     setTimeout(() => {
         document.body.classList.remove('cf-page-fade-in');
     }, 500);
+
+    // BUG FIX: The "White Screen" Back Button Fix (BFCache)
+    // If the browser restores the page from history, remove the fade-out class!
+    window.addEventListener('pageshow', (event) => {
+        if (event.persisted || document.body.classList.contains('cf-page-fade-out')) {
+            document.body.classList.remove('cf-page-fade-out');
+            document.body.classList.add('cf-page-fade-in');
+            
+            setTimeout(() => {
+                document.body.classList.remove('cf-page-fade-in');
+            }, 500);
+        }
+    });
 
     // 2. Listen for clicks on our special transition links
     document.querySelectorAll('.cf-page-link').forEach(link => {
