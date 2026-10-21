@@ -1349,17 +1349,16 @@ a.cf-menu-label:hover {
     justify-content: center;
     gap: 12px;
     
-    /* INITIAL STATE: Giant faded app placeholder */
     width: 85%;
     max-width: 800px;
     height: 350px;
     background: #f8fafc;
     border: 2px dashed #cbd5e1;
-    border-radius: 50px;
+    border-radius: 100px; /* Forces absolute rounded edges */
+    box-sizing: border-box; /* Prevents border width bugs */
     text-decoration: none;
     overflow: hidden;
     
-    /* Apple-style ultra smooth morph */
     transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -1399,14 +1398,12 @@ a.cf-menu-label:hover {
     z-index: 2;
 }
 
-/* --- THE MAGIC SQUEEZE (Triggered on Scroll) --- */
 .reveal-block.in-view .cf-squeeze-btn {
-    /* Shrinks down to pill size */
     width: 320px;
     height: 65px;
     background: linear-gradient(135deg, var(--cf-navy) 0%, var(--cf-blue) 100%);
-    border: 2px solid transparent;
-    border-radius: 40px;
+    border: 0px solid transparent; /* Completely removes border to stop artifacts */
+    border-radius: 100px;
     box-shadow: 0 15px 35px rgba(11, 126, 214, 0.3);
 }
 
