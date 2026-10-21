@@ -16,7 +16,7 @@ body {
 }
 
 /* =========================================
-   1. NAVIGATION (Fixed & Animated)
+   1. NAVIGATION (Premium Glassmorphism)
 ========================================= */
 .cf-nav-wrapper {
     position: fixed;
@@ -28,18 +28,23 @@ body {
     z-index: 1000;
 }
 
+/* Glassmorphism Container */
 .cf-nav-container {
-    background: #ffffff;
-    border: 1px solid var(--cf-border);
+    background: rgba(255, 255, 255, 0.75); /* Transparent White */
+    backdrop-filter: blur(20px); /* The Blur Effect */
+    -webkit-backdrop-filter: blur(20px); /* For Safari */
+    border: 1px solid rgba(255, 255, 255, 0.6);
     border-radius: 40px; 
-    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
     overflow: hidden;
-    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
+/* Solidifies slightly when opened for readability */
 .cf-nav-container.open {
-    border-radius: 24px;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+    background: rgba(255, 255, 255, 0.92);
+    border-radius: 28px;
+    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.1);
 }
 
 .cf-nav-top {
@@ -55,60 +60,99 @@ body {
     letter-spacing: -0.5px;
 }
 
+/* CellFlow Branded Toggle Button */
 .cf-nav-toggle {
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background-color: var(--cf-teal);
+    background: linear-gradient(135deg, var(--cf-navy) 0%, var(--cf-blue) 100%);
     border: none;
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s;
 }
 
+/* Turns light grey when opened */
 .cf-nav-container.open .cf-nav-toggle {
     transform: rotate(45deg);
-    background-color: #e2e8f0; /* Optional: change color on close */
+    background: #f1f5f9; 
 }
 
 .cf-icon-plus {
     position: relative;
     width: 14px;
     height: 14px;
-    pointer-events: none; /* Add this line */
+    pointer-events: none; 
 }
 
+/* White plus lines */
 .cf-icon-plus::before, .cf-icon-plus::after {
     content: '';
     position: absolute;
-    background-color: var(--cf-navy);
+    background-color: #ffffff; 
     border-radius: 2px;
+    transition: background-color 0.3s;
 }
+
 .cf-icon-plus::before { top: 50%; left: 0; right: 0; height: 2px; transform: translateY(-50%); }
 .cf-icon-plus::after { left: 50%; top: 0; bottom: 0; width: 2px; transform: translateX(-50%); }
 
+/* Dark lines when it turns into an 'X' */
+.cf-nav-container.open .cf-icon-plus::before,
+.cf-nav-container.open .cf-icon-plus::after {
+    background-color: var(--cf-navy);
+}
+
+/* Mobile First: Stacked Menu */
 .cf-nav-menu {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 20px;
+    display: flex;
+    flex-direction: column; /* Stacks items vertically on phone */
+    gap: 25px;
     padding: 0 30px;
-    max-height: 0; /* Hidden state */
+    max-height: 0; 
     opacity: 0;
     visibility: hidden;
-    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Desktop: Side-by-side columns */
+@media (min-width: 851px) {
+    .cf-nav-menu {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 20px;
+    }
 }
 
 .cf-nav-container.open .cf-nav-menu {
-    max-height: 300px; /* Expanded state */
+    max-height: 450px; 
     opacity: 1;
     visibility: visible;
     padding: 10px 30px 35px 30px;
 }
 
-/* Menu Links */
-.cf-menu-col { display: flex; flex-direction: column; gap: 10px; }
+/* Cascading Fade-In Animation for Menu Items */
+.cf-menu-col { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 12px; 
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.cf-nav-container.open .cf-menu-col {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Staggers the items sliding up */
+.cf-nav-container.open .cf-menu-col:nth-child(1) { transition-delay: 0.1s; }
+.cf-nav-container.open .cf-menu-col:nth-child(2) { transition-delay: 0.15s; }
+.cf-nav-container.open .cf-menu-col:nth-child(3) { transition-delay: 0.2s; }
+
 .cf-menu-col a { text-decoration: none; color: var(--cf-navy); font-weight: 800; font-size: 15px; }
 .cf-menu-col a:hover { color: var(--cf-blue); }
 .cf-menu-label { font-size: 13px; color: #94A3B8; margin-bottom: 2px; font-weight: 600; }
