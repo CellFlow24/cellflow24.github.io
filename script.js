@@ -182,13 +182,34 @@ document.addEventListener('DOMContentLoaded', () => {
                 // B. MOBILE SHOWCASE TILT & STICKY BUTTON
                 // -----------------------------------------
                 
-                // Sticky Button Logic
-                if (mobileShowcase && stickyBtn) {
+                // =========================================
+                // WATER DROP MENU LOGIC
+                // =========================================
+                const waterMenu = document.getElementById('cf-water-menu');
+                
+                if (mobileShowcase && waterMenu) {
                     const showcaseTop = mobileShowcase.offsetTop;
+                    
                     if (scrollY + windowHeight > showcaseTop + 200) {
-                        stickyBtn.classList.add('visible');
+                        // 1. Enter the section: Morph to Pill if not already triggered
+                        if (!waterMenu.dataset.triggered) {
+                            waterMenu.dataset.triggered = "true";
+                            waterMenu.classList.add('state-pill');
+                            
+                            // 2. Wait 3.5 seconds, then morph into bubble and slide right
+                            setTimeout(() => {
+                                if (waterMenu.classList.contains('state-pill')) {
+                                    waterMenu.classList.remove('state-pill');
+                                    waterMenu.classList.add('state-bubble');
+                                }
+                            }, 3500);
+                        }
                     } else {
-                        stickyBtn.classList.remove('visible');
+                        // Reset completely if user scrolls back above the showcase
+                        if (!waterMenu.classList.contains('menu-open')) {
+                            waterMenu.classList.remove('state-pill', 'state-bubble');
+                            waterMenu.dataset.triggered = ""; // Allows the animation to happen again
+                        }
                     }
                 }
 
@@ -212,4 +233,19 @@ document.addEventListener('DOMContentLoaded', () => {
             ticking = true;
         }
     }, { passive: true });
+    // Water Drop Click Toggle
+    const waterBtn = document.getElementById('cf-water-btn');
+    const waterMenuContainer = document.getElementById('cf-water-menu');
+    const waterIcon = document.getElementById('cf-water-icon');
+    
+    if (waterBtn) {
+        waterBtn.addEventListener('click', () => {
+            // Only allow opening if it has morphed into a bubble
+            if (waterMenuContainer.classList.contains('state-bubble')) {
+                const isOpen = waterMenuContainer.classList.toggle('menu-open');
+                // Change icon to an X when open
+                waterIcon.innerText = isOpen ? '✖' : '👋';
+            }
+        });
+    }
 });
