@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>FAQ & Support | CellFlow</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    
+    <!-- Link Main Style for Nav, and new FAQ Style -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="faq.css">
+</head>
+<body class="faq-body">
+
+    <!-- 1. NAVIGATION -->
+    <div class="cf-nav-wrapper">
+        <nav class="cf-nav-container" id="nav-container">
+            <div class="cf-nav-top">
+                <div class="cf-logo">
+                    <span style="color: var(--cf-navy);">Cell</span><span style="color: var(--cf-blue);">Flow</span>
+                </div>
+                <button class="cf-nav-toggle" id="nav-toggle" aria-label="Toggle Menu">
+                    <span class="cf-icon-plus"></span>
+                </button>
+            </div>
+            
+            <div class="cf-nav-menu" id="nav-menu">
+                <div class="cf-menu-col">
+                    <a href="index.html" class="cf-page-link">Home</a>
+                    <a href="index.html#custom-build" class="cf-page-link">Custom Build</a>
+                    <a href="index.html#pricing" class="cf-page-link">Pricing</a>
+                </div>
+                <div class="cf-menu-col">
+                    <div class="cf-menu-label">Download</div>
+                    <a href="MessKhata-Demo/index.html" class="cf-sub-link">Mess Khata</a>
+                    <a href="BillFlow-Demo/index.html" class="cf-sub-link">Bill Flow</a>
+                </div>
+                <div class="cf-menu-col">
+                    <a href="about.html" class="cf-menu-label cf-page-link">Company</a>
+                    <a href="about.html#contact" class="cf-sub-link cf-page-link">Contact</a>
+                    <div class="cf-socials">
+                        <a href="https://www.instagram.com/cellflow24" target="_blank" class="cf-social-icon">
+                            <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                        </a>
+                        <a href="https://www.facebook.com/share/1CE8utsk75/" target="_blank" class="cf-social-icon">
+                            <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"><path d="M4 4l16 16M4 20L20 4"></path></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <!-- 2. FAQ CHAT INTERFACE -->
+    <main class="faq-main">
+        <div class="faq-chat-container">
+            
+            <!-- Chat Header -->
+            <div class="faq-chat-header">
+                <div class="bot-profile">
+                    <img src="logo.png" alt="CellFlow Support">
+                    <div>
+                        <h2>CellFlow Assistant</h2>
+                        <span class="online-status">🟢 Online</span>
+                    </div>
+                </div>
+                <button class="faq-book-btn" id="open-book-btn">📖 View FAQ Book</button>
+            </div>
+
+            <!-- Chat Messages Area -->
+            <div class="faq-chat-box" id="chat-box">
+                <!-- Messages will be injected here via JavaScript -->
+            </div>
+
+            <!-- Chat Input / Options Area -->
+            <div class="faq-chat-input" id="chat-options-container">
+                <!-- Action buttons (Categories/Questions) injected here -->
+            </div>
+
+        </div>
+    </main>
+
+    <!-- 3. TOTAL FAQ BOOK MODAL (Hidden by default) -->
+    <div class="faq-book-modal" id="faq-book-modal">
+        <div class="faq-book-content">
+            <div class="faq-book-header">
+                <h2>📖 The Complete FAQ Book</h2>
+                <button class="close-book-btn" id="close-book-btn">✖</button>
+            </div>
+            <div class="faq-accordion-container" id="faq-accordion-container">
+                <!-- Full list injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Main site script for Nav, then FAQ specific script -->
+    <script src="script.js"></script>
+    <script src="faq.js"></script>
+</body>
+</html>
