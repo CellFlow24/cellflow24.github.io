@@ -1,0 +1,255 @@
+/* =========================================
+   FAQ PAGE STYLES (CHAT INTERFACE)
+========================================= */
+.faq-body {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.faq-main {
+    width: 100%;
+    max-width: 800px;
+    height: calc(100vh - 120px);
+    margin-top: 100px;
+    padding: 0 15px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Chat Container */
+.faq-chat-container {
+    background: #ffffff;
+    width: 100%;
+    height: 100%;
+    max-height: 800px;
+    border-radius: 30px;
+    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid var(--cf-border);
+}
+
+/* Chat Header */
+.faq-chat-header {
+    background: #ffffff;
+    padding: 20px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--cf-border);
+    z-index: 10;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+}
+
+.bot-profile {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.bot-profile img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: #f1f5f9;
+    padding: 5px;
+    border: 1px solid var(--cf-border);
+}
+
+.bot-profile h2 { margin: 0; font-size: 1.1rem; color: var(--cf-navy); font-weight: 800; }
+.online-status { font-size: 0.8rem; color: #10B981; font-weight: 600; }
+
+.faq-book-btn {
+    background: var(--cf-light);
+    border: 1px solid var(--cf-border);
+    color: var(--cf-navy);
+    padding: 10px 18px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.faq-book-btn:hover {
+    background: var(--cf-navy);
+    color: white;
+}
+
+/* Chat Box Area */
+.faq-chat-box {
+    flex: 1;
+    padding: 30px 25px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background: #f8fafc;
+    scroll-behavior: smooth;
+}
+
+/* Chat Bubbles */
+.chat-msg {
+    max-width: 80%;
+    padding: 14px 20px;
+    border-radius: 20px;
+    font-size: 1.05rem;
+    line-height: 1.5;
+    font-weight: 500;
+    animation: msgSlideUp 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.msg-bot {
+    align-self: flex-start;
+    background: #ffffff;
+    color: var(--cf-navy);
+    border-bottom-left-radius: 4px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+    border: 1px solid var(--cf-border);
+}
+
+.msg-user {
+    align-self: flex-end;
+    background: linear-gradient(135deg, var(--cf-navy) 0%, var(--cf-blue) 100%);
+    color: #ffffff;
+    border-bottom-right-radius: 4px;
+    box-shadow: 0 4px 15px rgba(11, 126, 214, 0.2);
+}
+
+/* Options / Input Area */
+.faq-chat-input {
+    background: #ffffff;
+    padding: 20px;
+    border-top: 1px solid var(--cf-border);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.chat-option-btn {
+    background: #f1f5f9;
+    color: var(--cf-navy);
+    border: 1px solid var(--cf-border);
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    animation: msgSlideUp 0.4s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.chat-option-btn:hover {
+    background: var(--cf-teal);
+    color: white;
+    border-color: var(--cf-teal);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 200, 150, 0.2);
+}
+
+.chat-back-btn { background: #fee2e2; color: #dc2626; border-color: #fca5a5; }
+.chat-back-btn:hover { background: #ef4444; color: white; border-color: #ef4444; }
+
+@keyframes msgSlideUp {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================================
+   FAQ BOOK MODAL (The Full List)
+========================================= */
+.faq-book-modal {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(10px);
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
+}
+
+.faq-book-modal.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.faq-book-content {
+    background: #ffffff;
+    width: 90%;
+    max-width: 800px;
+    height: 85vh;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transform: translateY(50px);
+    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.faq-book-modal.open .faq-book-content {
+    transform: translateY(0);
+}
+
+.faq-book-header {
+    padding: 25px 30px;
+    background: var(--cf-navy);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.faq-book-header h2 { margin: 0; font-size: 1.5rem; font-weight: 800; }
+
+.close-book-btn {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    width: 35px; height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.close-book-btn:hover { background: #ef4444; }
+
+.faq-accordion-container {
+    padding: 30px;
+    overflow-y: auto;
+    flex: 1;
+    background: #f8fafc;
+}
+
+.faq-category-title {
+    font-size: 1.2rem;
+    color: var(--cf-blue);
+    font-weight: 900;
+    margin: 30px 0 15px;
+    border-bottom: 2px solid var(--cf-border);
+    padding-bottom: 10px;
+}
+
+.faq-category-title:first-child { margin-top: 0; }
+
+.faq-item {
+    background: white;
+    border: 1px solid var(--cf-border);
+    border-radius: 12px;
+    margin-bottom: 10px;
+    padding: 15px 20px;
+}
+
+.faq-q { font-weight: 800; color: var(--cf-navy); margin: 0 0 8px; font-size: 1.05rem; }
+.faq-a { font-weight: 500; color: #64748B; margin: 0; font-size: 0.95rem; line-height: 1.5; }
