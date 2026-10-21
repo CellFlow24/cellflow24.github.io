@@ -67,9 +67,13 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Mobile Showcase Elements
     const revealBlocks = document.querySelectorAll('.reveal-block');
-    const stickyBtn = document.getElementById('sticky-action-btn');
     const mobileShowcase = document.querySelector('.cf-mobile-showcase');
     const phones = document.querySelectorAll('.cf-giant-phone');
+    
+    // Water Drop Menu Elements
+    const waterMenuContainer = document.getElementById('cf-water-menu');
+    const waterBtn = document.getElementById('cf-water-btn');
+    const waterIcon = document.getElementById('cf-water-icon');
 
     // =========================================
     // 2. MOBILE SHOWCASE REVEAL & CAROUSEL OBSERVER
@@ -134,7 +138,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-
     // =========================================
     // 3. UNIFIED SCROLL ENGINE (PARALLAX & TILT)
     // =========================================
@@ -179,37 +182,32 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 // -----------------------------------------
-                // B. MOBILE SHOWCASE TILT & STICKY BUTTON
+                // B. MOBILE SHOWCASE TILT & WATER MENU LOGIC
                 // -----------------------------------------
                 
-                // =========================================
-                // WATER DROP MENU LOGIC
-                // =========================================
-                const waterMenu = document.getElementById('cf-water-menu');
-                
                 // Sticky Button Logic (Water Menu)
-                if (mobileShowcase && stickyBtn) {
+                if (mobileShowcase && waterMenuContainer) {
                     const showcaseTop = mobileShowcase.offsetTop;
                     
                     if (scrollY + windowHeight > showcaseTop + 200) {
                         // 1. Enter the section: Morph to Pill if not already triggered
-                        if (!stickyBtn.dataset.triggered) {
-                            stickyBtn.dataset.triggered = "true";
-                            stickyBtn.classList.add('state-pill');
+                        if (!waterMenuContainer.dataset.triggered) {
+                            waterMenuContainer.dataset.triggered = "true";
+                            waterMenuContainer.classList.add('state-pill');
                             
                             // 2. Wait just 1.2 seconds, then morph into bubble and slide right
                             setTimeout(() => {
-                                if (stickyBtn.classList.contains('state-pill')) {
-                                    stickyBtn.classList.remove('state-pill');
-                                    stickyBtn.classList.add('state-bubble');
+                                if (waterMenuContainer.classList.contains('state-pill')) {
+                                    waterMenuContainer.classList.remove('state-pill');
+                                    waterMenuContainer.classList.add('state-bubble');
                                 }
                             }, 1200); // ⚡ QUICKER TIMEOUT
                         }
                     } else {
                         // Reset completely if user scrolls back above the showcase
-                        if (!stickyBtn.classList.contains('menu-open')) {
-                            stickyBtn.classList.remove('state-pill', 'state-bubble');
-                            stickyBtn.dataset.triggered = ""; 
+                        if (!waterMenuContainer.classList.contains('menu-open')) {
+                            waterMenuContainer.classList.remove('state-pill', 'state-bubble');
+                            waterMenuContainer.dataset.triggered = ""; 
                         }
                     }
                 }
@@ -234,19 +232,21 @@ document.addEventListener('DOMContentLoaded', () => {
             ticking = true;
         }
     }, { passive: true });
-    // Water Drop Click Toggle
-    const waterBtn = document.getElementById('cf-water-btn');
-    const waterMenuContainer = document.getElementById('cf-water-menu');
-    const waterIcon = document.getElementById('cf-water-icon');
-    
-    if (waterBtn) {
+
+    // =========================================
+    // 4. WATER DROP MENU CLICK TOGGLE
+    // =========================================
+    if (waterBtn && waterMenuContainer) {
         waterBtn.addEventListener('click', () => {
             // Only allow opening if it has morphed into a bubble
             if (waterMenuContainer.classList.contains('state-bubble')) {
                 const isOpen = waterMenuContainer.classList.toggle('menu-open');
                 // Change icon to an X when open
-                waterIcon.innerText = isOpen ? '✖' : '👋';
+                if (waterIcon) {
+                    waterIcon.innerText = isOpen ? '✖' : '👋';
+                }
             }
         });
     }
+
 });
