@@ -1331,105 +1331,112 @@ a.cf-menu-label:hover {
 }
 
 /* =========================================
-   PREMIUM STUDIO TEASER
+   PREMIUM STUDIO SQUEEZE TEASER
 ========================================= */
-.cf-studio-teaser {
+.cf-morph-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 400px;
+    margin: 50px auto 100px;
+}
+
+.cf-squeeze-btn {
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    
+    /* INITIAL STATE: Giant faded app placeholder */
     width: 85%;
     max-width: 800px;
-    margin: 50px auto 100px; /* Perfect spacing between Moktest and the Free Zone */
-    padding: 60px 30px;
-    border-radius: 30px;
-    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-    border: 1px solid var(--cf-border);
-    box-shadow: 0 15px 40px rgba(15, 23, 42, 0.04);
-    text-align: center;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    
-    /* Inherits your JS scroll reveal automatically */
-    opacity: 0;
-    transform: translateY(60px);
-    transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-.cf-studio-teaser.in-view {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* The gentle breathing background glow */
-.cf-teaser-glow {
-    position: absolute;
-    top: -50%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 150%;
-    height: 100%;
-    background: radial-gradient(ellipse at center, rgba(11, 126, 214, 0.08) 0%, rgba(255,255,255,0) 70%);
-    z-index: 0;
-    pointer-events: none;
-    animation: pulseTeaser 4s ease-in-out infinite alternate;
-}
-
-@keyframes pulseTeaser {
-    0% { transform: translateX(-50%) scale(1); opacity: 0.5; }
-    100% { transform: translateX(-50%) scale(1.1); opacity: 1; }
-}
-
-.cf-teaser-content {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.cf-teaser-content h3 {
-    font-size: clamp(2rem, 5vw, 2.5rem);
-    font-weight: 900;
-    color: var(--cf-navy);
-    margin: 0 0 15px 0;
-    letter-spacing: -1px;
-}
-
-.cf-teaser-content p {
-    font-size: 1.15rem;
-    color: #64748B;
-    max-width: 500px;
-    margin: 0 0 35px 0;
-    line-height: 1.6;
-    font-weight: 500;
-}
-
-/* Premium Gradient Button */
-.cf-teaser-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    background: linear-gradient(135deg, var(--cf-navy) 0%, var(--cf-blue) 100%);
-    color: #ffffff;
-    padding: 16px 36px;
-    border-radius: 40px;
-    font-size: 16px;
-    font-weight: 800;
+    height: 350px;
+    background: #f8fafc;
+    border: 2px dashed #cbd5e1;
+    border-radius: 50px;
     text-decoration: none;
-    box-shadow: 0 10px 25px rgba(11, 126, 214, 0.3);
-    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow: hidden;
+    
+    /* Apple-style ultra smooth morph */
+    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.cf-teaser-btn svg {
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+/* The Fake Phone Silhouette */
+.cf-ghost-phone {
+    position: absolute;
+    width: 140px;
+    height: 240px;
+    background: #e2e8f0;
+    border-radius: 24px;
+    left: 15%;
+    transition: opacity 0.4s ease;
 }
 
-/* Hover effects */
-.cf-teaser-btn:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 15px 35px rgba(11, 126, 214, 0.4);
+/* The Fake Text Silhouette */
+.cf-ghost-lines {
+    position: absolute;
+    width: 250px;
+    height: 24px;
+    background: #e2e8f0;
+    border-radius: 12px;
+    right: 15%;
+    top: 35%;
+    /* Creates 3 lines of fake text */
+    box-shadow: 0 50px 0 0 #e2e8f0, 0 100px 0 0 #e2e8f0;
+    transition: opacity 0.4s ease;
 }
 
-.cf-teaser-btn:hover svg {
-    transform: translateX(6px); /* Arrow shoots forward smoothly */
+/* The Final Text & Arrow (Hidden at first) */
+.cf-squeeze-text, .cf-squeeze-arrow {
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 17px;
+    opacity: 0;
+    transform: translateY(30px) scale(0.8);
+    transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 2;
+}
+
+/* --- THE MAGIC SQUEEZE (Triggered on Scroll) --- */
+.reveal-block.in-view .cf-squeeze-btn {
+    /* Shrinks down to pill size */
+    width: 320px;
+    height: 65px;
+    background: linear-gradient(135deg, var(--cf-navy) 0%, var(--cf-blue) 100%);
+    border: 2px solid transparent;
+    border-radius: 40px;
+    box-shadow: 0 15px 35px rgba(11, 126, 214, 0.3);
+}
+
+/* Hide the ghost placeholders */
+.reveal-block.in-view .cf-ghost-phone,
+.reveal-block.in-view .cf-ghost-lines {
+    opacity: 0;
+}
+
+/* Fade in the real text after a slight delay */
+.reveal-block.in-view .cf-squeeze-text,
+.reveal-block.in-view .cf-squeeze-arrow {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    transition-delay: 0.3s; /* Waits for the box to shrink first */
+}
+
+/* Hover State */
+.cf-squeeze-btn:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(11, 126, 214, 0.4);
+}
+
+.cf-squeeze-btn:hover .cf-squeeze-arrow {
+    transform: translateX(8px);
+}
+
+/* Mobile Adjustments */
+@media (max-width: 850px) {
+    .cf-ghost-phone { left: 50%; transform: translateX(-50%); top: 10%; }
+    .cf-ghost-lines { display: none; /* Hide lines on small screens */ }
+    .reveal-block.in-view .cf-squeeze-btn { width: 280px; }
 }
