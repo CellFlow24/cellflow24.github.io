@@ -126,12 +126,24 @@
     box-shadow: 0 25px 50px rgba(15, 23, 42, 0.08);
 }
 
+/* Container gets the white background and perfectly rounded corners */
+.app-visual {
+    background: #ffffff;
+    border-radius: 28px; /* Smooth squircle corners */
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* The inline box-shadow from HTML will now follow these rounded corners! */
+}
+
+/* The image sits perfectly inside without creating a double-box */
 .app-visual img {
-    width: 100px; height: 100px;
-    border-radius: 24px;
+    width: 90px; 
+    height: 90px;
+    border-radius: 14px; /* Slight inner curve to match the logo */
     object-fit: contain;
-    background: white;
-    padding: 10px;
+    display: block;
 }
 
 .app-story { flex: 1; }
@@ -227,7 +239,9 @@
     }
     .app-tags { justify-content: center; }
     .app-action { align-items: center; margin-top: 10px; }
-    .app-visual img { width: 80px; height: 80px; }
+    /* Mobile scaling for the perfectly fitted logos */
+    .app-visual { padding: 12px; border-radius: 24px; }
+    .app-visual img { width: 70px; height: 70px; }
 }
 /* Warm 'Donate' Button for Free Apps */
 .donate-btn {
