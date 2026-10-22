@@ -86,19 +86,117 @@ document.addEventListener('DOMContentLoaded', () => {
         
         btnText.innerText = "Submit Service Ticket";
     }
-    
-    // Phase 1 Mock Submit (Will be replaced with Razorpay/G-Sheets in Phase 2)
-    document.getElementById('req-form').addEventListener('submit', (e) => {
+
+    // =========================================
+    // 4. REAL SUBMIT ENGINE (G-Sheets & Razorpay)
+    // =========================================
+    document.getElementById('req-form').addEventListener('submit', function(e) {
         e.preventDefault();
         
         const submitBtn = document.getElementById('req-submit-btn');
         submitBtn.innerHTML = "Processing... ⏳";
         submitBtn.style.opacity = "0.7";
 
-        setTimeout(() => {
-            alert("Phase 1 Complete! In Phase 2, this button will fire the data to Google Sheets and open Razorpay.");
-            submitBtn.innerHTML = btnText.innerText + ' <svg class="btn-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
-            submitBtn.style.opacity = "1";
-        }, 1500);
+        // Gather Data
+        const name = document.getElementById('req-name').value;
+        const email = document.getElementById('req-email').value;
+        let message = document.getElementById('req-message').value || "";
+        let amount = 0;
+        let finalType = requestType; 
+
+        // Format based on request type
+        if (requestType === 'order') {
+            finalType = "Order Your App";
+            message = appName; // Just send the app name
+            let rawPrice = appPriceDisplay.innerText;
+            amount = parseFloat(rawPrice.replace(/[^0-9.-]+/g,"")); // Strips commas and symbols
+        } else if (requestType === 'donate') {
+            finalType = "Donate";
+            amount = parseFloat(amountInput.value);
+            message = appName ? `Donation for ${appName}. Msg: ${message}` : `General Donation. Msg: ${message}`;
+        } else if (requestType === 'custom') {
+            finalType = "Need a Custom Website/App";
+        } else {
+            finalType = "Technical Support/Complaint";
+        }
+
+        // Generate Ticket & FormData
+        const ticketId = "CF-" + Math.floor(100000 + Math.random() * 900000);
+        var formData = new FormData();
+        formData.append('name', name);
+        formData.append('email', email);
+        formData.append('inquiryType', finalType);
+        formData.append('message', message);
+        formData.append('paymentStatus', 'Pending');
+        formData.append('paymentAmount', amount);
+        formData.append('ticketId', ticketId);
+
+        // Your existing Web App URL
+        var webAppUrl = "https://script.google.com/macros/s/AKfycbzWinkvpaQNr25tKjePWeubGhEAV-ApWWJ_ELZcv7UJRr9xSxB4DRDehRnv6S4PZMIXKg/exec";
+
+        // Handle Payment Flow
+        if ((requestType === 'order' || requestType === 'donate') && amount > 0) {
+            submitBtn.innerHTML = "Logging Order...";
+            
+            fetch(webAppUrl, { method: 'POST', body: formData })
+            .then(() => {
+                submitBtn.innerHTML = "Opening Secure Checkout...";
+                
+                var options = {
+                    "key": "rzp_live_TSvZvBK9HMg5eU",
+                    "amount": amount * 100, // paise
+                    "currency": "INR",
+                    "name": "CellFlow Studio",
+                    "description": finalType === "Donate" ? "Support CellFlow" : "Order: " + appName,
+                    "image": "https://cellflow24.github.io/logo.png",
+                    "notes": { "ticketId": ticketId }, 
+                    "payment_capture": 1,
+                    "handler": function (response) {
+                        showSuccessState("Payment Successful!", "Your receipt has been sent to " + email);
+                    },
+                    "prefill": { "name": name, "email": email },
+                    "theme": { "color": "#0F172A" }, // CellFlow Navy
+                    "modal": {
+                        "ondismiss": function() {
+                            submitBtn.innerHTML = btnText.innerText + ' <svg class="btn-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+                            submitBtn.style.opacity = "1";
+                        }
+                    }
+                };
+                
+                var rzp1 = new Razorpay(options);
+                rzp1.open();
+            })
+            .catch(error => {
+                alert("Connection error. Please try again.");
+                submitBtn.innerHTML = btnText.innerText + ' <svg class="btn-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+                submitBtn.style.opacity = "1";
+            });
+
+        } else {
+            // Handle Free/Custom Flow
+            submitBtn.innerHTML = "Sending...";
+            fetch(webAppUrl, { method: 'POST', body: formData })
+            .then(() => showSuccessState("Request Received", "Team CellFlow will be in touch shortly."))
+            .catch(() => showSuccessState("Request Received", "Team CellFlow will be in touch shortly.")); 
+        }
     });
+
+    // Triggers the animation
+    function showSuccessState(title, desc) {
+        document.getElementById('req-form').style.display = 'none';
+        document.getElementById('req-title').style.display = 'none';
+        document.getElementById('req-subtitle').style.display = 'none';
+        
+        document.getElementById('success-title').innerText = title;
+        document.getElementById('success-message').innerText = desc;
+        
+        const successState = document.getElementById('successState');
+        successState.style.display = 'block';
+        
+        setTimeout(() => {
+            document.getElementById('successBlob').classList.add('active');
+            document.getElementById('successContent').classList.add('active');
+        }, 50);
+    }
 });
