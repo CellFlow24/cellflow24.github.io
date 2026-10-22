@@ -1453,12 +1453,14 @@ a.cf-menu-label:hover {
 ========================================= */
 .cf-finale {
     text-align: center;
-    padding: 100px 20px 0;
-    overflow: hidden; /* Hides the phones until they slide up */
+    /* Added bottom padding to make room for the floating footer */
+    padding: 100px 20px 120px; 
+    overflow: hidden; 
     display: flex;
     flex-direction: column;
     align-items: center;
     background: #ffffff;
+    position: relative; /* Allows the footer to float absolutely inside it */
 }
 
 .finale-title {
@@ -1607,29 +1609,45 @@ a.cf-menu-label:hover {
 }
 
 /* =========================================
-   9. MINIMALIST FOOTER
+   9. MINIMALIST GLASS FOOTER
 ========================================= */
 .cf-footer {
+    position: absolute;
+    bottom: 20px; /* Floats just above the bottom edge */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 700px;
+    
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 15px;
-    padding: 40px 20px;
-    background: #ffffff;
+    padding: 15px 30px;
+    
+    /* The Premium Glassmorphism Effect */
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 40px; /* Creates the Pill Shape */
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+    
     font-size: 0.95rem;
     font-weight: 700;
-    color: #94A3B8;
-    position: relative;
-    z-index: 20; /* Sits above the phone cluster */
+    color: #64748B;
+    z-index: 20; /* Safely floats above the phones */
 }
 
 .footer-links {
     display: flex;
     gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .footer-links a {
-    color: #64748B;
+    color: #475569;
     text-decoration: none;
     transition: color 0.3s;
 }
@@ -1638,12 +1656,12 @@ a.cf-menu-label:hover {
 
 /* Desktop Scaling */
 @media (min-width: 851px) {
-    .cf-phone-cluster { height: 450px; }
-    .cluster-phone { width: 280px; height: 580px; }
+    /* (Keep your existing desktop scaling rules for the phones here) */
     
-    /* Wider fan out on desktop */
-    .reveal-cluster.in-view .phone-left { transform: translateY(50px) translateX(-160px) rotate(-12deg) scale(0.9); }
-    .reveal-cluster.in-view .phone-right { transform: translateY(50px) translateX(160px) rotate(12deg) scale(0.9); }
-    
-    .cf-footer { flex-direction: row; justify-content: space-between; padding: 40px 60px; }
+    .cf-footer { 
+        flex-direction: row; 
+        justify-content: space-between; 
+        padding: 20px 40px; 
+        bottom: 30px; /* Floats a bit higher on desktop */
+    }
 }
