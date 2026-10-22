@@ -12,8 +12,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const appNameDisplay = document.getElementById('app-name-display');
     const appPriceDisplay = document.getElementById('app-price-display');
     const messageBox = document.getElementById('req-message-box');
-    const btnText = document.getElementById('btn-text');
+    const messageLabel = document.getElementById('req-message-label');
     const messageInput = document.getElementById('req-message');
+    const amountBox = document.getElementById('req-amount-box');
+    const amountInput = document.getElementById('req-amount');
+    const btnText = document.getElementById('btn-text');
 
     // 3. THE SHAPE-SHIFTING LOGIC
     if (requestType === 'order' && appName) {
@@ -21,16 +24,14 @@ document.addEventListener('DOMContentLoaded', () => {
         reqTitle.innerText = "Secure Your App";
         reqSubtitle.innerText = "Fill in your details. We will process your order and deliver your credentials.";
         
-        // Show the elegant order card
         orderSummary.style.display = 'block';
-        
-        // Hide the big text area, we don't need it for a direct purchase
+        amountBox.style.display = 'none';
         messageBox.style.display = 'none';
         messageInput.removeAttribute('required');
+        amountInput.removeAttribute('required');
 
         btnText.innerText = "Proceed to Secure Payment";
 
-        // Logic to assign the correct price based on the URL parameter
         let price = '₹0';
         if (appName === 'Bill Flow') price = '₹5,999';
         else if (appName === 'Mess Khata') price = '₹99';
@@ -45,10 +46,31 @@ document.addEventListener('DOMContentLoaded', () => {
         reqSubtitle.innerText = "Tell us about your vision. We will review it and send a tailored quotation.";
         
         orderSummary.style.display = 'none';
+        amountBox.style.display = 'none';
         messageBox.style.display = 'flex';
         messageInput.setAttribute('required', 'true');
+        amountInput.removeAttribute('required');
+        messageLabel.innerText = "Project Details / Request";
         
         btnText.innerText = "Send Custom Request";
+
+    } else if (requestType === 'donate') {
+        // --- DONATE MODE ---
+        reqTitle.innerText = "Support CellFlow ☕";
+        reqSubtitle.innerText = `Love using ${appName || 'our free apps'}? Your support keeps the servers running and the apps free!`;
+        
+        orderSummary.style.display = 'none';
+        
+        // Show Custom Amount Box
+        amountBox.style.display = 'flex';
+        amountInput.setAttribute('required', 'true');
+        
+        // Show Message Box (Optional)
+        messageBox.style.display = 'flex';
+        messageInput.removeAttribute('required'); 
+        messageLabel.innerText = "Leave a message (Optional)";
+        
+        btnText.innerText = "Proceed to Donate";
 
     } else {
         // --- SERVICE / SUPPORT MODE ---
@@ -56,12 +78,15 @@ document.addEventListener('DOMContentLoaded', () => {
         reqSubtitle.innerText = "Need technical support or modifications to an existing app? Let us know.";
         
         orderSummary.style.display = 'none';
+        amountBox.style.display = 'none';
         messageBox.style.display = 'flex';
         messageInput.setAttribute('required', 'true');
+        amountInput.removeAttribute('required');
+        messageLabel.innerText = "Issue / Request Details";
         
         btnText.innerText = "Submit Service Ticket";
     }
-
+    
     // Phase 1 Mock Submit (Will be replaced with Razorpay/G-Sheets in Phase 2)
     document.getElementById('req-form').addEventListener('submit', (e) => {
         e.preventDefault();
