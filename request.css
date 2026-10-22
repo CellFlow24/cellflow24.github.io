@@ -112,6 +112,13 @@
     color: var(--cf-navy);
     transition: all 0.3s ease;
     outline: none;
+    width: 100%; /* Ensures it respects container boundaries */
+    box-sizing: border-box; /* Keeps padding inside the width limits */
+}
+
+.input-group textarea {
+    resize: vertical; /* Locks horizontal resizing */
+    min-height: 100px; /* Gives it a good starting height */
 }
 
 .input-group input:focus, .input-group textarea:focus {
