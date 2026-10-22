@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Request | CellFlow</title>
     <link rel="icon" type="image/png" href="logo.png">
-    
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="request.css">
 </head>
@@ -97,6 +97,19 @@
                     <svg class="btn-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </button>
             </form>
+            <!-- THE SUCCESS STATE (Hidden initially) -->
+            <div id="successState" class="blast-container" style="display:none;">
+                <div class="success-blob" id="successBlob"></div>
+                <div class="success-content" id="successContent">
+                    <svg class="success-icon-svg" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                    <h3 id="success-title">Request Received</h3>
+                    <p id="success-message">Team CellFlow will be in touch shortly.</p>
+                    <a href="index.html" class="req-submit-btn cf-page-link" style="text-decoration: none; width: max-content; margin: 20px auto 0;">Back to Home</a>
+                </div>
+            </div>
         </div>
     </main>
 
