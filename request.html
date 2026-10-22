@@ -73,14 +73,20 @@
                     <input type="text" id="req-name" placeholder="John Doe" required>
                 </div>
 
-                <div class="input-group">
+                <<div class="input-group">
                     <label>Email Address</label>
                     <input type="email" id="req-email" placeholder="you@example.com" required>
                 </div>
 
-                <!-- Message Box (Shown for Custom Builds & Services, Hidden for direct app orders) -->
+                <!-- NEW: Donation Amount (Hidden by default, shown for Donations) -->
+                <div class="input-group" id="req-amount-box" style="display: none;">
+                    <label>Donation Amount (₹)</label>
+                    <input type="number" id="req-amount" placeholder="e.g. 100" min="1">
+                </div>
+
+                <!-- Message Box -->
                 <div class="input-group" id="req-message-box">
-                    <label>Project Details / Request</label>
+                    <label id="req-message-label">Project Details / Request</label>
                     <textarea id="req-message" rows="4" placeholder="Tell us about your requirements..."></textarea>
                 </div>
 
