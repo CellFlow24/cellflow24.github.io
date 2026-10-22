@@ -1437,3 +1437,148 @@ a.cf-menu-label:hover {
     .cf-ghost-lines { display: none; /* Hide lines on small screens */ }
     .reveal-block.in-view .cf-squeeze-btn { width: 280px; }
 }
+
+
+/* =========================================
+   8. THE FINALE & PHONE CLUSTER
+========================================= */
+.cf-finale {
+    text-align: center;
+    padding: 100px 20px 0;
+    overflow: hidden; /* Hides the phones until they slide up */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #ffffff;
+}
+
+.finale-title {
+    font-size: clamp(3.5rem, 10vw, 6rem);
+    font-weight: 900;
+    color: var(--cf-navy);
+    line-height: 1.1;
+    margin: 0 0 15px;
+    letter-spacing: -2px;
+}
+
+.finale-subtitle {
+    font-size: 1.2rem;
+    color: #64748B;
+    margin-bottom: 40px;
+    font-weight: 600;
+}
+
+.finale-actions {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 80px;
+    z-index: 10;
+}
+
+.cf-btn-premium {
+    background: var(--cf-navy);
+    color: white;
+    padding: 14px 28px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 800;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 20px rgba(15, 23, 42, 0.15);
+}
+
+.cf-btn-free {
+    background: var(--cf-neon);
+    color: var(--cf-navy);
+    padding: 14px 28px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 800;
+    transition: all 0.3s ease;
+}
+
+.cf-btn-premium:hover, .cf-btn-free:hover {
+    transform: translateY(-3px);
+}
+
+/* The Phone Cluster */
+.cf-phone-cluster {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    height: 350px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    perspective: 1000px;
+}
+
+.cluster-phone {
+    position: absolute;
+    bottom: -150px; /* Start completely hidden below the footer */
+    width: 240px;
+    height: 500px;
+    border-radius: 35px;
+    box-shadow: 0 0 0 4px #000, 0 30px 50px rgba(0,0,0,0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 1s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Base states (Before Scrolling into view) */
+.phone-center { z-index: 3; transform: translateY(150px); }
+.phone-left { z-index: 2; transform: translateY(200px) translateX(-50px) rotate(-5deg); opacity: 0.8; }
+.phone-right { z-index: 1; transform: translateY(200px) translateX(50px) rotate(5deg); opacity: 0.8; }
+
+/* ANIMATION: Triggered by Javascript when scrolled into view */
+.reveal-cluster.in-view .phone-center { 
+    transform: translateY(0); 
+}
+.reveal-cluster.in-view .phone-left { 
+    transform: translateY(40px) translateX(-110px) rotate(-10deg) scale(0.9); 
+}
+.reveal-cluster.in-view .phone-right { 
+    transform: translateY(40px) translateX(110px) rotate(10deg) scale(0.9); 
+}
+
+/* =========================================
+   9. MINIMALIST FOOTER
+========================================= */
+.cf-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding: 40px 20px;
+    background: #ffffff;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #94A3B8;
+    position: relative;
+    z-index: 20; /* Sits above the phone cluster */
+}
+
+.footer-links {
+    display: flex;
+    gap: 20px;
+}
+
+.footer-links a {
+    color: #64748B;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover { color: var(--cf-navy); }
+
+/* Desktop Scaling */
+@media (min-width: 851px) {
+    .cf-phone-cluster { height: 450px; }
+    .cluster-phone { width: 280px; height: 580px; }
+    
+    /* Wider fan out on desktop */
+    .reveal-cluster.in-view .phone-left { transform: translateY(50px) translateX(-160px) rotate(-12deg) scale(0.9); }
+    .reveal-cluster.in-view .phone-right { transform: translateY(50px) translateX(160px) rotate(12deg) scale(0.9); }
+    
+    .cf-footer { flex-direction: row; justify-content: space-between; padding: 40px 60px; }
+}
