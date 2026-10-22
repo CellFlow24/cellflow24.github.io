@@ -78,6 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const floaters = document.querySelectorAll('.cf-float-item');
     
     // Mobile Showcase Elements
+    const revealBlocks = document.querySelectorAll('.reveal-block');
     const revealCluster = document.querySelector('.reveal-cluster');
     const mobileShowcase = document.querySelector('.cf-mobile-showcase');
     const phones = document.querySelectorAll('.cf-giant-phone');
