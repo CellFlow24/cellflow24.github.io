@@ -264,8 +264,8 @@ a.cf-menu-label:hover { color: var(--cf-blue); }
 /* Zappy-Style Text Slider Container */
 .cf-motto-container {
     position: relative;
-    /* Dynamically sizes height based on font size to prevent overlapping */
-    height: calc(clamp(3rem, 8vw, 6rem) * 2.2); 
+    /* Increased from 2.2 to 2.5 to prevent cropping the 'y', 'p', or 'g' on desktop */
+    height: calc(clamp(3rem, 8vw, 6rem) * 2.5); 
     width: 100%;
     margin-bottom: 20px;
     overflow: hidden; /* Keeps the text invisible until it slides into the box */
