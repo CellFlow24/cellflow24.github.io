@@ -507,19 +507,39 @@
 
     <!-- 5. THE FINALE & PHONE CLUSTER -->
     <section class="cf-finale">
-        <h2 class="finale-title">PASSION FIRST.<br>PRO ALWAYS.</h2>
+        <h2 class="finale-title">
+            PASSION FIRST.<br>
+            <!-- Animated Text Rotator -->
+            <span class="cf-text-rotator">
+                <span class="cf-rotator-word active">PRO ALWAYS.</span>
+                <span class="cf-rotator-word">CLEAN CODE.</span>
+                <span class="cf-rotator-word">ZERO FRICTION.</span>
+            </span>
+        </h2>
         <p class="finale-subtitle">Join the CellFlow Ecosystem today.</p>
         
         <div class="finale-actions">
-            <!-- Link to Premium Filter -->
-            <a href="appstore.html?filter=premium" class="cf-btn-premium cf-page-link">Premium Studio</a>
-            <!-- Link to Free Filter -->
-            <a href="appstore.html?filter=free" class="cf-btn-free cf-page-link">Free & Fun</a>
+            <!-- Premium Studio Icon Button -->
+            <a href="appstore.html?filter=premium" class="cf-sq-btn premium-sq cf-page-link" aria-label="Premium Studio" title="Premium Studio">
+                <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                    <polyline points="2 17 12 22 22 17"></polyline>
+                    <polyline points="2 12 12 17 22 12"></polyline>
+                </svg>
+            </a>
+            <!-- Free & Fun Icon Button -->
+            <a href="appstore.html?filter=free" class="cf-sq-btn free-sq cf-page-link" aria-label="Free & Fun" title="Free & Fun">
+                <svg viewBox="0 0 24 24" width="28" height="28" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="2" y="6" width="20" height="12" rx="4" ry="4"></rect>
+                    <circle cx="17" cy="12" r="1"></circle>
+                    <circle cx="14" cy="12" r="1"></circle>
+                    <path d="M6 12h4M8 10v4"></path>
+                </svg>
+            </a>
         </div>
 
         <!-- The Animated Phone Cluster -->
         <div class="cf-phone-cluster reveal-cluster">
-            
             <!-- Left Phone (Bill Flow) -->
             <div class="cluster-phone phone-left" style="background: #0A192F;">
                 <img src="BillFlow-Demo/logo.png" alt="Bill Flow" style="width: 70px; border-radius: 16px;">
@@ -534,10 +554,9 @@
             <div class="cluster-phone phone-right" style="background: linear-gradient(135deg, #a18cd1, #fbc2eb);">
                 <img src="MessKhata-Demo/logo.png" alt="Mess Khata" style="width: 70px; border-radius: 16px;">
             </div>
-
         </div>
     </section>
-
+    
     <!-- 6. MINIMALIST FOOTER -->
     <footer class="cf-footer">
         <span>© 2026 CellFlow</span>
