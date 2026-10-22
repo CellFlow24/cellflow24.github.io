@@ -47,6 +47,13 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 // If already on the page -> Just close menu
                 document.getElementById('nav-container').classList.remove('open');
+                
+                // PRO FIX: If they clicked a link to the exact same page (like the logo)
+                // without a specific #section, smoothly scroll them to the very top!
+                if (!targetUrl.includes('#')) {
+                    e.preventDefault();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
             }
         });
     });
