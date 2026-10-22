@@ -1461,6 +1461,36 @@ a.cf-menu-label:hover {
     letter-spacing: -2px;
 }
 
+/* --- THE ROTATING TEXT ENGINE --- */
+.cf-text-rotator {
+    display: block;
+    position: relative;
+    height: 1.2em; /* Reserves exact space so layout doesn't jump */
+    overflow: hidden;
+    margin-top: 5px;
+}
+
+.cf-rotator-word {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    color: var(--cf-blue); /* Highlights the changing text */
+    opacity: 0;
+    transform: translateY(100%);
+    transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.cf-rotator-word.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.cf-rotator-word.exit {
+    opacity: 0;
+    transform: translateY(-100%);
+}
+
 .finale-subtitle {
     font-size: 1.2rem;
     color: #64748B;
@@ -1468,33 +1498,59 @@ a.cf-menu-label:hover {
     font-weight: 600;
 }
 
+/* --- PREMIUM SQUARE PILL BUTTONS --- */
 .finale-actions {
     display: flex;
-    gap: 15px;
+    gap: 25px; /* Spaced perfectly for icons */
     margin-bottom: 80px;
     z-index: 10;
 }
 
-.cf-btn-premium {
-    background: var(--cf-navy);
-    color: white;
-    padding: 14px 28px;
-    border-radius: 30px;
+.cf-sq-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 68px;
+    height: 68px;
+    border-radius: 22px; /* Smooth Apple-style 'Squircle' */
     text-decoration: none;
-    font-weight: 800;
-    transition: all 0.3s ease;
-    box-shadow: 0 10px 20px rgba(15, 23, 42, 0.15);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.cf-btn-free {
-    background: var(--cf-neon);
-    color: var(--cf-navy);
-    padding: 14px 28px;
-    border-radius: 30px;
-    text-decoration: none;
-    font-weight: 800;
-    transition: all 0.3s ease;
+.premium-sq {
+    background: linear-gradient(135deg, var(--cf-navy) 0%, var(--cf-blue) 100%);
+    color: #ffffff;
+    box-shadow: 0 10px 25px rgba(11, 126, 214, 0.3);
 }
+
+.free-sq {
+    background: #ffffff;
+    color: var(--cf-navy);
+    border: 2px solid var(--cf-border);
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.05);
+}
+
+.cf-sq-btn:hover {
+    transform: translateY(-6px) scale(1.05); /* Lifts and grows slightly */
+}
+
+.premium-sq:hover {
+    box-shadow: 0 15px 35px rgba(11, 126, 214, 0.5);
+}
+
+.free-sq:hover {
+    border-color: var(--cf-teal);
+    color: var(--cf-teal);
+    box-shadow: 0 15px 35px rgba(0, 200, 150, 0.2);
+}
+
+.finale-subtitle {
+    font-size: 1.2rem;
+    color: #64748B;
+    margin-bottom: 40px;
+    font-weight: 600;
+}
+
 
 .cf-btn-premium:hover, .cf-btn-free:hover {
     transform: translateY(-3px);
