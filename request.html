@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Request | CellFlow</title>
+    <link rel="icon" type="image/png" href="logo.png">
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="request.css">
+</head>
+<body class="req-body">
+
+    <!-- 1. NAVIGATION -->
+    <div class="cf-nav-wrapper">
+        <nav class="cf-nav-container" id="nav-container">
+            <div class="cf-nav-top">
+                <div class="cf-logo">
+                    <span style="color: var(--cf-navy);">Cell</span><span style="color: var(--cf-blue);">Flow</span>
+                </div>
+                <button class="cf-nav-toggle" id="nav-toggle" aria-label="Toggle Menu">
+                    <span class="cf-icon-plus"></span>
+                </button>
+            </div>
+            
+            <div class="cf-nav-menu" id="nav-menu">
+                <div class="cf-menu-col">
+                    <a href="index.html" class="cf-page-link">Home</a>
+                    <a href="request.html?type=custom" class="cf-page-link">Custom Build</a>
+                    <a href="request.html?type=service" class="cf-page-link">Services</a>
+                </div>
+                <div class="cf-menu-col">
+                    <div class="cf-menu-label">App Store</div>
+                    <a href="appstore.html?filter=premium" class="cf-sub-link cf-page-link">Premium Apps</a>
+                    <a href="appstore.html?filter=free" class="cf-sub-link cf-page-link">Free & Fun</a>
+                </div>
+                <div class="cf-menu-col">
+                    <a href="about.html" class="cf-menu-label cf-page-link">Company</a>
+                    <a href="about.html#contact" class="cf-sub-link cf-page-link">Contact</a>
+                    <div class="cf-socials">
+                        <a href="https://www.instagram.com/cellflow24" target="_blank" class="cf-social-icon"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+                        <a href="https://www.facebook.com/share/1CE8utsk75/" target="_blank" class="cf-social-icon"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <!-- 2. DYNAMIC REQUEST FORM -->
+    <main class="req-main">
+        <!-- Background Ambient Glow -->
+        <div class="req-glow"></div>
+
+        <div class="req-card">
+            <!-- Dynamic Headers -->
+            <h1 class="req-title" id="req-title">Loading...</h1>
+            <p class="req-subtitle" id="req-subtitle">Please wait while we set up your request.</p>
+
+            <form class="req-form" id="req-form">
+                
+                <!-- Dynamic Order Summary (Hidden by default, shown for App Purchases) -->
+                <div class="req-order-summary" id="order-summary" style="display: none;">
+                    <div class="summary-label">Order Details</div>
+                    <div class="summary-flex">
+                        <div class="summary-app-name" id="app-name-display">App Name</div>
+                        <div class="summary-price" id="app-price-display">₹0</div>
+                    </div>
+                </div>
+
+                <!-- Input Fields -->
+                <div class="input-group">
+                    <label>Full Name</label>
+                    <input type="text" id="req-name" placeholder="John Doe" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Email Address</label>
+                    <input type="email" id="req-email" placeholder="you@example.com" required>
+                </div>
+
+                <!-- Message Box (Shown for Custom Builds & Services, Hidden for direct app orders) -->
+                <div class="input-group" id="req-message-box">
+                    <label>Project Details / Request</label>
+                    <textarea id="req-message" rows="4" placeholder="Tell us about your requirements..."></textarea>
+                </div>
+
+                <!-- Dynamic Submit Button -->
+                <button type="submit" class="req-submit-btn" id="req-submit-btn">
+                    <span id="btn-text">Proceed</span>
+                    <svg class="btn-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <script src="request.js"></script>
+</body>
+</html>
