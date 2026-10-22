@@ -1,0 +1,153 @@
+/* =========================================
+   REQUEST & ORDER PAGE STYLES
+========================================= */
+.req-body {
+    background: #f8fafc;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 120px 20px 50px;
+    box-sizing: border-box;
+}
+
+.req-main {
+    position: relative;
+    width: 100%;
+    max-width: 550px;
+    z-index: 1;
+}
+
+.req-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120%;
+    height: 120%;
+    background: radial-gradient(circle, rgba(11, 126, 214, 0.1) 0%, rgba(0, 200, 150, 0.05) 50%, transparent 70%);
+    z-index: -1;
+    pointer-events: none;
+}
+
+.req-card {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 1);
+    border-radius: 30px;
+    padding: 50px 40px;
+    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.05);
+}
+
+.req-title {
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--cf-navy);
+    margin: 0 0 10px;
+    letter-spacing: -1px;
+}
+
+.req-subtitle {
+    font-size: 1rem;
+    color: #64748B;
+    margin: 0 0 35px;
+    line-height: 1.5;
+}
+
+/* Order Summary Box (For Premium Apps) */
+.req-order-summary {
+    background: #ffffff;
+    border: 2px solid var(--cf-blue);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 10px 20px rgba(11, 126, 214, 0.1);
+}
+
+.summary-label {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--cf-blue);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+.summary-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.summary-app-name { font-size: 1.25rem; font-weight: 800; color: var(--cf-navy); }
+.summary-price { font-size: 1.5rem; font-weight: 900; color: var(--cf-teal); }
+
+/* Form Inputs */
+.req-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-group label {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--cf-navy);
+}
+
+.input-group input, .input-group textarea {
+    background: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    padding: 16px;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--cf-navy);
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.input-group input:focus, .input-group textarea:focus {
+    background: #ffffff;
+    border-color: var(--cf-blue);
+    box-shadow: 0 0 0 4px rgba(11, 126, 214, 0.1);
+}
+
+/* Submit Button */
+.req-submit-btn {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(135deg, var(--cf-navy) 0%, var(--cf-blue) 100%);
+    color: white;
+    border: none;
+    padding: 18px;
+    border-radius: 16px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(11, 126, 214, 0.3);
+    transition: all 0.3s ease;
+}
+
+.req-submit-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(11, 126, 214, 0.4);
+}
+
+.req-submit-btn svg { transition: transform 0.3s ease; }
+.req-submit-btn:hover svg { transform: translateX(5px); }
+
+@media (max-width: 600px) {
+    .req-card { padding: 40px 25px; }
+    .req-title { font-size: 1.8rem; }
+}
