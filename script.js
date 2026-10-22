@@ -263,4 +263,26 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // =========================================
+    // 5. FINALE TEXT ROTATOR ENGINE
+    // =========================================
+    const rotatorWords = document.querySelectorAll('.cf-rotator-word');
+    
+    if (rotatorWords.length > 0) {
+        let currentWordIndex = 0;
+        
+        setInterval(() => {
+            // Send current word up and fade out
+            rotatorWords[currentWordIndex].classList.remove('active');
+            rotatorWords[currentWordIndex].classList.add('exit');
+            
+            // Calculate next word
+            currentWordIndex = (currentWordIndex + 1) % rotatorWords.length;
+            
+            // Bring next word up from the bottom
+            rotatorWords[currentWordIndex].classList.remove('exit');
+            rotatorWords[currentWordIndex].classList.add('active');
+            
+        }, 3000); // Changes every 3 seconds
+    }
 });
