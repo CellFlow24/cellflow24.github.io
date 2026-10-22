@@ -229,3 +229,24 @@
     .app-action { align-items: center; margin-top: 10px; }
     .app-visual img { width: 80px; height: 80px; }
 }
+/* Warm 'Donate' Button for Free Apps */
+.donate-btn {
+    background: #fffbeb;
+    color: #d97706; /* Warm amber/gold */
+    border: 1px solid #fde68a;
+    padding: 10px 24px;
+    border-radius: 25px;
+    font-weight: 800;
+    font-size: 14px;
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.donate-btn:hover {
+    background: #d97706;
+    color: white;
+    border-color: #d97706;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(217, 119, 6, 0.2);
+}
